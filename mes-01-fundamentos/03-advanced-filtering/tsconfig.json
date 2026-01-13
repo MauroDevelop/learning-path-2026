@@ -7,8 +7,8 @@
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
-    "module": "NodeNext",
-    "target": "ES2016",
+    "module": "nodenext",
+    "target": "ESNext",
     "types": [],
     // For nodejs:
     // "lib": ["esnext"],
@@ -26,9 +26,9 @@
 
     // Style Options
     "noImplicitReturns": true,
-    // "noImplicitOverride": true,
-    //"noUnusedLocals": true,
-    "noUnusedParameters": true,
+    "noImplicitOverride": true,
+    // "noUnusedLocals": true,
+    // "noUnusedParameters": true,
     // "noFallthroughCasesInSwitch": true,
     // "noPropertyAccessFromIndexSignature": true,
 
