@@ -7,11 +7,11 @@
  * 5. Ejecuta la función usando el nuevo nombre 'remove'.
  */
 
-import { getUserByEmail, users, deleteUser as remove} from "./user-service";
+import { getUserByEmail, users, deleteUser as remove} from "./user-service.js";
 
 console.log( '--- Lista de Usuarios ---')
 console.log(users);
 
 console.log(getUserByEmail('maurodevelop.git@gmail.com'));
 
-console.log(remove(3));
+remove(3)

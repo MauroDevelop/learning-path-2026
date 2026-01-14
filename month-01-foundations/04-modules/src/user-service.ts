@@ -7,8 +7,8 @@
  * 4. Crea y exporta una función 'deleteUser' que reciba un id (number) y muestre un 
  * mensaje en consola: "Usuario con ID [id] eliminado".
  */
-
-import {User} from './types';
+ 
+import {User} from './types.js';
 export const users: User[] = [
     {id: 0, name: 'Mauro', email: 'maurodevelop.git@gmail.com', role: 'admin',},
     {id: 3, name: 'Rodrigo', email: 'rodrigo.rivero.dev@gmail.com', role: 'user',},
