@@ -6,7 +6,8 @@
     "dev:01": "tsx watch 01-introduction/src/index.ts",
     "dev:02": "tsx watch 02-functions-and-objects/src/index.ts",
     "dev:03": "tsx watch 03-advanced-filtering/src/index.ts",
-    "dev:04": "tsx watch 04-modules/src/index.ts"
+    "dev:04": "tsx watch 04-modules/src/index.ts",
+    "dev:05": "tsx watch 06-array-practice/src/index.ts"
   },
   "devDependencies": {
     "tsx": "^4.0.0",
