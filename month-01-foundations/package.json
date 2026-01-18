@@ -9,10 +9,15 @@
     "dev:04": "tsx watch 04-modules/src/index.ts",
     "dev:05": "tsx watch 05-array-practice/src/index.ts",
     "dev:06": "tsx watch 06-enums-types/src/index.ts",
-    "dev:07": "tsx watch 07-asynchrony-and-promises/src/index.ts"
+    "dev:07": "tsx watch 07-asynchrony-and-promises/src/index.ts",
+    "dev:08": "tsx watch 08-express-basics/src/index.ts"
   },
   "devDependencies": {
+    "@types/express": "^5.0.6",
     "tsx": "^4.0.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
   }
 }
