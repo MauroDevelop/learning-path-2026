@@ -5,15 +5,17 @@
  * Crear un servicio que guarde y recupere platos sugeridos en un archivo 
  * físico llamado 'database.json', para que los datos sobrevivan al reinicio.
  * * * TAREAS:
- * 1. Crear una interfaz 'DailySpecial' con: id, nombre y precio.
- * 2. Implementar una función 'saveToFile' que convierta un array a JSON y lo guarde.
- * 3. Implementar una función 'readFromFile' que lea el archivo y lo convierta a array.
- * 4. Crear un método para agregar un nuevo plato sin borrar los anteriores.
+ * 1. Definir la interfaz 'DailySpecial' con los campos: id, name y price.
+ * 2. Implementar 'cargarDatos': una función asíncrona que lea el JSON y maneje 
+ * la ausencia del archivo devolviendo un array vacío.
+ * 3. Implementar 'guardarPlato': una función que gestione la lectura previa, 
+ * la generación de IDs autoincrementales y la escritura en disco.
+ * 4. Crear 'mostrarMenu' para imprimir los platos cargados en formato de tabla.
  * * * REQUISITOS:
- * - Usar el módulo nativo 'fs' (promises) de Node.js.
- * - El archivo 'database.json' debe crearse automáticamente si no existe.
+ * - Usar el módulo nativo 'fs/promises' y 'path' para la gestión de rutas.
+ * - Guardar el JSON con indentación de 2 espacios para asegurar su legibilidad.
  */
-import fs from 'fs/promises';
+import fs from 'fs/promises'; 
 import path from 'path';
 import { fileURLToPath } from 'url';
 
