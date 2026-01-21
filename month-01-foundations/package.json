@@ -12,7 +12,10 @@
     "dev:07": "tsx watch 07-asynchrony-and-promises/src/index.ts",
     "dev:08": "tsx watch 08-express-basics/src/index.ts",
     "dev:09": "tsx watch 09-data-persistence/src/index.ts",
-    "dev:10": "tsx watch 10-persistence-refresher/src/index.ts"
+    "dev:10": "tsx watch 10-persistence-refresher/src/index.ts",
+    "dev:11": "tsx watch 11-config-management/src/index.ts"
+
+    
 
   },
   "devDependencies": {
