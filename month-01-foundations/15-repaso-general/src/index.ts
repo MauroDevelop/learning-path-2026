@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
+import { error } from 'console';
 
 dotenv.config();
 
@@ -85,12 +86,12 @@ class MenuService {
     async deletePlate(id: number) {
         const allPlates = await this.getAll();
         const plates = allPlates.filter(p => p.id !== id)
-        if (plates.length === allPlates.length){
+        if (plates.length === allPlates.length) {
             return 'No se elimino ningun plato';
-        } 
+        }
         await this.savePlate(plates);
         return 'Plato eliminado con exito';
-        
+
     }
 };
 
@@ -148,22 +149,22 @@ const service = new MenuService;
     }
 })();
 
-app.get('/menu/:id', async (req: Request, res:Response) => {
+app.get('/menu/:id', async (req: Request, res: Response) => {
     // tengo que conventir la id de la URL a número
     const id = parseInt(req.params.id as string);
 
     if (isNaN(id)) {
-        return res.status(400).json({ error: "El ID debe ser un número" });
-    }
+        return res.status(400).json({error: "El ID debe ser un número"})
+    };
 
     const plato = await service.getById(id);
 
     if (plato) {
         res.json(plato);
     } else {
-        res.status(404).json({ error: "Plato no encontrado" });
-    }
-})
+        res.status(400).json({ error: "Plato no encontrado"})
+    };
+});
 
 app.listen(PORT, () => {
     console.log(`Servidor corriendo en http://localhost:${PORT}/menu`);
