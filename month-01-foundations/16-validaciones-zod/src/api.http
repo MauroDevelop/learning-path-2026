@@ -1,0 +1,50 @@
+# ==================================================================
+# GUÍA PARA EJECUTAR ESTAS PRUEBAS
+# ==================================================================
+#
+# 1. REQUISITO: Necesitas la extensión "REST Client" en VS Code.
+#    (Busca la extensión creada por "Huachao Mao" e instálala).
+#
+# 2. SERVIDOR: Asegúrate de tener tu API corriendo.
+#    Abre tu terminal en la carpeta del proyecto (month-01-foundations) y ejecuta:
+#    > npm run dev:16
+#
+# 3. USO: Una vez encendido el servidor, verás un pequeño botón
+#    o texto que dice "Send Request" encima de cada bloque URL.
+#    Haz clic ahí para probar la respuesta en el panel derecho.
+# ==================================================================
+
+
+### 1. PRUEBA EXITOSA: Un plato correcto
+# Debería devolver status 201 y el mensaje de éxito
+POST http://localhost:3000/menu
+Content-Type: application/json
+
+{
+  "name": "Milanesa Napolitana",
+  "price": 8500,
+  "category": "Principal",
+  "available": true
+}
+
+### 2. PRUEBA DE ERROR: Precio negativo y nombre corto
+# Zod debería dar errores en "name" y "price". Status 400
+POST http://localhost:3000/menu
+Content-Type: application/json
+
+{
+  "name": "A", 
+  "price": -500,
+  "category": "Entrada"
+}
+
+### 3. PRUEBA DE ERROR: Categoría inventada
+# La categoría "Desayuno" no está en tu lista permitida. Status 400
+POST http://localhost:3000/menu
+Content-Type: application/json
+
+{
+  "name": "Café con Leche",
+  "price": 2000,
+  "category": "Desayuno"
+}
