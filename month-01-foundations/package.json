@@ -18,7 +18,10 @@
     "dev:13": "tsx watch 13-full-crud-persistence/src/index.ts",
     "dev:14": "tsx watch 14-layered-architecture/src/index.ts",
     "dev:15": "tsx watch 15-repaso-general/src/index.ts",
-    "dev:16": "tsx watch 16-validaciones-zod/src/index.ts"
+    "dev:16": "tsx watch 16-validaciones-zod/src/index.ts",
+    "dev:17": "tsx watch 17-poo-basics/src/index.ts",
+    "dev:18": "tsx watch 18-centralized-error-handling/src/index.ts"
+
   },
   "devDependencies": {
     "@types/express": "^5.0.6",

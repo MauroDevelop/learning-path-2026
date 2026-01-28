@@ -15,48 +15,48 @@
  */
 
 interface Candidate {
-    readonly id: number;
-    name: string;
-    skills: Array<string>;
-    yearsExperience: number;
-    isAvailable: boolean;
+  readonly id: number;
+  name: string;
+  skills: Array<string>;
+  yearsExperience: number;
+  isAvailable: boolean;
 }
 
 const candidates: Candidate[] = [
-  { 
-    id: 1, 
-    name: "Mauro", 
-    skills: ["TypeScript", "Node.js", "SQL"], 
-    yearsExperience: 1, 
-    isAvailable: true 
+  {
+    id: 1,
+    name: "Mauro",
+    skills: ["TypeScript", "Node.js", "SQL"],
+    yearsExperience: 1,
+    isAvailable: true
   },
-  { 
-    id: 2, 
-    name: "Carla", 
-    skills: ["TypeScript", "React", "SQL"], 
-    yearsExperience: 4, 
-    isAvailable: true 
+  {
+    id: 2,
+    name: "Carla",
+    skills: ["TypeScript", "React", "SQL"],
+    yearsExperience: 4,
+    isAvailable: true
   },
-  { 
-    id: 3, 
-    name: "Enzo", 
-    skills: ["Java", "Python"], 
-    yearsExperience: 5, 
-    isAvailable: false 
+  {
+    id: 3,
+    name: "Enzo",
+    skills: ["Java", "Python"],
+    yearsExperience: 5,
+    isAvailable: false
   },
-  { 
-    id: 4, 
-    name: "Sofia", 
-    skills: ["TypeScript", "AWS", "Node.js"], 
-    yearsExperience: 3, 
-    isAvailable: true 
+  {
+    id: 4,
+    name: "Sofia",
+    skills: ["TypeScript", "AWS", "Node.js"],
+    yearsExperience: 3,
+    isAvailable: true
   }
 ];
 
 function filterCandidates(skillToSearch: string, experience: number) {
-    return candidates.filter(candidate => {
-        return candidate.skills.includes(skillToSearch) && candidate.yearsExperience > experience;
-    });
+  return candidates.filter(candidate => {
+    return candidate.skills.includes(skillToSearch) && candidate.yearsExperience > experience;
+  });
 };
 
 const candidatesSelect = filterCandidates('TypeScript', 2);
@@ -66,8 +66,8 @@ const candidatesList = candidatesSelect.map(candidate => `Candidato ${candidate.
 const mauro = candidates.find(candidate => candidate.name === 'Mauro');
 
 if (mauro) {
-    console.log(`--- Resultado de búsqueda ---`);
-    console.log(`Candidato: ${mauro.name} | Disponible: ${mauro.isAvailable ? 'Sí' : 'No'}`);
+  console.log(`--- Resultado de búsqueda ---`);
+  console.log(`Candidato: ${mauro.name} | Disponible: ${mauro.isAvailable ? 'Sí' : 'No'}`);
 }
 
 console.log(candidatesList);
