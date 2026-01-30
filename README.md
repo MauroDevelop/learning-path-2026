@@ -40,6 +40,9 @@ El proyecto está dividido en módulos prácticos:
 * **14-layered-architecture**: Implementación del patrón **Service Layer** y Programación Orientada a Objetos (POO).
 * **15-repaso-general**: Consolidación de arquitectura: Servicios, Controladores y manipulación asíncrona de I/O.
 * **16-validaciones-zod**: Validación robusta de esquemas en tiempo de ejecución (runtime) utilizando **Zod**.
+* **17-poo-basics**: Introducción a Programación Orientada a Objetos (Clases, Herencia y Constructores).
+* **18-centralized-error-handling**: Implementación de Middleware de errores y Clases de Error personalizadas (`AppError`).
+* **19-unit-testing**: Introducción al Testing Unitario con **Jest**, configuración de entorno y aserciones básicas.
 
 ## Ejecución
 Para probar cualquiera de los módulos, primero asegúrate de estar dentro de la carpeta del mes y sigue estos pasos:
@@ -77,7 +80,10 @@ npm run dev:04
 │   ├── 13-full-crud-persistence/
 │   ├── 14-layered-architecture/
 │   ├── 15-repaso-general/
-│   └── 16-validaciones-zod/
+│   ├── 16-validaciones-zod/
+│   ├── 17-poo-basics/
+│   ├── 18-centralized-error-handling/
+│   └── 19-unit-testing/
 ├── .env.example
 ├── .gitignore
 ├── package.json
