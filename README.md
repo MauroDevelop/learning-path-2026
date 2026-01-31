@@ -1,4 +1,4 @@
-# Learning Path Backend 2026
+# Ruta de Aprendizaje Backend 2026
 
 
 <div align="center">
@@ -37,6 +37,7 @@ El proyecto está dividido en módulos prácticos:
 * **17-poo-basics**: Introducción a Programación Orientada a Objetos (Clases, Herencia y Constructores).
 * **18-centralized-error-handling**: Implementación de Middleware de errores y Clases de Error personalizadas (`AppError`).
 * **19-unit-testing**: Introducción al Testing Unitario con **Jest**, configuración de entorno y aserciones básicas.
+* **20-user-auth-validation**: Integración de validaciones (Zod), manejo de errores personalizados y Testing Unitario (Jest) en un flujo de registro.
 
 ## Ejecución
 Para probar cualquiera de los módulos, primero asegúrate de estar dentro de la carpeta del mes y sigue estos pasos:
@@ -53,7 +54,29 @@ Módulo 04 (ejemplo):
 ```bash
 npm run dev:04
 ```
+### 3. Ejecutar Tests (Pruebas Unitarias)
+Este proyecto utiliza **Jest** para el testing unitario y de integración. Los tests están ubicados dentro de cada módulo junto a su código fuente.
 
+Asegúrate de estar en la carpeta del mes 01:
+```bash
+cd month-01-foundations
+```
+
+**Comandos disponibles:**
+
+**Ejecutar todos los tests:** (Verifica que todo el proyecto funcione bien)
+```bash
+npm run test
+```
+**Tests del Módulo 19 (Calculadora de Precios):**
+```bash
+npm run test:19
+```
+
+**Tests del Módulo 20 (Sistema de Registro & Validación):** 
+```bash
+npm run test:20
+```
 ## Estructura del Repositorio
 
 ```text
@@ -77,7 +100,8 @@ npm run dev:04
 │   ├── 16-validaciones-zod/
 │   ├── 17-poo-basics/
 │   ├── 18-centralized-error-handling/
-│   └── 19-unit-testing/
+│   ├── 19-unit-testing/
+│   └── 20-user-auth-validation/
 ├── .env.example
 ├── .gitignore
 ├── package.json
