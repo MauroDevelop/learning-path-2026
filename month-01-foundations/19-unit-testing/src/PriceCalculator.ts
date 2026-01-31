@@ -12,7 +12,7 @@ export class PriceCalculator {
         // No se aceptan precios negativos
         if (basePrice < 0){
             // El proceso se detiene en seco y no entrega ningún resultado, entrega un Error
-            throw new Error("¡El precio es negativo!");
+            throw new Error("El precio base no puede ser negativo");
         }
 
         // Calculo impuesto

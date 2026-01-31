@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "dev:01": "tsx watch 01-introduction/src/index.ts",
     "dev:02": "tsx watch 02-functions-and-objects/src/index.ts",
     "dev:03": "tsx watch 03-advanced-filtering/src/index.ts",
@@ -22,7 +21,10 @@
     "dev:16": "tsx watch 16-validaciones-zod/src/index.ts",
     "dev:17": "tsx watch 17-poo-basics/src/index.ts",
     "dev:18": "tsx watch 18-centralized-error-handling/src/index.ts",
-    "dev:20": "tsx watch 20-user-auth-validation/src/UserManager.ts"
+
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:19": "npm run test 19-unit-testing",
+    "test:20": "npm run test 20-user-auth-validation"
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
