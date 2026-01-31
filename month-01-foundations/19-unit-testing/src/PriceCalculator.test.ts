@@ -1,4 +1,4 @@
-import { PriceCalculator } from './PriceCalculator';
+import { PriceCalculator } from './PriceCalculator.js';
 
 // 'describe' agrupa un conjunto de pruebas relacionadas
 describe('PriceCalculator', () => {
