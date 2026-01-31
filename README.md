@@ -18,12 +18,6 @@ He decidido formarme profesionalmente como desarrollador Backend, por lo que en 
 
 ## Estructura del Mes 01: Fundamentos
 El proyecto está dividido en módulos prácticos:
-* **01-introduction**: Variables y tipos de datos básicos.
-* **02-functions-and-objects**: Arreglos, tuplas, enums y estructuras de objetos.
-* **03-advanced-filtering**: Lógica de filtrado avanzado usando `Partial` y `Omit`.
-* **04-modules**: Organización de servicios y exportación de interfaces.
-* **05-array-practice**: Práctica intensiva de procesamiento de datos (`filter`, `map`, `find`).
-* **06-enums-types**: Gestión de transacciones y estados con tipos de unión.
 * **01-introduction**: Tipado estático básico (primitivos) y estructuras de control.
 * **02-functions-and-objects**: Tipado fuerte en funciones, Arreglos, Tuplas y modelado de Objetos.
 * **03-advanced-filtering**: Interfaces avanzadas, Type Guards, Utility Types (`Partial`, `Omit`) y filtrado complejo.
