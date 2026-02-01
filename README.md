@@ -38,6 +38,7 @@ El proyecto está dividido en módulos prácticos:
 * **18-centralized-error-handling**: Implementación de Middleware de errores y Clases de Error personalizadas (`AppError`).
 * **19-unit-testing**: Introducción al Testing Unitario con **Jest**, configuración de entorno y aserciones básicas.
 * **20-user-auth-validation**: Integración de validaciones (Zod), manejo de errores personalizados y Testing Unitario (Jest) en un flujo de registro.
+* **21-password-hashing**: Introducción a la seguridad y criptografía. Hashing de contraseñas con **bcrypt** y verificación segura (Login Flow).
 
 ## Ejecución
 Para probar cualquiera de los módulos, primero asegúrate de estar dentro de la carpeta del mes y sigue estos pasos:
@@ -101,7 +102,8 @@ npm run test:20
 │   ├── 17-poo-basics/
 │   ├── 18-centralized-error-handling/
 │   ├── 19-unit-testing/
-│   └── 20-user-auth-validation/
+│   ├── 20-user-auth-validation/
+│   └── 21-password-hashing/
 ├── .env.example
 ├── .gitignore
 ├── package.json
