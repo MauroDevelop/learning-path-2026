@@ -1,4 +1,4 @@
-import { email, z } from 'zod';
+import { z } from 'zod';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -11,14 +11,14 @@ const RegisterSchema = z.object({
 const LoginSchema = z.object({
     email: z.string().email(),
     password: z.string()
-})
+});
 
 interface StoredUser {
     id: string;
     username: string;
     email: string;
     password: string; // El hash
-}
+};
 
 // Tipos inferidos (deducir tipos)
 type RegisterInput = z.infer<typeof RegisterSchema>;
@@ -38,7 +38,7 @@ export class UserManager {
         
         if (!validacion.success){
             throw new Error(validacion.error.issues[0]?.message);
-        }
+        };
 
         // Hashear password
         const hashedPassword = await bcrypt.hash(data.password, 10);
@@ -56,7 +56,7 @@ export class UserManager {
 
         console.log(`[BD] Usuario guardado: ${newUser.email}`);
 
-        return {message: 'Usuario registrado con éxito', UserID: newUser.id}
+        return {message: 'Usuario registrado con éxito', userId: newUser.id};
     }
 
     // --- LOGIN ---
@@ -76,15 +76,16 @@ export class UserManager {
         const isPasswordValid = await bcrypt.compare(data.password, userFound.password);
         if (!isPasswordValid) {
             throw new Error("Credenciales incorrectas (Password erróneo)");
-        } 
+        } ;
 
+        // Generar Token (JWT)
         const token = jwt.sign(
             // Payload: Qué datos guardamos DENTRO del token
             { 
                 userId: userFound.id, 
                 email: userFound.email 
             }, 
-            // Secret: La llave única de tu servidor
+            // Secret: La llave única del servidor
             this.JWT_SECRET, 
             // Opciones: Cuánto tiempo vive el token
             { expiresIn: '1h' } 
@@ -96,16 +97,9 @@ export class UserManager {
             message: "Login exitoso",
             token: token // Devolvemos el token al usuario
         };
-        
+    };
 
-        
-    }
-
-
-} 
-
-UserManager.register({
-    username: 'mauro',
-    email: 'mauro@developer.com',
-    password: '1234'
-})
+    static showUsers() {
+        console.log(this.users);
+    };
+};

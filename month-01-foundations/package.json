@@ -22,8 +22,8 @@
     "dev:17": "tsx watch 17-poo-basics/src/index.ts",
     "dev:18": "tsx watch 18-centralized-error-handling/src/index.ts",
     "dev:21": "tsx watch 21-password-hashing/src/index.ts",
-    "dev:22": "tsx watch 22-jwt-authentication/src/UserManager.ts",
-    
+    "dev:22": "tsx watch 22-jwt-authentication/src/index.ts",
+
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
     "test:20": "npm run test 20-user-auth-validation"
