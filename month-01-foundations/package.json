@@ -22,6 +22,7 @@
     "dev:17": "tsx watch 17-poo-basics/src/index.ts",
     "dev:18": "tsx watch 18-centralized-error-handling/src/index.ts",
     "dev:21": "tsx watch 21-password-hashing/src/index.ts",
+    "dev:22": "tsx watch 22-jwt-authentication/src/UserManager.ts",
     
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
@@ -33,6 +34,7 @@
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.10",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.6",
@@ -43,6 +45,7 @@
     "bcrypt": "^6.0.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
     "zod": "^4.3.6"
   }
 }
