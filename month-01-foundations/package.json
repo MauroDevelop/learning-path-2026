@@ -23,7 +23,7 @@
     "dev:18": "tsx watch 18-centralized-error-handling/src/index.ts",
     "dev:21": "tsx watch 21-password-hashing/src/index.ts",
     "dev:22": "tsx watch 22-jwt-authentication/src/index.ts",
-    "dev:23": "tsx watch 23-middlewares-protection/src/AuthMiddleware.ts",
+    "dev:23": "tsx watch 23-middlewares-protection/src/index.ts",
     
 
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",

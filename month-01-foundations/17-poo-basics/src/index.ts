@@ -1,5 +1,6 @@
 
 class Vehiculo {
+    // (Propiedad: una variable que vive dentro de la clase)
     public ruedas: number;
 
     constructor(ruedas: number) {
