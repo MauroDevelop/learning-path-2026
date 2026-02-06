@@ -24,6 +24,7 @@
     "dev:21": "tsx watch 21-password-hashing/src/index.ts",
     "dev:22": "tsx watch 22-jwt-authentication/src/index.ts",
     "dev:23": "tsx watch 23-middlewares-protection/src/index.ts",
+    "dev:24": "tsx watch 24-dependency-injection/src/index.ts",
     
 
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
