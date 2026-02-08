@@ -39,6 +39,10 @@ El proyecto está dividido en módulos prácticos:
 * **19-unit-testing**: Introducción al Testing Unitario con **Jest**, configuración de entorno y aserciones básicas.
 * **20-user-auth-validation**: Integración de validaciones (Zod), manejo de errores personalizados y Testing Unitario (Jest) en un flujo de registro.
 * **21-password-hashing**: Introducción a la seguridad y criptografía. Hashing de contraseñas con **bcrypt** y verificación segura (Login Flow).
+* **22-jwt-authentication**: Implementación de autenticación basada en Tokens (Stateless) utilizando **JSON Web Tokens (JWT)** para manejo de sesiones seguras.
+* **23-middlewares-protection**: Creación de Middlewares de autorización para proteger rutas privadas y verificar la validez de los tokens en cada petición.
+* **24-dependency-injection**: Desacoplamiento de componentes aplicando **Inyección de Dependencias**. Separación de la lógica de negocio de la implementación de base de datos.
+* **25-api-integration-review**: **Arquitectura en Capas (Layered Architecture)**. Consolidación de todo lo aprendido creando un flujo completo (Controller -> Service -> Repository) con Entidades de dominio y Testing de integración (**Jest** + **Supertest**).
 
 ## Ejecución
 Para probar cualquiera de los módulos, primero asegúrate de estar dentro de la carpeta del mes y sigue estos pasos:
@@ -103,10 +107,39 @@ npm run test:20
 │   ├── 18-centralized-error-handling/
 │   ├── 19-unit-testing/
 │   ├── 20-user-auth-validation/
-│   └── 21-password-hashing/
+│   ├── 21-password-hashing/
+│   ├── 22-jwt-authentication/
+│   ├── 23-middlewares-protection/
+│   ├── 24-dependency-injection/
+│   └── 25-api-integration-review/
 ├── .env.example
 ├── .gitignore
 ├── package.json
 └── tsconfig.json
  ```
  
+## Estándar de Arquitectura (Layered Architecture)
+A partir del Módulo 25, todos los desarrollos siguen una **Arquitectura en Capas** estricta. Este diseño busca separar las reglas de negocio de las herramientas externas (Express, Bases de Datos).
+
+### Estructura de Carpetas
+Cada módulo o funcionalidad debe respetar la siguiente organización dentro de `src/`:
+
+```text
+src/
+├── core/                       # CAPA DE DOMINIO (El "Qué")
+│   ├── entities/               # ➜ Clases puras que definen los datos (ej: User.ts, Product.ts)
+│   └── interfaces/             # ➜ Contratos que deben cumplir los repositorios (Inversión de Dependencias)
+│
+├── services/                   # CAPA DE APLICACIÓN (El "Cómo")
+│   └── [Name]Service.ts        # ➜ Lógica de negocio, validaciones y casos de uso.
+│                               #    Solo se comunica con 'core' y nunca toca la BD directamente.
+│
+├── infrastructure/             # CAPA DE INFRAESTRUCTURA (Detalles Técnicos)
+│   ├── controllers/            # ➜ Manejo de HTTP (req, res). Traduce peticiones web a llamadas de servicio.
+│   └── repositories/           # ➜ Implementación real de la BD (Memoria, FS, SQL). Cumple las interfaces de 'core'.
+│
+├── middlewares/                # Validaciones transversales (Autenticación, Zod, Errores)
+└── index.ts                    # PUNTO DE ENTRADA (Composition Root)
+                                # ➜ Aquí se crean las instancias y se inyectan las    
+                                dependencias manualmente.
+```
