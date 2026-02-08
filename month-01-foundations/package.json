@@ -25,11 +25,13 @@
     "dev:22": "tsx watch 22-jwt-authentication/src/index.ts",
     "dev:23": "tsx watch 23-middlewares-protection/src/index.ts",
     "dev:24": "tsx watch 24-dependency-injection/src/index.ts",
+    "dev:25": "tsx watch 25-api-integration-review/src/index.ts",
     
 
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
-    "test:20": "npm run test 20-user-auth-validation"
+    "test:20": "npm run test 20-user-auth-validation",
+    "test:25": "npm run test 25-api-integration-review"
     
   },
   "devDependencies": {
