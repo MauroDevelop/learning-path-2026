@@ -26,13 +26,12 @@
     "dev:23": "tsx watch 23-middlewares-protection/src/index.ts",
     "dev:24": "tsx watch 24-dependency-injection/src/index.ts",
     "dev:25": "tsx watch 25-api-integration-review/src/index.ts",
+    "dev:26": "tsx watch 26-openapi-documentation/src/index.ts",
     
-
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
     "test:20": "npm run test 20-user-auth-validation",
     "test:25": "npm run test 25-api-integration-review"
-    
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
@@ -41,6 +40,9 @@
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.0.10",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
+    "@types/uuid": "^10.0.0",
     "jest": "^30.2.0",
     "ts-jest": "^29.4.6",
     "tsx": "^4.0.0",
@@ -51,6 +53,9 @@
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "uuid": "^13.0.0",
     "zod": "^4.3.6"
   }
 }
