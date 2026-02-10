@@ -27,6 +27,7 @@
     "dev:24": "tsx watch 24-dependency-injection/src/index.ts",
     "dev:25": "tsx watch 25-api-integration-review/src/index.ts",
     "dev:26": "tsx watch 26-openapi-documentation/src/index.ts",
+    "dev:27": "tsx watch 27-external-api-integration/src/index.ts",
     
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
