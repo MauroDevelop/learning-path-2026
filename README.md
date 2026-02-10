@@ -44,6 +44,7 @@ El proyecto está dividido en módulos prácticos:
 * **24-dependency-injection**: Desacoplamiento de componentes aplicando **Inyección de Dependencias**. Separación de la lógica de negocio de la implementación de base de datos.
 * **25-api-integration-review**: **Arquitectura en Capas (Layered Architecture)**. Consolidación de todo lo aprendido creando un flujo completo (Controller -> Service -> Repository) con Entidades de dominio y Testing de integración (**Jest** + **Supertest**).
 * **26-openapi-documentation**: Implementación de documentación automatizada bajo el estándar **OpenAPI 3.0** utilizando **Swagger UI** y generación de contratos a partir de código (JSDoc).
+* **27-external-api-integration**: Consumo de APIs de terceros y servicios externos. Implementación de un sistema de notificaciones para **Maro Crochet** aplicando el **Patrón Adapter** y gestión segura de **API Keys**.
 
 ## Ejecución
 Para probar cualquiera de los módulos, primero asegúrate de estar dentro de la carpeta del mes y sigue estos pasos:
@@ -113,7 +114,8 @@ npm run test:20
 │   ├── 23-middlewares-protection/
 │   ├── 24-dependency-injection/
 │   ├── 25-api-integration-review/
-│   └── 26-openapi-documentation/
+│   ├── 26-openapi-documentation/
+│   └── 27-external-api-integration/
 ├── .env.example
 ├── .gitignore
 ├── package.json
