@@ -28,7 +28,7 @@
     "dev:25": "tsx watch 25-api-integration-review/src/index.ts",
     "dev:26": "tsx watch 26-openapi-documentation/src/index.ts",
     "dev:27": "tsx watch 27-external-api-integration/src/index.ts",
-    
+    "dev:28": "tsx watch 28-database-prisma/src/index.ts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
     "test:20": "npm run test 20-user-auth-validation",
@@ -36,17 +36,19 @@
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
+    "@prisma/client": "^6.19.2",
     "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "^25.0.10",
+    "@types/node": "^25.2.3",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
     "@types/uuid": "^10.0.0",
     "jest": "^30.2.0",
+    "prisma": "^6.19.2",
     "ts-jest": "^29.4.6",
-    "tsx": "^4.0.0",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {

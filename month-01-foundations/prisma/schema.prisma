@@ -1,0 +1,10 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Define models (tables)
+model User {
+  id    Int     @id @default(autoincrement())
+  name  String
+  email String  @unique
+}
