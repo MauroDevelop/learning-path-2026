@@ -45,6 +45,20 @@ El proyecto está dividido en módulos prácticos:
 * **25-api-integration-review**: **Arquitectura en Capas (Layered Architecture)**. Consolidación de todo lo aprendido creando un flujo completo (Controller -> Service -> Repository) con Entidades de dominio y Testing de integración (**Jest** + **Supertest**).
 * **26-openapi-documentation**: Implementación de documentación automatizada bajo el estándar **OpenAPI 3.0** utilizando **Swagger UI** y generación de contratos a partir de código (JSDoc).
 * **27-external-api-integration**: Consumo de APIs de terceros y servicios externos. Implementación de un sistema de notificaciones para **Maro Crochet** aplicando el **Patrón Adapter** y gestión segura de **API Keys**.
+* **28-database-prisma**: Introducción a Bases de Datos Relacionales con **MySQL** y el ORM **Prisma**. Migración de persistencia en memoria a base de datos real manteniendo la Arquitectura Limpia.
+
+##  Configuración de Variables de Entorno
+Este proyecto requiere una conexión a base de datos para los módulos avanzados (Módulo 28 en adelante).
+Crea un archivo `.env` en la raíz del proyecto y asegúrate de definir la variable `DATABASE_URL` con tus credenciales de MySQL local (ej: Laragon/XAMPP).
+
+Ejemplo de `.env`:
+```env
+DATABASE_URL="mysql://root:@localhost:3306/mi_base_de_datos"
+```
+ 
+
+
+
 
 ## Ejecución
 Para probar cualquiera de los módulos, primero asegúrate de estar dentro de la carpeta del mes y sigue estos pasos:
@@ -68,8 +82,6 @@ Asegúrate de estar en la carpeta del mes 01:
 ```bash
 cd month-01-foundations
 ```
-
-**Comandos disponibles:**
 
 **Ejecutar todos los tests:** (Verifica que todo el proyecto funcione bien)
 ```bash
@@ -115,8 +127,8 @@ npm run test:20
 │   ├── 24-dependency-injection/
 │   ├── 25-api-integration-review/
 │   ├── 26-openapi-documentation/
-│   └── 27-external-api-integration/
-├── .env.example
+│   ├── 27-external-api-integration/
+│   └── 28-database-prisma/
 ├── .gitignore
 ├── package.json
 └── tsconfig.json
@@ -147,3 +159,7 @@ src/
                                 # ➜ Aquí se crean las instancias y se inyectan las    
                                 dependencias manualmente.
 ```
+
+### 🛠 Decisiones Técnicas Importantes
+* **Prisma ORM**: Actualmente el proyecto utiliza la versión **v5.22.0 (Stable)**. 
+  * *Motivo:* Originalmente se intentó implementar la versión experimental de Prisma 7, pero se detectaron conflictos de validación (Error P1012) entre la CLI y el entorno de ejecución. Se decidió priorizar la estabilidad del entorno de desarrollo utilizando el estándar de la industria (v5) y la configuración clásica en `schema.prisma`.
