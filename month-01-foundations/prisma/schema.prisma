@@ -1,6 +1,18 @@
+// ARCHITECTURAL DECISION:
+// Originally, I attempted to implement Prisma 7 with the experimental 'prisma.config.ts'.
+// However, due to persistent validation conflicts (P1012) between the CLI and the runtime,
+// I decided to downgrade the project to Prisma v5.22.0.
+// This ensures stability by adhering to the current industry standard over experimental features.
+
 generator client {
   provider = "prisma-client-js"
 }
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
 
 // Define models (tables)
 model User {
