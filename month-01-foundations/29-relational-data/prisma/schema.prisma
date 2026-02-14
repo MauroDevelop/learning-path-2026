@@ -1,0 +1,33 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+
+}
+
+model Author {
+  id Int @id @default(autoincrement())
+  name String 
+  bio String? // Optional
+  createdAt DateTime @default(now())
+
+  // Relation with the Books
+  book Book[]
+}
+
+model Book {
+  id Int @id @default(autoincrement())
+  title String
+  sumary String?
+  published Boolean @default(false)
+
+  // FOREING KEY
+  // Saved the id for the Author
+  authorId Int
+  // Defined ralation. This 'author' fiel connect to the 'Author' model using 'authorld' field
+  author Author @relation(fields: [authorId], references: [id])
+}
