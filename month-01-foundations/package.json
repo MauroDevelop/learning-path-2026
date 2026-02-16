@@ -29,10 +29,13 @@
     "dev:26": "tsx watch 26-openapi-documentation/src/index.ts",
     "dev:27": "tsx watch 27-external-api-integration/src/index.ts",
     "dev:28": "tsx watch 28-database-prisma/src/index.ts",
+    "dev:29": "tsx watch 29-relational-data/src/index.ts",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
     "test:19": "npm run test 19-unit-testing",
     "test:20": "npm run test 20-user-auth-validation",
-    "test:25": "npm run test 25-api-integration-review"
+    "test:25": "npm run test 25-api-integration-review",
+    "//": "--- HERRAMIENTAS ---",
+    "init:structure": "mkdir -p $1/src/core/entities $1/src/core/interfaces $1/src/services $1/src/infrastructure/repositories $1/src/infrastructure/controllers $1/src/middlewares"
   },
   "devDependencies": {
     "@jest/globals": "^30.2.0",
