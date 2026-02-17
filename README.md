@@ -1,12 +1,10 @@
 # Ruta de Aprendizaje Backend 2026
 
-
 <div align="center">
 
 ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
 ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
 ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-
 
 </div>
 He decidido formarme profesionalmente como desarrollador Backend, por lo que en este repositorio estaré agregando mis avances y prácticas. Mi objetivo principal es aprender Backend dedicándole horas diarias de estudio constante durante un periodo de 3 meses.
@@ -46,6 +44,7 @@ El proyecto está dividido en módulos prácticos:
 * **26-openapi-documentation**: Implementación de documentación automatizada bajo el estándar **OpenAPI 3.0** utilizando **Swagger UI** y generación de contratos a partir de código (JSDoc).
 * **27-external-api-integration**: Consumo de APIs de terceros y servicios externos. Implementación de un sistema de notificaciones para **Maro Crochet** aplicando el **Patrón Adapter** y gestión segura de **API Keys**.
 * **28-database-prisma**: Introducción a Bases de Datos Relacionales con **MySQL** y el ORM **Prisma**. Migración de persistencia en memoria a base de datos real manteniendo la Arquitectura Limpia.
+* **29-relational-data**: Relaciones **Uno a Muchos (1:N)** con Prisma. Implementación de Transacciones Atómicas (Nested Writes) para crear entidades relacionadas simultáneamente (Author + Books).
 
 ##  Configuración de Variables de Entorno
 Este proyecto requiere una conexión a base de datos para los módulos avanzados (Módulo 28 en adelante).
@@ -128,7 +127,8 @@ npm run test:20
 │   ├── 25-api-integration-review/
 │   ├── 26-openapi-documentation/
 │   ├── 27-external-api-integration/
-│   └── 28-database-prisma/
+│   ├── 28-database-prisma/       
+│   └── 29-relational-data/       
 ├── .gitignore
 ├── package.json
 └── tsconfig.json
@@ -161,5 +161,5 @@ src/
 ```
 
 ### 🛠 Decisiones Técnicas Importantes
-* **Prisma ORM**: Actualmente el proyecto utiliza la versión **v5.22.0 (Stable)**. 
+* **Prisma ORM**: Actualmente el proyecto utiliza la versión **v5.22.0 (Stable)**
   * *Motivo:* Originalmente se intentó implementar la versión experimental de Prisma 7, pero se detectaron conflictos de validación (Error P1012) entre la CLI y el entorno de ejecución. Se decidió priorizar la estabilidad del entorno de desarrollo utilizando el estándar de la industria (v5) y la configuración clásica en `schema.prisma`.
