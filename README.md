@@ -44,31 +44,32 @@ He decidido formarme profesionalmente como desarrollador Backend, por lo que en 
 ![OpenAPI](https://img.shields.io/badge/OpenAPI-6BA539?style=flat-square)
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat-square)
 
+
+
 <br>
 <br>
 
-## 📁 Estructura Actual del Repositorio
+
+
+## 📁 Estructura del Repositorio
 
 ```text
 learning-path-2026/
 │
-├── month-01-foundations/     #    Etapa 1: Fundamentos (Completado)
-│   ├── docs/                 #    Documentación técnica (Arquitectura, Setup)
-│   ├── api-evolution/        #    Código de la API evolucionando paso a paso
-│   └── exercises/            #    Ejercicios aislados (TypeScript, Lógica)
+├── months/                     # 📂 Carpeta contenedora de los módulos mensuales
+│   ├── month-01-foundations/   #   Etapa 1: Fundamentos (Completado)
+│   │   ├── docs/
+│   │   ├── api-evolution/
+│   │   └── exercises/
+│   │
+│   └── month-02-delivery-api/  #   Etapa 2: Proyecto Real (En Desarrollo)
+│       ├── docs/
+│       ├── prisma/
+│       └── src/
 │
-├── month-02-delivery-api/    #    Etapa 2: Proyecto Real (En Desarrollo)
-│   ├── docs/                 #    Roadmap, Requerimientos y Arquitectura
-│   ├── prisma/               #    Modelado de Datos (Schema)
-│   └── src/                  #    Código Fuente de la API de Delivery
-│       ├── core/             #      - Entidades y Reglas de Negocio
-│       ├── services/         #      - Casos de Uso
-│       └── infrastructure/   #      - Controladores y Base de Datos
-│
-├── .env.example              # Plantilla de variables de entorno
-└── README.md                 # Índice principal del repositorio
+├── .env.example                # Plantilla de configuración
+└── README.md                   # Índice principal
 ```
-
 
 <br>
 <br>
@@ -77,17 +78,17 @@ learning-path-2026/
 
 ## 📅 Progreso Mensual
 
-### [Mes 02: Delivery API Professional](./month-02-delivery-api/README.md)
+### [Mes 02: Delivery API Professional](./months/month-02-delivery-api/README.md)
 **Estado: En Desarrollo**
 Construcción de un backend para una plataforma de delivery con múltiples actores (Cliente, Restaurante, Repartidor).
 * **Key Tech:** RBAC (Roles), Transacciones Prisma, Máquina de Estados, Docker, Geo-search.
-* **Documentación:** [Roadmap](./month-02-delivery-api/docs/roadmap.md) | [Requerimientos](./month-02-delivery-api/docs/requirements.md)
+* **Documentación:** [Roadmap](./months/month-02-delivery-api/docs/roadmap.md) | [Requerimientos](./months/month-02-delivery-api/docs/requirements.md)
 
-### [Mes 01: Fundamentos Backend](./month-01-foundations/README.md)
+### [Mes 01: Fundamentos Backend](./months/month-01-foundations/README.md)
 **Estado: Completado ✅**
 Enfoque en bases sólidas de TypeScript, POO y Arquitectura en Capas.
 * **Logros:** 29 módulos de ejercicios prácticos, implementación de Auth (JWT), validaciones con Zod y Testing unitario.
-* **Documentación:** [Arquitectura](./month-01-foundations/docs/architecture.md) | [Módulos](./month-01-foundations/docs/modules.md)
+* **Documentación:** [Arquitectura](./months/month-01-foundations/docs/architecture.md) | [Módulos](./months/month-01-foundations/docs/modules.md)
 
 <br>
 <br>
