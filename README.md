@@ -6,10 +6,19 @@
 </div>
 He decidido formarme profesionalmente como desarrollador Backend, por lo que en este repositorio estaré agregando mis avances y prácticas. Mi objetivo principal es aprender Backend dedicándole horas diarias de estudio constante durante un periodo de 3 meses.
 
+
+<br>
+
+
+
 ## Objetivos
 * **Meta Final**: Desarrollar una aplicación web funcional que incorpore todo lo aprendido en este periodo.
 * **Foco Actual**: Dominio de TypeScript y entornos de trabajo modernos.
 * **Experiencia Previa**: Manejo de JavaScript y nociones de PHP.
+
+
+<br>
+
 
 ## Stack Tecnológico
 
@@ -35,49 +44,75 @@ He decidido formarme profesionalmente como desarrollador Backend, por lo que en 
 ![OpenAPI](https://img.shields.io/badge/OpenAPI-6BA539?style=flat-square)
 ![Swagger](https://img.shields.io/badge/Swagger-85EA2D?style=flat-square)
 
+<br>
+<br>
+
 ## 📁 Estructura Actual del Repositorio
 
 ```text
 learning-path-2026/
 │
-├── month-01-foundations/
-│   ├── api-evolution/     # Evolución progresiva de la API
-│   ├── docs/              # Documentación técnica detallada del mes
-│   ├── exercises/         # Ejercicios prácticos y fundamentos
-│   ├── node_modules/
-│   ├── package.json
-│   ├── tsconfig.json
-│   └── jest.config.ts
+├── month-01-foundations/     #    Etapa 1: Fundamentos (Completado)
+│   ├── docs/                 #    Documentación técnica (Arquitectura, Setup)
+│   ├── api-evolution/        #    Código de la API evolucionando paso a paso
+│   └── exercises/            #    Ejercicios aislados (TypeScript, Lógica)
 │
-├── .env.example
-└── README.md
+├── month-02-delivery-api/    #    Etapa 2: Proyecto Real (En Desarrollo)
+│   ├── docs/                 #    Roadmap, Requerimientos y Arquitectura
+│   ├── prisma/               #    Modelado de Datos (Schema)
+│   └── src/                  #    Código Fuente de la API de Delivery
+│       ├── core/             #      - Entidades y Reglas de Negocio
+│       ├── services/         #      - Casos de Uso
+│       └── infrastructure/   #      - Controladores y Base de Datos
+│
+├── .env.example              # Plantilla de variables de entorno
+└── README.md                 # Índice principal del repositorio
 ```
 
-## Organización del Mes 01
 
-El mes 01 está enfocado en fundamentos sólidos:
+<br>
+<br>
 
-- Tipado avanzado con TypeScript
-- Principios de Programación Orientada a Objetos
-- Construcción progresiva de una API REST
-- Aplicación de Arquitectura en Capas
-- Testing y manejo centralizado de errores
-- Integración con base de datos usando Prisma
 
-La documentación técnica detallada (arquitectura, decisiones, estructura interna) se encuentra disponible en los siguientes documentos:
 
-* 📖 **[Guía de Arquitectura](./month-01-foundations/docs/architecture.md)**: Explicación del patrón Layered Architecture y decisiones de diseño.
-* 🛠 **[Guía de Setup y Ejecución](./month-01-foundations/docs/setup.md)**: Instrucciones paso a paso para clonar, instalar y ejecutar el entorno.
-* 🗂 **[Índice de Módulos](./month-01-foundations/docs/modules.md)**: Desglose detallado de los 29 módulos y ejercicios realizados.
+## 📅 Progreso Mensual
 
-## Cómo Ejecutar el Proyecto
+### [Mes 02: Delivery API Professional](./month-02-delivery-api/README.md)
+**Estado: En Desarrollo**
+Construcción de un backend para una plataforma de delivery con múltiples actores (Cliente, Restaurante, Repartidor).
+* **Key Tech:** RBAC (Roles), Transacciones Prisma, Máquina de Estados, Docker, Geo-search.
+* **Documentación:** [Roadmap](./month-02-delivery-api/docs/roadmap.md) | [Requerimientos](./month-02-delivery-api/docs/requirements.md)
 
+### [Mes 01: Fundamentos Backend](./month-01-foundations/README.md)
+**Estado: Completado ✅**
+Enfoque en bases sólidas de TypeScript, POO y Arquitectura en Capas.
+* **Logros:** 29 módulos de ejercicios prácticos, implementación de Auth (JWT), validaciones con Zod y Testing unitario.
+* **Documentación:** [Arquitectura](./month-01-foundations/docs/architecture.md) | [Módulos](./month-01-foundations/docs/modules.md)
+
+<br>
+<br>
+
+
+## Cómo Ejecutar los Proyectos
+
+Cada mes funciona como un proyecto independiente.
+
+**Para ver el proyecto actual (Delivery API):**
 ```bash
-git clone https://github.com/MauroDevelop/learning-path-2026.git
-cd learning-path-2026/month-01-foundations
+cd month-02-delivery-api
 npm install
 npm run dev
 ```
+**Para revisar los fundamentos (Mes 01):**
+
+```bash
+cd month-01-foundations
+npm install
+npm run dev:29  # (Ejemplo para correr el último módulo)
+```
+
+<br>
+<br>
 
 
 ## 🔒 Archivos Excluidos del Repositorio
