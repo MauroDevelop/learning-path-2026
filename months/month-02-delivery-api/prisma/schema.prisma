@@ -1,0 +1,34 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url = env("DATABASE_URL")
+}
+
+// User role definition
+enum Role {
+  Client    // Can place orders
+  Admin     // Manages the menu and the store
+  Courier   // Delivery
+}
+
+// Main User entity
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String   // Hashed password
+  name String
+  phone String?
+  role Role @default(Client)
+
+  // Auditing and Soft Delete
+  isActive  Boolean  @default(true)   // Soft delete flag
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users") // Best Practice: tables names should be lowercase and plural
+}
