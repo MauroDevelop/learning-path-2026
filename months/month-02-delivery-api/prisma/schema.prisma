@@ -11,9 +11,9 @@ datasource db {
 
 // User role definition
 enum Role {
-  Client    // Can place orders
-  Admin     // Manages the menu and the store
-  Courier   // Delivery
+  CLIENT    // Can place orders
+  ADMIN     // Manages the menu and the store
+  COURIER   // Delivery
 }
 
 // Main User entity
@@ -23,7 +23,7 @@ model User {
   password String   // Hashed password
   name String
   phone String?
-  role Role @default(Client)
+  role Role @default(CLIENT)
 
   // Auditing and Soft Delete
   isActive  Boolean  @default(true)   // Soft delete flag
