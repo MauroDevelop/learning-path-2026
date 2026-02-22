@@ -2,7 +2,7 @@ import { User, Role } from "../../core/entities/User";
 import { IUserRepository } from "../../core/interfaces/IUserRepository";
 import { prisma } from "../database/prisma";
 
-export class PrismaRepository implements IUserRepository {
+export class PrismaUserRepository implements IUserRepository {
     async findByEmail(email: string): Promise<User | null> {
         const prismaUser = await prisma.user.findUnique({
             where: { email }
