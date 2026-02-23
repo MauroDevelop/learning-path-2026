@@ -1,46 +1,77 @@
-# Arquitectura del Proyecto Delivery API
+# Delivery API Project Architecture
 
-Este proyecto sigue una **Arquitectura en Capas (Layered Architecture)** estricta, diseñada para separar la lógica de negocio de los detalles de infraestructura (Base de datos, Framework HTTP).
+This project follows a strict **Layered Architecture**, designed to separate business logic from infrastructure details (Database, HTTP Framework).
 
-## 🏗 Diagrama de Flujo de Datos
+## 🏗 Data Flow Diagram
 
-El flujo de control siempre va desde el exterior hacia el interior, respetando la **Regla de Dependencia**:
+The control flow always goes from the outside in, respecting the **Dependency Rule**:
 
 ```mermaid
 graph TD
-    %% Actores Externos
-    User((👤 Cliente / Usuario))
-    DB[(🗄️ Base de Datos)]
+    %% External Actors
+    User((👤 Client / User))
+    DB[(🗄️ Database)]
 
-    %% Tu Sistema (Caja Principal)
-    subgraph "Backend Delivery API"
+    %% Your System (Main Box)
+    subgraph "Delivery API Backend"
         direction TB
         
-        %% Componentes Principales
-        Controller[📡 Controlador]
-        Service[🧠 Servicio]
-        Repo[🛠️ Repositorio]
+        %% Main Components
+        Controller[📡 Controller]
+        Service[🧠 Service]
+        Repo[🛠️ Repository]
         
-        %% Notas explicativas simples
-        note1[1. Recibe la petición HTTP y valida datos]
-        note2[2. Aplica las reglas del negocio]
-        note3[3. Se conecta con la base de datos]
+        %% Simple explanatory notes
+        note1[1. Receives HTTP request and validates data]
+        note2[2. Applies business rules]
+        note3[3. Connects to the database]
 
-        %% Conexiones visuales de las notas (Estilo punteado)
+        %% Visual connections for notes (Dotted style)
         Controller -.- note1
         Service -.- note2
         Repo -.- note3
     end
 
-    %% Flujo de la Información (Flechas)
-    User -->|Petición JSON| Controller
-    Controller -->|Llama a| Service
-    Service -->|Consulta a| Repo
+    %% Information Flow (Arrows)
+    User -->|JSON Request| Controller
+    Controller -->|Calls| Service
+    Service -->|Queries| Repo
     Repo -->|SQL| DB
     
-    %% Retorno (Opcional, para entender que vuelve)
-    DB -.->|Datos| Repo
-    Repo -.->|Entidad| Service
-    Service -.->|Respuesta| Controller
-    Controller -.->|Respuesta JSON| User
+    %% Return flow
+    DB -.->|Data| Repo
+    Repo -.->|Entity| Service
+    Service -.->|Response| Controller
+    Controller -.->|JSON Response| User
 ```
+<br>
+
+## 📁 Architecture Structure Overview
+
+The project follows a strict Layered Architecture pattern to maintain modularity and separation of concerns. Below is the description of each layer and its responsibilities within the system:
+
+### 1. CORE
+**Responsibility:** Defines the fundamental business entities and the core features of our classes. This layer is entirely independent of external frameworks or databases.
+
+* **`entities/`**: Defines the domain classes with the exact attributes required for our entities. 
+  * *Example:* In `User.ts`, we define core features such as `name`, `email`, `role`, etc.
+* **`interfaces/`**: Defines contracts containing function signatures (e.g., `findByEmail`, `saveUser`) required to access system features. 
+  * *Example:* `IUserRepository` declares methods that dictate the rules for data access, acting as a strict contract for any external implementation.
+
+### 2. INFRASTRUCTURE
+**Responsibility:** Handles the outside world, including HTTP requests, API routing, and direct database communication.
+
+* **`controllers/`**: Responsible for handling HTTP requests and responses from the frontend. They receive data, validate it, and request the Services to process the information (typically handling data through JSON).
+* **`repositories/`**: Implements the functionalities defined in the `core/interfaces/` and communicates directly with the database. 
+  * *Example:* `PrismaUserRepository` uses methods like `findByEmail` to access the database and retrieve the specific user.
+* **`web/routes/`**: Acts as the API router and the Composition Root. This is where we group the endpoints of the API and perform Dependency Injection (connecting the repository, service, and controller).
+* **`database/`**: Defines the global instance used to communicate with the database engine. 
+  * *Example:* We instantiate `PrismaClient` here to translate our code into SQL sentences efficiently.
+
+### 3. SERVICES
+**Responsibility:** Contains the pure business logic for the system.
+* **Use Cases:** Handles operations such as user registration, applying specific business rules, and performing security tasks like password encryption. It acts as the bridge between the external requests and the data layer.
+
+### 4. SHARED / DTOs (Data Transfer Objects)
+**Responsibility:** Manages data validation and structures shared across layers.
+* **Validation:** We use tools like `Zod` to define objects with the exact characteristics and types we expect when receiving data from external sources, ensuring the system only processes valid information.

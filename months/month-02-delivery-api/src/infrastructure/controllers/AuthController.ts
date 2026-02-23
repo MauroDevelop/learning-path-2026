@@ -10,8 +10,8 @@ export class AuthController {
 
     register = async (req: Request, res: Response): Promise<void> => {
         try {
-            // Zod valida y limpia req.body. Si es válido devuelve los datos
-            // tipados; si falla, lanza un error y salta al catch.
+            // Zod validates and cleans req.body. If valid, it returns typed data;
+            // if it fails, it throws an error and jumps to the catch block.
             const validatedData = RegisterSchema.parse(req.body)
 
             // Register the new user with validated data
@@ -25,7 +25,7 @@ export class AuthController {
             })
 
         } catch (error: unknown) {
-            // Erros manager
+            // Error manager
 
             // The user send incorrect data (error in zod)
             if (error instanceof ZodError) {
@@ -36,7 +36,7 @@ export class AuthController {
                 return;
             }
 
-            // Verificamos si son errores nativos de typescript
+            // Check if they are native TypeScript errors
             if (error instanceof Error) {
                 if (error.message === 'Email address is already registered') {
                     res.status(409).json({
@@ -49,21 +49,18 @@ export class AuthController {
                 console.error('[Auth Error]:', error.message);
                 res.status(500).json({
                     success: false,
-                    message: 'Error interno del servidor'
+                    message: 'Internal server error'
                 });
                 return;
             }
 
-            // Fallback por si alguien lanza algo que no es un Error (ej: throw "Fallo")
+            // Fallback in case something that is not an Error is thrown (e.g., throw "Fail")
             console.error('[Unknown Error]:', error);
             res.status(500).json({
                 success: false,
-                message: 'Error desconocido'
+                message: 'Unknown error'
             });
 
         }
     }
-
-
-
 }

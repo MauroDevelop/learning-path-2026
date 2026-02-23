@@ -1,32 +1,34 @@
-# 🍔 Delivery API - Proyecto Mes 02
+# 🍔 Delivery API - Month 02 Project
 
-API RESTful profesional para la gestión de un servicio de delivery de restaurante, simulando un entorno de producción real con múltiples actores y reglas de negocio complejas.
+Professional RESTful API for managing a restaurant delivery service, simulating a real production environment with multiple actors and complex business rules.
 
-## 🚀 Tecnologías
+## 🚀 Technologies
 - **Core:** Node.js, TypeScript, Express.
-- **Base de Datos:** MySQL, Prisma ORM.
-- **Arquitectura:** Layered Architecture (Clean Code).
-- **Seguridad:** JWT, Bcrypt, RBAC (Role Based Access Control).
-- **Calidad:** Jest, Supertest, Zod.
+- **Database:** MySQL, Prisma ORM.
+- **Architecture:** Layered Architecture (Clean Code).
+- **Security:** JWT, Bcrypt, RBAC (Role Based Access Control).
+- **Quality:** Jest, Supertest, Zod.
 
-## 📂 Documentación del Proyecto
-Para entender el diseño y planificación, consulta la carpeta `docs/`:
-- 🗺 **[Roadmap](./docs/roadmap.md)**: Plan de trabajo semanal.
-- 📝 **[Requerimientos](./docs/requirements.md)**: Reglas de negocio y actores.
-- 🏗 **[Arquitectura](./docs/architecture.md)**: Estructura y patrones de diseño.
+## 📂 Project Documentation
+To understand the design and planning, check the `docs/` folder:
+- 🗺 **[Roadmap](./docs/roadmap.md)**: Weekly work plan.
+- 📝 **[Requirements](./docs/requeriments.md)**: Business rules and actors.
+- 🏗 **[Architecture](./docs/architecture.md)**: Structure and design patterns.
 
-## 🛠 Instalación y Ejecución
-1. **Instalar dependencias:**
+## 🛠 Installation and Execution
+
+1. **Install dependencies:**
 ```bash
-  npm install
+npm install
 ```
 
-2. **Configurar entorno:**
+2. **Environment setup:**
+Copy the `.env.example` file to `.env` and configure your database connection string.
+```bash
+cp .env.example .env
+```
 
-Copia el archivo .env.example a .env y configura tu base de datos.
-
-3. **Iniciar en desarrollo:**
-
+3. **Start in development:**
 ```bash
 npm run dev
 ```

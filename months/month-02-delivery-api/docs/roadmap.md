@@ -1,26 +1,26 @@
-# Roadmap: Delivery API (Mes 02)
+# Roadmap: Delivery API (Month 02)
 
-Objetivo: Construir el backend robusto para una plataforma de delivery multi-actor (Cliente, Restaurante, Repartidor).
+**Objective:** Build a robust backend for a multi-actor delivery platform (Client, Restaurant Admin, Courier).
 
-## 📅 Semana 1: Cimientos y Seguridad (Identity Access Management)
-- [ ] Configuración inicial del proyecto (TypeScript, Express, Jest).
-- [ ] Diseño del Schema de Base de Datos (Prisma): Usuarios y Roles.
-- [ ] Implementación de Auth (Registro/Login) con JWT y Bcrypt.
-- [ ] Middleware de Control de Acceso (RBAC): `verifyRole(['ADMIN', 'COURIER'])`.
+## 📅 Week 1: Foundations and Security (Identity Access Management)
+- [x] Initial project setup (TypeScript, Express, Jest).
+- [x] Database Schema Design (Prisma): Users and Roles.
+- [ ] Auth Implementation (Register/Login) with JWT and Bcrypt.
+- [ ] Access Control Middleware (RBAC): `verifyRole(['ADMIN', 'COURIER'])`.
 
-## 📅 Semana 2: Gestión del Menú (Complex CRUD)
-- [ ] Modelado de Productos, Categorías y Modificadores (ej: "Extra queso").
-- [ ] Validaciones avanzadas con Zod (Precios no negativos, stock).
-- [ ] Implementación de "Soft Delete" para no perder historial de ventas.
-- [ ] Carga de imágenes para productos (Multer + Cloudinary/Local).
+## 📅 Week 2: Menu Management (Complex CRUD)
+- [ ] Modeling of Products, Categories, and Modifiers (e.g., "Extra cheese").
+- [ ] Advanced validations with Zod (Non-negative prices, stock).
+- [ ] "Soft Delete" implementation to preserve sales history.
+- [ ] Image upload for products (Multer + Cloudinary/Local).
 
-## 📅 Semana 3: Core del Negocio - Pedidos (Orders)
-- [ ] Modelado de la Orden (Estados: PENDING -> COOKING -> DELIVERING -> DELIVERED).
-- [ ] Transacciones Atómicas con Prisma: (Crear Orden + Detalle + Actualizar Stock).
-- [ ] Lógica de cambio de estados: Validar que un Cliente no pueda pasar una orden a "ENTREGADO".
+## 📅 Week 3: Business Core - Orders
+- [ ] Order Modeling (Statuses: PENDING -> COOKING -> DELIVERING -> DELIVERED).
+- [ ] Atomic Transactions with Prisma: (Create Order + Details + Update Stock).
+- [ ] Status change logic: Validate that a Client cannot change an order status to "DELIVERED".
 
-## 📅 Semana 4: Geo, Search & Deploy
-- [ ] Filtrado avanzado: Buscar productos por nombre, categoría y precio.
-- [ ] (Bonus) Geolocalización básica: Guardar lat/long en direcciones.
-- [ ] Dockerización de la API.
-- [ ] Despliegue en Railway/Render con Base de Datos productiva.
+## 📅 Week 4: Geo, Search & Deploy
+- [ ] Advanced filtering: Search products by name, category, and price.
+- [ ] (Bonus) Basic geolocation: Save lat/long in addresses.
+- [ ] API Dockerization.
+- [ ] Deployment on Railway/Render with a production Database.

@@ -1,27 +1,27 @@
-# Requerimientos Funcionales
+# Functional Requirements
 
-## 🎭 Actores y Permisos
+## 🎭 Actors and Permissions
 
-### 1. Cliente (Client)
-- Puede registrarse y ver el menú.
-- Puede crear una orden (Carrito de compras).
-- Puede ver el historial de sus órdenes.
-- **Restricción:** No puede ver órdenes de otros clientes.
+### 1. Client
+- Can register and view the menu.
+- Can create an order (Shopping cart).
+- Can view their order history.
+- **Restriction:** Cannot view orders from other clients.
 
-### 2. Administrador del Restaurante (Admin)
-- Puede crear/editar/eliminar Productos y Categorías.
-- Puede ver todas las órdenes entrantes.
-- Puede cambiar el estado de orden de `PENDING` a `COOKING` y `READY_FOR_PICKUP`.
+### 2. Restaurant Administrator (Admin)
+- Can create/edit/delete Products and Categories.
+- Can view all incoming orders.
+- Can change the order status from `PENDING` to `COOKING` and `READY_FOR_PICKUP`.
 
-### 3. Repartidor (Courier)
-- Puede ver órdenes con estado `READY_FOR_PICKUP`.
-- Puede "tomar" una orden (asignársela).
-- Puede cambiar el estado a `DELIVERED` (Entregado).
+### 3. Courier
+- Can view orders with the `READY_FOR_PICKUP` status.
+- Can "take" an order (assign it to themselves).
+- Can change the status to `DELIVERED`.
 
-## 📦 Reglas de Negocio (Business Logic)
-1. **Integridad de Menú:** No se puede eliminar una categoría si tiene productos activos.
-2. **Flujo de Orden:**
-   - Una orden nace en `PENDING`.
-   - Solo el Admin pasa a `COOKING`.
-   - Solo el Repartidor pasa a `DELIVERED`.
-3. **Validación de Stock:** Al crear una orden, se debe verificar y reservar el stock de los productos.
+## 📦 Business Logic
+1. **Menu Integrity:** A category cannot be deleted if it has active products.
+2. **Order Flow:**
+   - An order is created as `PENDING`.
+   - Only the Admin can change the status to `COOKING`.
+   - Only the Courier can change the status to `DELIVERED`.
+3. **Stock Validation:** When creating an order, the stock of the products must be verified and reserved.
