@@ -20,6 +20,7 @@ const authController = new AuthController(authService);
 
 // --- ENDPOINT DEFINITIONS ---
 authRoutes.post('/register', authController.register);
+authRoutes.post('/login', authController.login);
 
 // Export the routes to be used in the main application file (app.ts / index.ts)
 export { authRoutes };
