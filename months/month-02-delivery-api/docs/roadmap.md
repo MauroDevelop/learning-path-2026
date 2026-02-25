@@ -5,7 +5,7 @@
 ## 📅 Week 1: Foundations and Security (Identity Access Management)
 - [x] Initial project setup (TypeScript, Express, Jest).
 - [x] Database Schema Design (Prisma): Users and Roles.clear
-- [ ] Auth Implementation (Register/Login) with JWT and Bcrypt.
+- [x] Auth Implementation (Register/Login) with JWT and Bcrypt.
 - [ ] Access Control Middleware (RBAC): `verifyRole(['ADMIN', 'COURIER'])`.
 
 ## 📅 Week 2: Menu Management (Complex CRUD)
