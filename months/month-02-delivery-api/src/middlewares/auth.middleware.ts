@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from 'jsonwebtoken';
-import { string } from "zod";
 
 // We create an interface that extends Request
 export interface AuthRequest extends Request {
@@ -35,7 +34,7 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
         res.status(403).json({ success: false, message: 'Invalid or expired token' });
         return;
     }
-}
+};
 
 export const verifyRole = (allowedRoles: string[]) => {
     return (req: AuthRequest, res: Response, next: NextFunction): void => {
@@ -44,7 +43,7 @@ export const verifyRole = (allowedRoles: string[]) => {
         if (!req.user) {
             res.status(401).json({
                 success: false,
-                message: 'Usuario no autenticado'
+                message: 'User not authenticated'
             });
             return;
         }
@@ -53,13 +52,11 @@ export const verifyRole = (allowedRoles: string[]) => {
         if (!allowedRoles.includes(req.user.userRole)) {
             res.status(403).json({
                 success: false,
-                message: 'No tienes permisos para realizar esta acción'
+                message: 'You do not have permission to perform this action'
             });
             return;
         }
 
         next();
     };
-
-    
-}
+};
