@@ -32,3 +32,61 @@ model User {
 
   @@map("users") // Best Practice: tables names should be lowercase and plural
 }
+
+model Product {
+  id String @id @default(uuid())
+  name String @unique
+  description String?
+  price Decimal @db.Decimal(10, 2)
+
+  stock Int @default(0)
+  imageUrl String?
+
+  isActive Boolean @default(true)
+
+  // Relations
+  categoryId String
+  category Category @relation(fields: [categoryId], references: [id])
+
+  modifiers Modifier[]
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Category {
+  id String @id @default(uuid())
+  name String @unique
+  description String?
+
+  isActive Boolean @default(true)
+
+  products Product[]   // Relation, a category have too products
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Modifier {
+  id String @id @default(uuid())
+  name String 
+  price Decimal @db.Decimal(10, 2)
+
+  isActive Boolean @default(true)
+
+  // Relations
+  productId String
+  product Product @relation(fields: [productId], references: [id])
+  
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("modifiers")
+}

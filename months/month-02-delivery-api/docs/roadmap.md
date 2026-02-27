@@ -6,7 +6,7 @@
 - [x] Initial project setup (TypeScript, Express, Jest).
 - [x] Database Schema Design (Prisma): Users and Roles.clear
 - [x] Auth Implementation (Register/Login) with JWT and Bcrypt.
-- [ ] Access Control Middleware (RBAC): `verifyRole(['ADMIN', 'COURIER'])`.
+- [x] Access Control Middleware (RBAC): `verifyRole(['ADMIN', 'COURIER'])`.
 
 ## 📅 Week 2: Menu Management (Complex CRUD)
 - [ ] Modeling of Products, Categories, and Modifiers (e.g., "Extra cheese").
