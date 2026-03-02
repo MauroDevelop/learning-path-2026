@@ -9,9 +9,11 @@
 - [x] Access Control Middleware (RBAC): `verifyRole(['ADMIN', 'COURIER'])`.
 
 ## 📅 Week 2: Menu Management (Complex CRUD)
-- [ ] Modeling of Products, Categories, and Modifiers (e.g., "Extra cheese").
-- [ ] Advanced validations with Zod (Non-negative prices, stock).
-- [ ] "Soft Delete" implementation to preserve sales history.
+- [x] Modeling of Products, Categories, and Modifiers (e.g., "Extra cheese").
+- [x] Advanced validations with Zod (Non-negative prices, stock).
+- [x] Category CRUD implementation (Service with Soft Delete).
+- [ ] Category Controller and routing.
+- [ ] Product & Modifier CRUD implementation (Preserving sales history).
 - [ ] Image upload for products (Multer + Cloudinary/Local).
 
 ## 📅 Week 3: Business Core - Orders
