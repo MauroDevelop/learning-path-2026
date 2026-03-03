@@ -5,6 +5,9 @@ import cors from 'cors';
 // Import our authentication routing module
 import { authRoutes } from './infrastructure/web/routes/auth.routes';
 
+// Import our Categories routing module
+import { categoryRoutes } from './infrastructure/web/routes/category.routes';
+
 // Initialize the Express application
 const app = express();
 
@@ -21,6 +24,8 @@ app.use(express.json());
 
 // --- ROUTE MOUNTING (Delegating the work) ---
 app.use('/api/auth', authRoutes);
+
+app.use('/api/categories', categoryRoutes);
 
 // --- SERVER INITIALIZATION ---
 
