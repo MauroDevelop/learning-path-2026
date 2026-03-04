@@ -12,7 +12,7 @@
 - [x] Modeling of Products, Categories, and Modifiers (e.g., "Extra cheese").
 - [x] Advanced validations with Zod (Non-negative prices, stock).
 - [x] Category CRUD implementation (Service with Soft Delete).
-- [ ] Category Controller and routing.
+- [x] Category Controller and routing.
 - [ ] Product & Modifier CRUD implementation (Preserving sales history).
 - [ ] Image upload for products (Multer + Cloudinary/Local).
 

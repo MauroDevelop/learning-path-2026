@@ -1,4 +1,4 @@
-import z from "zod";
+import { z } from "zod";
 
 export const CreateCategorySchema = z.object({
     name: z.string({
@@ -23,7 +23,7 @@ export const CreateProductSchema = z.object({
 
     categoryId: z.string().uuid('Category ID must be a valid UUID'),
 
-    imageUrl: z.string().url('Invalid URL format').optional() 
+    imageUrl: z.string().url('Invalid URL format').optional()
 });
 
 export const CreateModifierSchema = z.object({

@@ -1,7 +1,6 @@
 import { CreateCategorySchema, CreateCategoryInput } from "../shared/dtos/MenuDTO";
-import { PrismaClient, Category } from "../generated/prisma";
-
-const prisma = new PrismaClient()
+import { Category } from "../generated/prisma";
+import { prisma } from "../infrastructure/database/prisma";
 
 export class CategoryService {
     // Create a new category
@@ -41,5 +40,15 @@ export class CategoryService {
         });
 
         return categories;
+    }
+
+    async getCategoryById(id: string): Promise<Category | null> {
+        const category = await prisma.category.findUnique({
+            where: {
+                id: id
+            }
+        });
+
+        return category;
     }
 }

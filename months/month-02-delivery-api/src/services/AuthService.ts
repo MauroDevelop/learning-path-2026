@@ -6,7 +6,7 @@ import { User } from '../core/entities/User';
 
 export class AuthService {
   // Dependency Injection: The service requires a repository but remains implementation-agnostic
-  constructor(private userRepository: IUserRepository) { }
+  constructor(private readonly userRepository: IUserRepository) { }
 
   async register(data: RegisterDTO): Promise<Omit<User, 'password'>> {
     // Business Rule: Email must be unique
