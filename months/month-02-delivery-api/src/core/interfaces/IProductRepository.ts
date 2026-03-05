@@ -2,11 +2,11 @@ import { Product } from "../../generated/prisma";
 
 export interface CreateProductData {
     name: string;
-    description?: string | null;
+    description?: string | undefined;  // Fix the optional properties
     price: number;
     stock: number;
     categoryId: string;
-    imageUrl?: string | null;
+    imageUrl?: string | undefined; // Fix too
 }
 
 export interface IProductRepository {

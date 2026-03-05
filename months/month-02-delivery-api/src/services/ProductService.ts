@@ -5,7 +5,7 @@ export class ProductService {
     // Inject both dependencies into the constructor
     constructor(
         private readonly productRepository: IProductRepository,
-        private readonly categoryService: CategoryService // Inyectamos el servicio de categorías
+        private readonly categoryService: CategoryService // Inject the service for categories
     ) { }
 
     public async createProduct(data: CreateProductData) {
@@ -15,7 +15,7 @@ export class ProductService {
             throw new Error('The product category is invalid or does not exist');
         }
 
-        const createdProduct = await this.productRepository.save(data)
+        const createdProduct = await this.productRepository.save(data);
 
         return createdProduct;
     }

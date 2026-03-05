@@ -8,6 +8,9 @@ import { authRoutes } from './infrastructure/web/routes/auth.routes';
 // Import our Categories routing module
 import { categoryRoutes } from './infrastructure/web/routes/category.routes';
 
+// Import our Products routing module
+import { productRoutes } from './infrastructure/web/routes/product.routes';
+
 // Initialize the Express application
 const app = express();
 
@@ -27,9 +30,12 @@ app.use('/api/auth', authRoutes);
 
 app.use('/api/categories', categoryRoutes);
 
+app.use('/api/products', productRoutes);
+
 // --- SERVER INITIALIZATION ---
 
 app.listen(PORT, () => {
   console.log(`Delivery API server running at http://localhost:${PORT}`);
   console.log(`Endpoint ready: POST http://localhost:${PORT}/api/auth/register`);
 });
+
