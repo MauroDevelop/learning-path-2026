@@ -1,14 +1,21 @@
 import { Request, Response } from "express";
 import { CategoryService } from "../../services/CategoryService";
 import { ZodError } from "zod";
+import { AppError } from "../../shared/errors/AppError";
+import { CreateCategorySchema } from "../../shared/dtos/MenuDTO";
 
 export class CategoryController {
-    private categoryService = new CategoryService();
+    // Dependecy Injection
+    constructor(private readonly categoryService: CategoryService) { }
 
     createCategory = async (req: Request, res: Response) => {
         try {
-            const newCategory = await this.categoryService.createCategory(req.body);
-
+            // Validate Data with Zod
+            const validateData = CreateCategorySchema.parse(req.body)
+            
+            // Send the validate data to the service
+            const newCategory = await this.categoryService.createCategory(validateData);
+            
             res.status(201).json({
                 success: true,
                 message: 'A new category has been created',
@@ -26,15 +33,13 @@ export class CategoryController {
                 return;
             }
 
-            // Handle storage errors (e.g., Duplicates)
-            if (error instanceof Error) {
-                if (error.message === 'Category with this name already exists') {
-                    res.status(409).json({
-                        success: false,
-                        message: error.message
-                    });
-                    return;
-                }
+            // Handle business logic errors (AppError)
+            if (error instanceof AppError) {
+                res.status(error.statusCode).json({
+                    success: false,
+                    message: error.message
+                });
+                return;
             }
 
             // Unknow errors

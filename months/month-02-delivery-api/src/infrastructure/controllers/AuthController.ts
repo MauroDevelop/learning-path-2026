@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import { AuthService } from "../../services/AuthService";
 import { RegisterSchema, LoginSchema } from "../../shared/dtos/AuthDTO";
-// Errors manager with zod
+// Errors manager
 import { ZodError } from "zod";
+import { AppError } from "../../shared/errors/AppError";
+
 
 export class AuthController {
 
-    constructor(private authService: AuthService) { }
+    constructor(private readonly authService: AuthService) { }
 
     register = async (req: Request, res: Response): Promise<void> => {
         try {
@@ -31,25 +33,16 @@ export class AuthController {
             if (error instanceof ZodError) {
                 res.status(400).json({
                     success: false,
-                    errors: error.name
+                    errors: error.issues
                 })
                 return;
             }
 
             // Check if they are native TypeScript errors
-            if (error instanceof Error) {
-                if (error.message === 'Email address is already registered') {
-                    res.status(409).json({
-                        success: false,
-                        message: error.message
-                    });
-                    return;
-                }
-
-                console.error('[Auth Error]:', error.message);
-                res.status(500).json({
+            if (error instanceof AppError) {
+                res.status(error.statusCode).json({
                     success: false,
-                    message: 'Internal server error'
+                    message: error.message
                 });
                 return;
             }
@@ -89,7 +82,7 @@ export class AuthController {
                 );
                 return;
             }
-            
+
             if (error instanceof Error) {
                 if (error.message === 'Invalid credentials') {
                     res.status(401).json({

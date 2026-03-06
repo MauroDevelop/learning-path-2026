@@ -2,6 +2,7 @@ import { ProductService } from "../../services/ProductService";
 import { Request, Response, NextFunction } from "express";
 import { CreateProductSchema } from "../../shared/dtos/MenuDTO";
 import { ZodError } from "zod";
+import { AppError } from "../../shared/errors/AppError";
 
 export class ProductController {
     constructor(private readonly productService: ProductService) { }
@@ -32,14 +33,12 @@ export class ProductController {
                 return;
             }
 
-            if (error instanceof Error) {
-                if (error.message === 'The product category is invalid or does not exist') {
-                    res.status(400).json({
-                        success: false,
-                        message: error.message
-                    });
-                    return
-                }
+            if (error instanceof AppError) {
+                res.status(error.statusCode).json({
+                    success: false,
+                    message: error.message
+                });
+                return
             }
 
             // Unknown errors

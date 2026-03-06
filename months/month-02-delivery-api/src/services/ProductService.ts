@@ -1,6 +1,8 @@
 import { IProductRepository, CreateProductData } from "../core/interfaces/IProductRepository";
 import { CategoryService } from "./CategoryService";
 
+import { AppError } from "../shared/errors/AppError";
+
 export class ProductService {
     // Inject both dependencies into the constructor
     constructor(
@@ -12,7 +14,7 @@ export class ProductService {
         // Fetch only the required category for performance optimization
         const categoryExists = await this.categoryService.getCategoryById(data.categoryId);
         if (!categoryExists) {
-            throw new Error('The product category is invalid or does not exist');
+            throw new AppError('The product category is invalid or does not exist', 400);
         }
 
         const createdProduct = await this.productRepository.save(data);
@@ -29,7 +31,7 @@ export class ProductService {
         const product = await this.productRepository.findById(productId);
 
         if (!product || !product.isActive) {
-            throw new Error('Product not found or already deleted');
+            throw new AppError('Product not found or already deleted', 404);
         }
 
         // Apply Soft Delete through the repository

@@ -1,10 +1,12 @@
 import { Router } from "express";
 import { CategoryController } from "../../controllers/CategoryController";
+import { CategoryService } from '../../../services/CategoryService';
 
 // Initialize the router for Category-related endpoints
 const categoryRoutes = Router();
 // Instance the controller to handle the incoming requests
-const categoryController = new CategoryController();
+const categoryService = new CategoryService();
+const categoryController = new CategoryController(categoryService);
 
 // --- ENDPOINT DEFINITIONS ---
 

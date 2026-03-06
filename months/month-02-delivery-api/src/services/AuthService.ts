@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import { IUserRepository } from '../core/interfaces/IUserRepository';
 import { RegisterDTO, LoginDTO } from '../shared/dtos/AuthDTO';
 import { User } from '../core/entities/User';
+import { AppError } from '../shared/errors/AppError';
 
 export class AuthService {
   // Dependency Injection: The service requires a repository but remains implementation-agnostic
@@ -12,7 +13,7 @@ export class AuthService {
     // Business Rule: Email must be unique
     const existingUser = await this.userRepository.findByEmail(data.email);
     if (existingUser) {
-      throw new Error('Email address is already registered');
+      throw new AppError('Email address is already registered', 409);
     }
 
     // Security: Hash the password (10 salt rounds is the industry standard)
@@ -41,13 +42,13 @@ export class AuthService {
     // We verified if the user exists
     const userValid = await this.userRepository.findByEmail(data.email);
     if (!userValid) {
-      throw new Error('Incorrect email or password');
+      throw new AppError('Incorrect email or password', 400);
     }
 
     // Compare the password entered with the saved hash
     const isPasswordValid = await bcrypt.compare(data.password, userValid.password);
     if (!isPasswordValid) {
-      throw new Error('Incorrect email or password');
+      throw new AppError('Incorrect email or password', 400);
     }
 
     // Trigger JWT

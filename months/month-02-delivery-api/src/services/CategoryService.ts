@@ -1,6 +1,7 @@
 import { CreateCategorySchema, CreateCategoryInput } from "../shared/dtos/MenuDTO";
 import { Category } from "../generated/prisma";
 import { prisma } from "../infrastructure/database/prisma";
+import { AppError } from "../shared/errors/AppError";
 
 export class CategoryService {
     // Create a new category
@@ -14,7 +15,7 @@ export class CategoryService {
         });
 
         if (existCategory) {
-            throw new Error('Category with this name already exists');
+            throw new AppError('Category with this name already exists', 409);
         }
 
         // Persist the record in the database
