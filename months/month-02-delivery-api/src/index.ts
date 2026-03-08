@@ -11,6 +11,9 @@ import { categoryRoutes } from './infrastructure/web/routes/category.routes';
 // Import our Products routing module
 import { productRoutes } from './infrastructure/web/routes/product.routes';
 
+// Import our Modifier routing module
+import { modifierRoutes } from './infrastructure/web/routes/modifier.routes';
+
 // Initialize the Express application
 const app = express();
 
@@ -31,6 +34,8 @@ app.use('/api/auth', authRoutes);
 app.use('/api/categories', categoryRoutes);
 
 app.use('/api/products', productRoutes);
+
+app.use('/api/modifiers', modifierRoutes);
 
 // --- SERVER INITIALIZATION ---
 

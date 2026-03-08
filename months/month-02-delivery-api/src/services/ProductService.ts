@@ -39,4 +39,14 @@ export class ProductService {
 
         return deletedProduct;
     }
+
+    public async getProductById(productId: string) {
+        const product = await this.productRepository.findById(productId);
+
+        if (!product || !product.isActive) {
+            throw new AppError('The product was not found or is deleted', 404);
+        }
+
+        return product;
+    }
 }

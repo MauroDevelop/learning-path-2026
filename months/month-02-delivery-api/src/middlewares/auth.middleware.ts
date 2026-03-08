@@ -17,7 +17,10 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
     const token = req.headers['authorization']?.split(' ')[1]
 
     if (!token) {
-        res.status(401).json('Access denied');
+        res.status(401).json({
+            success: false,
+            message:'Access denied'
+        });
         return;
     }
 

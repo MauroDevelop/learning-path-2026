@@ -87,14 +87,12 @@ export class ProductController {
             });
         } catch (error: unknown) {
             // Handle specific errors here
-            if (error instanceof Error) {
-                if (error.message === 'Product not found or already deleted') {
-                    res.status(404).json({
-                        success: false,
-                        message: error.message
-                    });
-                    return;
-                }
+            if (error instanceof AppError) {
+                res.status(error.statusCode).json({
+                    success: false,
+                    message: error.message
+                });
+                return;
             }
 
             // Handle unknown errors
