@@ -7,7 +7,7 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET!,
 });
 
-export class ClaudinaryService {
+export class CloudinaryService {
 
     static async uploadImage(fileBufer: Buffer): Promise<string> {
         return new Promise((resolve, reject) => {

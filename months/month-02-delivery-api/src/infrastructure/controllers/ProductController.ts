@@ -3,17 +3,33 @@ import { Request, Response, NextFunction } from "express";
 import { CreateProductSchema } from "../../shared/dtos/MenuDTO";
 import { ZodError } from "zod";
 import { AppError } from "../../shared/errors/AppError";
+import { CloudinaryService } from "../../services/CloudinaryService";
 
 export class ProductController {
     constructor(private readonly productService: ProductService) { }
 
     public createProduct = async (req: Request, res: Response) => {
         try {
-            // Validate request body used CreateCategorySchema
+            // Validate request body using CreateCategorySchema
             const validatedData = CreateProductSchema.parse(req.body);
+            
+            // Initialize imageUrl; defaults to the provided URL or null
+            let imageUrlCloudinary = validatedData.imageUrl ?? null;
+            
+            // Upload image to Cloudinary if a file is present in the request
+            if (req.file) {
+                imageUrlCloudinary = await CloudinaryService.uploadImage(req.file.buffer);
+            }
 
-            // Call service
-            const newProduct = await this.productService.createProduct(validatedData);
+            // Map the data for the service (convert undefined values to null)
+            const productData = {
+                ...validatedData,
+                description: validatedData.description ?? null,
+                imageUrl: imageUrlCloudinary
+            }
+
+            // Call the product service to persist the record
+            const newProduct = await this.productService.createProduct(productData);
 
             // Response 
             res.status(201).json({

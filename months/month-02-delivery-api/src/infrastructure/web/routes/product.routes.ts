@@ -1,6 +1,7 @@
 import { Router } from "express";
 
 import { authenticateToken, verifyRole } from '../../../middlewares/auth.middleware';
+import { uploadMiddleware } from "../../../middlewares/upload.middleware";
 
 import { PrismaProductRepository } from "../../repositories/PrismaProductRepository";
 import { ProductService } from "../../../services/ProductService";
@@ -24,7 +25,7 @@ const productController = new ProductController(productService);
 productRoutes.get('/', productController.getAllProducts);
 
 // POST /api/products -> Protegido (Solo ADMIN)
-productRoutes.post('/', authenticateToken, verifyRole(['ADMIN']), productController.createProduct);
+productRoutes.post('/', authenticateToken, verifyRole(['ADMIN']), uploadMiddleware.single('image'), productController.createProduct);
 
 // DELETE /api/products/:id -> Protegido (Solo ADMIN)
 productRoutes.delete('/:id', authenticateToken, verifyRole(['ADMIN']), productController.deleteProduct);
