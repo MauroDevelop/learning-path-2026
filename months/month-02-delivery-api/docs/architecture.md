@@ -75,3 +75,36 @@ The project follows a strict Layered Architecture pattern to maintain modularity
 ### 4. SHARED / DTOs (Data Transfer Objects)
 **Responsibility:** Manages data validation and structures shared across layers.
 * **Validation:** We use tools like `Zod` to define objects with the exact characteristics and types we expect when receiving data from external sources, ensuring the system only processes valid information.
+
+## ☁️ Image Upload Flow (Cloudinary & Multer)
+
+Handling file uploads requires a specific flow to avoid overloading our server's storage and memory. We use **Multer** to intercept the `multipart/form-data` requests and store the image temporarily in a RAM `Buffer`. Then, **Cloudinary** processes this buffer via a continuous `Stream`.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Client as 👤 Client (Postman)
+    participant Route as 🛣️ Router (Express)
+    participant Multer as 🛡️ Multer Middleware
+    participant Controller as 📡 ProductController
+    participant Cloudinary as ☁️ CloudinaryService
+    participant DB as 🗄️ Database (Prisma)
+
+    Client->>Route: POST /api/products (multipart/form-data)
+    Route->>Multer: Intercept request
+    
+    alt Invalid mimetype (not an image)
+        Multer-->>Client: ❌ 400 Bad Request ("Only images allowed")
+    else Valid image
+        Multer->>Multer: Store file in RAM (req.file.buffer)
+        Multer->>Controller: Next() -> Pass execution
+        Controller->>Cloudinary: uploadImage(req.file.buffer)
+        
+        note over Cloudinary: Opens upload_stream() and injects buffer
+        Cloudinary-->>Controller: ✅ Returns secure_url (String)
+        
+        Controller->>DB: create({ ..., imageUrl: secure_url })
+        DB-->>Controller: Product entity
+        Controller-->>Client: 🚀 201 Created (JSON data)
+    end
+```

@@ -14,7 +14,7 @@
 - [x] Category CRUD implementation (Service with Soft Delete).
 - [x] Category Controller and routing.
 - [x] Product & Modifier CRUD implementation (Preserving sales history).
-- [ ] Image upload for products (Multer + Cloudinary/Local).
+- [x] Image upload for products (Multer + Cloudinary/Local).
 
 ## 📅 Week 3: Business Core - Orders
 - [ ] Order Modeling (Statuses: PENDING -> COOKING -> DELIVERING -> DELIVERED).
