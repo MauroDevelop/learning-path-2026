@@ -1,3 +1,6 @@
+import dotenv from 'dotenv';
+dotenv.config();
+
 // Import Express (the server engine) and CORS (security rules)
 import express from 'express';
 import cors from 'cors';

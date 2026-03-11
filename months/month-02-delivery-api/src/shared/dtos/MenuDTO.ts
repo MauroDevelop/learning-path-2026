@@ -15,11 +15,11 @@ export const CreateProductSchema = z.object({
 
     description: z.string().optional(),
 
-    price: z.number({
+    price: z.coerce.number({
         message: 'Price is required and must be a number',
     }).positive('Price must be positive'),
 
-    stock: z.number().int('Stock must be an integer').nonnegative('Stock must be not negative ').default(0),
+    stock: z.coerce.number().int('Stock must be an integer').nonnegative('Stock must be not negative ').default(0),
 
     categoryId: z.string().uuid('Category ID must be a valid UUID'),
 
@@ -31,7 +31,7 @@ export const CreateModifierSchema = z.object({
         message: 'Name is required'
     }).min(2, 'The name is very short'),
 
-    price: z.number({
+    price: z.coerce.number({
         message: 'The price is required and must be a number',
     }).nonnegative('The price must be positive').default(0),
 
