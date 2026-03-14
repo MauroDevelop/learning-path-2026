@@ -9,7 +9,8 @@ export const OrderItemSchema = z.object({
 });
 
 export const CreateOrderSchema = z.object({
-    items: z.array(OrderItemSchema).min(1, 'Order must contain at least one item')
+    items: z.array(OrderItemSchema).min(1, 'Order must contain at least one item'),
+    deliveryAddress: z.string().min(5)
 });
 
 // Used by Admins and Couriers to change the order state
@@ -18,3 +19,5 @@ export const UpdateOrderStatusSchema = z.object({
         message: 'Invalid order status'
     })
 });
+
+export type CreateOrderType = z.infer<typeof CreateOrderSchema>;

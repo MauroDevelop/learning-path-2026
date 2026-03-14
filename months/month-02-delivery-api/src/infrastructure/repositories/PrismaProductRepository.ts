@@ -2,9 +2,20 @@ import { IProductRepository, CreateProductData } from "../../core/interfaces/IPr
 import { prisma } from "../database/prisma";
 
 export class PrismaProductRepository implements IProductRepository {
+
     public async save(data: CreateProductData): Promise<Product> {
         return prisma.product.create({
             data: data
+        });
+    }
+
+    findByIds(ids: string[]): Promise<Product[]> {
+        return prisma.product.findMany({
+            where: {
+                id: {
+                    in: ids
+                }
+            }
         });
     }
 

@@ -1,7 +1,7 @@
 export enum OrderStatus {
     PENDING = 'PENDING',
     COOKING = 'COOKING',
-    READY_FOR_PICKUP = 'READY_FOR_PICKUP',
+    READY_FOR_PICKUP = 'DELIVERING',
     DELIVERED = 'DELIVERED'
 }
 
@@ -15,6 +15,7 @@ export class OrderItem {
     price!: number;
     orderId?: string;
     productId!: string;
+    deliveryAddress!: string;
 
     constructor(data: OrderItem) {
         // Bulk assign properties from the data object to the current instance

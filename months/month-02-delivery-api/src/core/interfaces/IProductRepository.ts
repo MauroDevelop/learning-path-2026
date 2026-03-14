@@ -12,6 +12,8 @@ export interface CreateProductData {
 export interface IProductRepository {
     save(data: CreateProductData): Promise<Product>
 
+    findByIds(ids: string[]): Promise<Product[]>;
+
     findById(id: string): Promise<Product | null>
 
     findAll(isActive: boolean): Promise<Product[]>

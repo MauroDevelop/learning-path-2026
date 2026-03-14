@@ -3,6 +3,7 @@ import { Order, OrderStatus } from "../entities/Order";
 export interface CreateOrderData {
     clientId: string,
     total: number,
+    deliveryAddress: string,
     items: {
         productId: string,
         quantity: number,
