@@ -29,6 +29,7 @@ export class Order {
     total!: number;
     status!: OrderStatus;
     clientId!: string;
+    deliveryAddress!: string;
     courierId?: string | null; // Optional: only present when a courier is assigned
     createdAt?: Date;
     updatedAt?: Date;

@@ -1,0 +1,74 @@
+import { IOrderRepository, CreateOrderData } from "../../core/interfaces/IOrderRepository";
+import { Order, OrderStatus } from "../../core/entities/Order";
+import { prisma } from "../database/prisma";
+
+export class PrismaOrderRepository implements IOrderRepository {
+    public async create(data: CreateOrderData): Promise<Order> {
+
+        // Define the query to create the order and its associated items (Nested Write)
+        const createOrderQuery = prisma.order.create({
+            data: {
+                total: data.total,
+                clientId: data.clientId,
+                deliveryAddress: data.deliveryAddress,
+                status: 'PENDING',
+
+                orderItems: {
+                    create: data.items.map(item => ({
+                        productId: item.productId,
+                        quantity: item.quantity,
+                        price: item.price
+                    }))
+                }
+            },
+            // Include orderItems in the response for further mapping if needed
+            include: { orderItems: true }
+        });
+
+        // Prepare the stock update queries for each product in the order
+        const stockUpdates = data.items.map(item => {
+            return prisma.product.update({
+                where: { id: item.productId },
+                data: {
+                    stock: { decrement: item.quantity }
+                }
+            });
+        });
+
+        /**
+         * prisma.$transaction([...]): Executes all instructions in a single database transaction.
+         * This ensures atomicity: either all operations succeed, or all are rolled back.
+         */
+        const [orderCreated] = await prisma.$transaction([
+            createOrderQuery,
+            ...stockUpdates
+        ]);
+
+        // Map the database record to our Domain Entity
+        return new Order({
+            id: orderCreated.id,
+            clientId: orderCreated.clientId,
+            deliveryAddress: orderCreated.deliveryAddress,
+            status: orderCreated.status as OrderStatus,
+            total: orderCreated.total.toNumber(),
+            createdAt: orderCreated.createdAt,
+            updatedAt: orderCreated.updatedAt
+        });
+    }
+
+    public async findById(id: string): Promise<Order | null> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async findAll(): Promise<Order[]> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async findByIdClient(clientId: string): Promise<Order[]> {
+        throw new Error("Method not implemented.");
+    }
+
+    public async updateStatus(id: string, orderStatus: OrderStatus, courierId?: string): Promise<Order> {
+        throw new Error("Method not implemented.");
+    }
+}

@@ -17,8 +17,8 @@
 - [x] Image upload for products (Multer + Cloudinary/Local).
 
 ## 📅 Week 3: Business Core - Orders
-- [ ] Order Modeling (Statuses: PENDING -> COOKING -> DELIVERING -> DELIVERED).
-- [ ] Atomic Transactions with Prisma: (Create Order + Details + Update Stock).
+- [x] Order Modeling (Statuses: PENDING -> COOKING -> DELIVERING -> DELIVERED).
+- [x] Atomic Transactions with Prisma: (Create Order + Details + Update Stock).
 - [ ] Status change logic: Validate that a Client cannot change an order status to "DELIVERED".
 
 ## 📅 Week 4: Geo, Search & Deploy
