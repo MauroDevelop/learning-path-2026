@@ -33,7 +33,7 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
 
         next();
 
-    } catch (error: any) {
+    } catch (error) {
         res.status(403).json({ success: false, message: 'Invalid or expired token' });
         return;
     }

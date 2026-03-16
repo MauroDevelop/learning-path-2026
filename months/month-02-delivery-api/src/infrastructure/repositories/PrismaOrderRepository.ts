@@ -1,8 +1,24 @@
 import { IOrderRepository, CreateOrderData } from "../../core/interfaces/IOrderRepository";
+import { Order as orderPrisma } from "../../generated/prisma";
 import { Order, OrderStatus } from "../../core/entities/Order";
 import { prisma } from "../database/prisma";
 
 export class PrismaOrderRepository implements IOrderRepository {
+
+    // Private Mapper Function
+    // Converts the raw Prisma object (generated type) to our Domain Entity
+    private mapToDomain(prismaOrder: orderPrisma): Order {
+        return new Order({
+            id: prismaOrder.id,
+            clientId: prismaOrder.clientId,
+            deliveryAddress: prismaOrder.deliveryAddress,
+            status: prismaOrder.status as OrderStatus,
+            total: prismaOrder.total.toNumber(),
+            createdAt: prismaOrder.createdAt,
+            updatedAt: prismaOrder.updatedAt
+        });
+    }
+
     public async create(data: CreateOrderData): Promise<Order> {
 
         // Define the query to create the order and its associated items (Nested Write)
@@ -45,30 +61,43 @@ export class PrismaOrderRepository implements IOrderRepository {
         ]);
 
         // Map the database record to our Domain Entity
-        return new Order({
-            id: orderCreated.id,
-            clientId: orderCreated.clientId,
-            deliveryAddress: orderCreated.deliveryAddress,
-            status: orderCreated.status as OrderStatus,
-            total: orderCreated.total.toNumber(),
-            createdAt: orderCreated.createdAt,
-            updatedAt: orderCreated.updatedAt
-        });
+        return this.mapToDomain(orderCreated);
     }
 
     public async findById(id: string): Promise<Order | null> {
-        throw new Error("Method not implemented.");
+        const orderSearch = await prisma.order.findUnique({
+            where: {id: id}
+        });
+        if (!orderSearch) {
+            return null
+        }
+        return this.mapToDomain(orderSearch);
     }
 
     public async findAll(): Promise<Order[]> {
-        throw new Error("Method not implemented.");
+        const orders = await prisma.order.findMany()
+        return orders.map(order => this.mapToDomain(order));
     }
 
     public async findByIdClient(clientId: string): Promise<Order[]> {
-        throw new Error("Method not implemented.");
+       const clientSearch = await prisma.order.findMany({
+            where: {clientId: clientId}
+        });
+       
+        return clientSearch.map(client => this.mapToDomain(client));
+        
     }
 
     public async updateStatus(id: string, orderStatus: OrderStatus, courierId?: string): Promise<Order> {
-        throw new Error("Method not implemented.");
+    
+        const updateStatus = await prisma.order.update({
+            where: { id: id },
+            data: {
+                status: orderStatus,
+                courierId: courierId ?? null
+            }
+        });
+
+        return this.mapToDomain(updateStatus)
     }
 }

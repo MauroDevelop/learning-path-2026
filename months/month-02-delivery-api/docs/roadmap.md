@@ -19,7 +19,7 @@
 ## 📅 Week 3: Business Core - Orders
 - [x] Order Modeling (Statuses: PENDING -> COOKING -> DELIVERING -> DELIVERED).
 - [x] Atomic Transactions with Prisma: (Create Order + Details + Update Stock).
-- [ ] Status change logic: Validate that a Client cannot change an order status to "DELIVERED".
+- [x] Status change logic: Validate that a Client cannot change an order status to "DELIVERED".
 
 ## 📅 Week 4: Geo, Search & Deploy
 - [ ] Advanced filtering: Search products by name, category, and price.

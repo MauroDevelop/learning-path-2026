@@ -5,7 +5,7 @@ import { OrderService } from '../../../services/OrderService';
 import { OrderController } from '../../controllers/OrderController';
 import { authenticateToken, verifyRole } from '../../../middlewares/auth.middleware';
 
-const router = Router();
+const orderRoutes = Router();
 
 // --- DEPENDENCY INJECTION SETUP ---
 
@@ -28,11 +28,23 @@ const orderController = new OrderController(orderService);
  * - authenticateToken: Verifies the JWT.
  * - verifyRole: Restricts access to authorized roles only.
  */
-router.post(
+orderRoutes.post(
     '/', 
     authenticateToken, 
     verifyRole(['CLIENT']), 
     orderController.createOrder
 );
 
-export { router as orderRoutes };
+// PATCH /api/orders/:id/status
+// JWT protected route. Restricted to ADMIN and COURIER roles.
+// Note: Additional authorization logic is handled within the Service layer.
+orderRoutes.patch(
+    '/:id/status', 
+    authenticateToken, 
+    verifyRole(['ADMIN', 'COURIER']),
+    orderController.updateStatus
+);
+
+
+
+export { orderRoutes };
