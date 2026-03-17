@@ -1,4 +1,4 @@
-import { IProductRepository, CreateProductData } from "../core/interfaces/IProductRepository";
+import { IProductRepository, CreateProductData, ProductFilters } from "../core/interfaces/IProductRepository";
 import { CategoryService } from "./CategoryService";
 
 import { AppError } from "../shared/errors/AppError";
@@ -49,4 +49,16 @@ export class ProductService {
 
         return product;
     }
+
+    public async getFilteredProducts(filters: ProductFilters) {
+    // Business Rule: Ensure the price range is logically valid
+    if (filters.minPrice && filters.maxPrice && filters.minPrice > filters.maxPrice) {
+        throw new AppError('Minimum price cannot be greater than maximum price', 400);
+    }
+
+    // Delegate the search to the repository with the provided filter criteria
+    const products = await this.productRepository.findManyWithFilters(filters);
+    
+    return products;
+}
 }

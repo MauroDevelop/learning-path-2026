@@ -1,4 +1,4 @@
-import { Product } from "../../generated/prisma";
+import { Product } from "../entities/Product";
 
 export interface CreateProductData {
     name: string;
@@ -10,14 +10,22 @@ export interface CreateProductData {
 }
 
 export interface IProductRepository {
-    save(data: CreateProductData): Promise<Product>
+    save(data: CreateProductData): Promise<Product>;
 
     findByIds(ids: string[]): Promise<Product[]>;
 
-    findById(id: string): Promise<Product | null>
+    findById(id: string): Promise<Product | null>;
 
-    findAll(isActive: boolean): Promise<Product[]>
+    findAll(isActive: boolean): Promise<Product[]>;
 
-    softDelete(id: string): Promise<Product>
+    softDelete(id: string): Promise<Product>;
 
+    findManyWithFilters(filters: ProductFilters): Promise<Product[]>;
+}
+
+export interface ProductFilters {
+    name?: string;
+    categoryId?: string;
+    minPrice?: number;
+    maxPrice?: number;
 }
