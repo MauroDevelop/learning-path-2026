@@ -22,7 +22,8 @@ const productController = new ProductController(productService);
 // --- ENDPOINT DEFINITIONS ---
 
 // GET /api/products -> Público (Cualquier persona o cliente puede ver el menú)
-productRoutes.get('/', productController.getAllProducts);
+productRoutes.get('/search', productController.getProducts);
+productRoutes.get('/', productController.getAllProducts)
 
 // POST /api/products -> Protegido (Solo ADMIN)
 productRoutes.post('/', authenticateToken, verifyRole(['ADMIN']), uploadMiddleware.single('image'), productController.createProduct);

@@ -22,7 +22,7 @@
 - [x] Status change logic: Validate that a Client cannot change an order status to "DELIVERED".
 
 ## 📅 Week 4: Geo, Search & Deploy
-- [ ] Advanced filtering: Search products by name, category, and price.
+- [x] Advanced filtering: Search products by name, category, and price.
 - [ ] (Bonus) Basic geolocation: Save lat/long in addresses.
 - [ ] API Dockerization.
 - [ ] Deployment on Railway/Render with a production Database.

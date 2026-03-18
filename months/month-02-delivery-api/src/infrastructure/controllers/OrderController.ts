@@ -98,6 +98,8 @@ export class OrderController {
                 data: updatedOrder
             });
         } catch (error: unknown) {
+
+            // Handle schema validation errors
             if (error instanceof ZodError) {
                 res.status(400).json({
                     success: false,
@@ -106,6 +108,7 @@ export class OrderController {
                 });
                 return;
             }
+
 
             if (error instanceof AppError) {
                 res.status(error.statusCode).json({
