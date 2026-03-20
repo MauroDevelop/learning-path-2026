@@ -39,13 +39,13 @@ export class OrderService {
             }
 
             // Calculate subtotal for this item and add to the order total
-            total += item.quantity * existingProduct.price.toNumber();
+            total += item.quantity * existingProduct.price;
 
             // Prepare the item data for persistence
             orderItemsToSave.push({
                 productId: item.productId,
                 quantity: item.quantity,
-                price: existingProduct.price.toNumber()
+                price: existingProduct.price
             });
         }
 
@@ -53,6 +53,8 @@ export class OrderService {
             clientId: clientId,
             deliveryAddress: validatedData.deliveryAddress,
             total: total,
+            latitude: validatedData.latitude,
+            longitude: validatedData.longitude,
             items: orderItemsToSave
         };
 

@@ -23,6 +23,6 @@
 
 ## 📅 Week 4: Geo, Search & Deploy
 - [x] Advanced filtering: Search products by name, category, and price.
-- [ ] (Bonus) Basic geolocation: Save lat/long in addresses.
+- [x] (Bonus) Basic geolocation: Save lat/long in addresses.
 - [ ] API Dockerization.
 - [ ] Deployment on Railway/Render with a production Database.

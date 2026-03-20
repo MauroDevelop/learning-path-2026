@@ -108,6 +108,8 @@ model Order {
   total     Decimal     @db.Decimal(10, 2) // total price
   status    OrderStatus @default(PENDING)
   deliveryAddress String 
+  latitude Float?
+  longitude Float?
   createdAt DateTime    @default(now())
   updatedAt DateTime    @updatedAt
 

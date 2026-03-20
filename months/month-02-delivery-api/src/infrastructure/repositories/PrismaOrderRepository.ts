@@ -12,6 +12,8 @@ export class PrismaOrderRepository implements IOrderRepository {
             id: prismaOrder.id,
             clientId: prismaOrder.clientId,
             deliveryAddress: prismaOrder.deliveryAddress,
+            latitude: prismaOrder.latitude,
+            longitude: prismaOrder.longitude,
             status: prismaOrder.status as OrderStatus,
             total: prismaOrder.total.toNumber(),
             createdAt: prismaOrder.createdAt,
@@ -27,6 +29,8 @@ export class PrismaOrderRepository implements IOrderRepository {
                 total: data.total,
                 clientId: data.clientId,
                 deliveryAddress: data.deliveryAddress,
+                longitude: data.longitude ?? null,
+                latitude: data.latitude ?? null,
                 status: 'PENDING',
 
                 orderItems: {
@@ -66,7 +70,7 @@ export class PrismaOrderRepository implements IOrderRepository {
 
     public async findById(id: string): Promise<Order | null> {
         const orderSearch = await prisma.order.findUnique({
-            where: {id: id}
+            where: { id: id }
         });
         if (!orderSearch) {
             return null
@@ -80,16 +84,16 @@ export class PrismaOrderRepository implements IOrderRepository {
     }
 
     public async findByIdClient(clientId: string): Promise<Order[]> {
-       const clientSearch = await prisma.order.findMany({
-            where: {clientId: clientId}
+        const clientSearch = await prisma.order.findMany({
+            where: { clientId: clientId }
         });
-       
+
         return clientSearch.map(client => this.mapToDomain(client));
-        
+
     }
 
     public async updateStatus(id: string, orderStatus: OrderStatus, courierId?: string): Promise<Order> {
-    
+
         const updateStatus = await prisma.order.update({
             where: { id: id },
             data: {

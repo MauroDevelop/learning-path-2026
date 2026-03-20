@@ -4,6 +4,8 @@ export interface CreateOrderData {
     clientId: string,
     total: number,
     deliveryAddress: string,
+    latitude?: number | undefined,
+    longitude?: number | undefined,
     items: {
         productId: string,
         quantity: number,
