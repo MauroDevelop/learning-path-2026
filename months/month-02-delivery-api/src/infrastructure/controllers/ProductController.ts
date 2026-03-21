@@ -141,15 +141,15 @@ export class ProductController {
             // Convert price strings to numbers and validate they are not NaN
             if (minPrice) {
                 const parsedMin = Number(minPrice);
-                if (!isNaN(parsedMin)) {
+                if (isNaN(parsedMin)) {
                     throw new AppError("minPrice must be a valid number", 400);
                 }
                 filters.minPrice = parsedMin;
             }
             if (maxPrice) {
                 const parsedMax = Number(maxPrice);
-                if (!isNaN(parsedMax)) {
-                    throw new AppError("minPrice must be a valid number", 400);
+                if (isNaN(parsedMax)) {
+                    throw new AppError("maxPrice must be a valid number", 400);
                 }
                 filters.maxPrice = parsedMax;
             }
