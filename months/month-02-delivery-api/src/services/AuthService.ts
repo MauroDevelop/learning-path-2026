@@ -20,15 +20,15 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(data.password, 10);
 
     // Create the pure entity (pass an empty string for the ID as the DB will generate it)
-    const newUser = new User(
-      '',
-      data.email,
-      data.name,
-      hashedPassword,
-      data.role || 'CLIENT',
-      true,
-      data.phone
-    );
+    const newUser = new User({
+      id: null,
+      email: data.email,
+      name: data.name,
+      password: hashedPassword,
+      role: 'CLIENT',
+      isActive: true,
+      phone: data.phone ?? null
+    });
 
     // Persist to the database using the repository
     const savedUser = await this.userRepository.save(newUser);

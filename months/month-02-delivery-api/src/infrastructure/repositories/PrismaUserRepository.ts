@@ -1,8 +1,24 @@
 import { User, Role } from "../../core/entities/User";
 import { IUserRepository } from "../../core/interfaces/IUserRepository";
 import { prisma } from "../database/prisma";
+import { User as PrismaUser } from "../../generated/prisma";
 
 export class PrismaUserRepository implements IUserRepository {
+
+    private mapToDomain(prismaUser: PrismaUser): User {
+        return new User(
+            {
+            id: prismaUser.id,
+            email: prismaUser.email,
+            password: prismaUser.password,
+            name: prismaUser.name,
+            role: prismaUser.role as Role,
+            isActive: prismaUser.isActive,
+            phone: prismaUser.phone
+            }
+        );
+    }
+
     public async findByEmail(email: string): Promise<User | null> {
         const prismaUser = await prisma.user.findUnique({
             where: { email }
@@ -10,15 +26,8 @@ export class PrismaUserRepository implements IUserRepository {
 
         if (!prismaUser) return null;
 
-        return new User(
-            prismaUser.id,
-            prismaUser.email,
-            prismaUser.name,
-            prismaUser.password,
-            prismaUser.role as Role,
-            prismaUser.isActive,
-            prismaUser.phone
-        );
+        return this.mapToDomain(prismaUser);
+
     }
 
     public async findById(id: string): Promise<User | null> {
@@ -28,15 +37,7 @@ export class PrismaUserRepository implements IUserRepository {
 
         if (!prismaUser) return null;
 
-        return new User(
-            prismaUser.id,
-            prismaUser.email,
-            prismaUser.name,
-            prismaUser.password,
-            prismaUser.role as Role,
-            prismaUser.isActive,
-            prismaUser.phone
-        );
+        return this.mapToDomain(prismaUser);
     }
 
     public async save(user: User): Promise<User> {
@@ -52,15 +53,7 @@ export class PrismaUserRepository implements IUserRepository {
 
         // Map the Prisma result to our pure Domain Entity.
         // This ensures the Service layer is decoupled from and unaware of Prisma.
-        return new User(
-            savedUser.id,
-            savedUser.email,
-            savedUser.name,
-            savedUser.password,
-            savedUser.role as Role,
-            savedUser.isActive,
-            savedUser.phone
-        );
+        return this.mapToDomain(savedUser);
 
     }
 }
