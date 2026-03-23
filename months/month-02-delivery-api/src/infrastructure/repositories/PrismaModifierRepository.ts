@@ -1,5 +1,5 @@
 import { IModifierRepository, CreateModifierData } from "../../core/interfaces/IModifierRepository";
-import { Modifier } from "../../generated/prisma";
+import { Modifier } from "@prisma/client";
 import { prisma } from "../database/prisma";
 
 export class PrismaModifierRepository implements IModifierRepository {

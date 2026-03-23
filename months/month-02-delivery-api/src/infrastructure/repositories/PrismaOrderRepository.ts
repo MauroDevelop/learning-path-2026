@@ -1,5 +1,5 @@
 import { IOrderRepository, CreateOrderData } from "../../core/interfaces/IOrderRepository";
-import { Order as orderPrisma } from "../../generated/prisma";
+import { Order as orderPrisma } from "@prisma/client";
 import { Order, OrderStatus } from "../../core/entities/Order";
 import { prisma } from "../database/prisma";
 

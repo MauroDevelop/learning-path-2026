@@ -1,5 +1,5 @@
 // import from the newly folder genereded
-import { PrismaClient } from "../../generated/prisma";  
+import { PrismaClient } from '@prisma/client';
 
 // exported singleton instance for the entire application
 export const prisma = new PrismaClient({

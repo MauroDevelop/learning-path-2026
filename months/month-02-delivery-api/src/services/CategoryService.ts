@@ -1,5 +1,5 @@
 import { CreateCategorySchema, CreateCategoryInput } from "../shared/dtos/MenuDTO";
-import { Category } from "../generated/prisma";
+import { Category } from "@prisma/client";
 import { prisma } from "../infrastructure/database/prisma";
 import { AppError } from "../shared/errors/AppError";
 

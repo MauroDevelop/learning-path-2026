@@ -1,9 +1,9 @@
 import { IProductRepository, CreateProductData, ProductFilters } from "../../core/interfaces/IProductRepository";
-import { Product as PrismaProduct } from "../../generated/prisma";
+import { Product as PrismaProduct } from "@prisma/client";
 import { Product } from "../../core/entities/Product";
 import { prisma } from "../database/prisma";
 // Import the Prisma namespace from the generated client to access internal types
-import { Prisma } from "../../generated/prisma";
+import { Prisma } from "@prisma/client";
 
 export class PrismaProductRepository implements IProductRepository {
 
