@@ -1,6 +1,9 @@
 # Stage 1: Base Image
 FROM node:20-alpine
 
+# Install OpenSSL for Prisma Query Engine compatibility
+RUN apk add --no-cache openssl
+
 # Set the working directory inside the container
 WORKDIR /app
 
