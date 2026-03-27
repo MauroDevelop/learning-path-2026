@@ -20,6 +20,9 @@ import { modifierRoutes } from './infrastructure/web/routes/modifier.routes';
 // Initialize the Express application
 const app = express();
 
+// Export app for Supertest
+export default app;
+
 // Define the port. Use the PORT environment variable if available, otherwise default to 3000
 const PORT = process.env.PORT || 3000;
 
@@ -41,9 +44,12 @@ app.use('/api/products', productRoutes);
 app.use('/api/modifiers', modifierRoutes);
 
 // --- SERVER INITIALIZATION ---
+// Only if not stay in the testing
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(PORT, () => {
+    console.log(`Delivery API server running at http://localhost:${PORT}`);
+    console.log(`Endpoint ready: POST http://localhost:${PORT}/api/auth/register`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`Delivery API server running at http://localhost:${PORT}`);
-  console.log(`Endpoint ready: POST http://localhost:${PORT}/api/auth/register`);
-});
 
