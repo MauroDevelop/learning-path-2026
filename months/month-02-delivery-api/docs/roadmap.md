@@ -25,4 +25,5 @@
 - [x] Advanced filtering: Search products by name, category, and price.
 - [x] (Bonus) Basic geolocation: Save lat/long in addresses.
 - [x] API Dockerization.
-- [x] Deployment on Railway/Render with a production Database.
+- [x] Automated Testing: Setup Jest & Supertest for API endpoint validation.
+- [ ] Deployment on Railway/Render with a production Database
