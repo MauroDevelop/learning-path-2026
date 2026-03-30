@@ -26,4 +26,4 @@
 - [x] (Bonus) Basic geolocation: Save lat/long in addresses.
 - [x] API Dockerization.
 - [x] Automated Testing: Setup Jest & Supertest for API endpoint validation.
-- [ ] Deployment on Railway/Render with a production Database
+- [x] Deployment on Railway/Render with a production Database
