@@ -19,13 +19,19 @@ export const authenticateToken = (req: AuthRequest, res: Response, next: NextFun
     if (!token) {
         res.status(401).json({
             success: false,
-            message:'Access denied'
+            message: 'Access denied'
         });
         return;
     }
 
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret) {
+        throw new Error('CRITICAL FATAL ERROR: JWT_SECRET is not defined in environment variables.');
+    }
+
     try {
-        const secret = process.env.JWT_SECRET || 'my-super-secret-development-key';
+
         // Decrypt the token
         const decode = jwt.verify(token, secret) as { userId: string, userRole: string };
         //We save the decoded data in req.user

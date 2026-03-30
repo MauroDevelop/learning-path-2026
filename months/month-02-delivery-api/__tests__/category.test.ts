@@ -1,3 +1,10 @@
+/**
+ * GLOBAL ENVIRONMENT SETUP:
+ * We inject the JWT_SECRET variable into the process to ensure our authentication 
+ * middleware has a valid secret to verify tokens against during test execution.
+ */
+process.env.JWT_SECRET = 'test-secret-key-for-jest';
+
 // Import Supertest and our Express application
 import request from 'supertest';
 import app from '../src/index';
@@ -5,31 +12,32 @@ import app from '../src/index';
 import jwt from 'jsonwebtoken';
 import { CategoryService } from '../src/services/CategoryService';
 
-describe('Rutas de categorias (category API)', () => {
+describe('Category Routes API', () => {
 
     describe('POST /api/categories', () => {
 
-        test('Should blocked the request and response error 401 if do not sended the token JWT', async () => {
-            // Use Supertest to simulate the HTTP request
-            const response = request(app)
+        test('Should block the request and return a 401 status if no JWT token is provided', async () => {
+            // Execute the HTTP request cleanly using await
+            const response = await request(app)
                 .post('/api/categories')
                 .send({
                     name: 'Desserts',
                     description: 'Delicious desserts'
-                })
-            // Use Supertest to simulate the HTTP request
-            expect((await response).status).toBe(401);
+                });
+
+            // Expect a 401 Unauthorized status code
+            expect(response.status).toBe(401);
+            
             // Expect the success flag in the response body to be false
-            expect((await response).body.success).toBe(false);
-        })
+            expect(response.body.success).toBe(false);
+        });
 
         test('Should successfully create a category (201) using a mocked service', async () => {
-            
             // Create a dummy payload with the ADMIN role to pass the authorization middleware
             const payload = { userId: 'test-admin-id', userRole: 'ADMIN' };
 
-            // Sign the JWT token
-            const secret = process.env.JWT_SECRET || 'my-super-secret-development-key';
+            // Sign the JWT token using the global secret we injected at the top
+            const secret = process.env.JWT_SECRET as string;
             const token = jwt.sign(payload, secret, { expiresIn: '1h' });
 
             // MOCKING THE SERVICE
@@ -71,5 +79,5 @@ describe('Rutas de categorias (category API)', () => {
             // Restore the spy to prevent interference with future tests
             spy.mockRestore();
         });
-    })
-})
+    });
+});

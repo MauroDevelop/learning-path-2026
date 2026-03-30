@@ -52,7 +52,12 @@ export class AuthService {
     }
 
     // Trigger JWT
-    const secret = process.env.JWT_SECRET || 'my-super-secret-development-key';
+    const secret = process.env.JWT_SECRET;
+
+    if (!secret) {
+      throw new Error('CRITICAL FATAL ERROR: JWT_SECRET is not defined in environment variables.');
+    }
+    
     const token = jwt.sign(
       { userId: userValid.id, userRole: userValid.role },
       secret,
