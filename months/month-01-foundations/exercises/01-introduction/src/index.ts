@@ -1,6 +1,6 @@
 // Declaramos variables con un tipo especifico
 let nombre: string = "Mauro";
-let edad: number = 25;
+let edad: number = 19;
 let esEstudiante: boolean = true;
 let respuesta: string = ""
 

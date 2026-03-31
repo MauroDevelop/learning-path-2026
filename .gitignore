@@ -1,5 +1,12 @@
-node_modules/
-database.json
-productos.json
-data/
-.env
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS metadata
+.DS_Store
+Thumbs.db
