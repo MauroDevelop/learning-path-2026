@@ -2,86 +2,84 @@ import fs from 'fs/promises';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// 1. CONFIGURACIÓN DE RUTAS (Native Modules)
+// 1. ROUTING CONFIGURATION (Native Modules)
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DATA_DIR = path.join(__dirname, 'data');
-const FILE_PATH = path.join(DATA_DIR, 'productos.json');
+const FILE_PATH = path.join(DATA_DIR, 'products.json');
 
-// 2. INTERFAZ
-interface Producto {
+// Defines valid categories to ensure type safety
+type ProductCategory = 'amigurumi' | 'garment' | 'other';
+
+// 2. INTERFACE
+interface Product {
     id: number;
-    nombre: string;
-    precio: number;
-    categoria: 'amigurumi' | 'prenda' | 'otros';
+    name: string;
+    price: number;
+    category: ProductCategory;
 }
 
-async function inicializarArchivo() {
+async function initializeFile(): Promise<void> {
     try {
-        await fs.mkdir(DATA_DIR, {recursive: true})
-        console.log('Directorio creado/verificado.')
-        // TODO: Asegúrate de que la carpeta 'data' exista usando fs.mkdir
-        // Pista: await fs.mkdir(DATA_DIR, { recursive: true });
+        await fs.mkdir(DATA_DIR, { recursive: true });
+        console.log('Directory created/verified');
         
         try {
             await fs.access(FILE_PATH);
         } catch {
-            // Si el archivo no existe, lo creamos con un array vacío
+            // If the file does not exist, we create it with an empty array
             await fs.writeFile(FILE_PATH, JSON.stringify([], null, 2), 'utf-8');
         }
     } catch (error) {
-        console.error("Error al inicializar:", error);
+        console.error("Initialization error:", error);
     }
 }
 
-async function agregarProducto(nombre: string, precio: number, categoria: any) {
-    // TODO: 
-    // 1. Leer el archivo (usa utf-8)
-    // 2. Convertir de JSON a Array
-    // 3. Crear el nuevo objeto Producto (genera el ID automáticamente)
-    // 4. Hacer el .push() al array
-    // 5. Guardar el archivo actualizado (JSON.stringify con indentación)
-    const contenedJSON = await fs.readFile(FILE_PATH, 'utf-8');
-    const array: Array<Producto> = JSON.parse(contenedJSON);
+async function addProduct(name: string, price: number, category: ProductCategory): Promise<void> {
+    // Read file content and parse it
+    const fileContent = await fs.readFile(FILE_PATH, 'utf-8');
+    const products: Product[] = JSON.parse(fileContent);
 
-    const lastID = array[array.length -1]?.id || 0;
+    // Generate ID automatically
+    const lastId = products[products.length - 1]?.id || 0;
 
-    const producto: Producto = {
-        id: lastID +1,
-        nombre: nombre,
-        precio: precio,
-        categoria: categoria,
-    }
-    array.push(producto);
-
-    await fs.writeFile(FILE_PATH, JSON.stringify(array, null, 2), 'utf-8'); // el null y 2 para que no sea una sola línea dificil de leer
-
-    console.log(`Producto ${nombre} con precio de ${precio} fue agregado`);
+    const newProduct: Product = {
+        id: lastId + 1,
+        name,
+        price,
+        category
+    };
     
-    
+    products.push(newProduct);
+
+    // Save updated file with 2-space indentation for readability
+    await fs.writeFile(FILE_PATH, JSON.stringify(products, null, 2), 'utf-8');
+
+    console.log(`Product ${name} with a price of $${price} was added`);
 }
 
-async function buscarPorCategoria(categoria: string) {
-   try{
-    const contenedJSON = await fs.readFile(FILE_PATH, 'utf-8');
-    const array: Array<Producto> = JSON.parse(contenedJSON);
+async function findByCategory(category: string): Promise<Product[]> {
+   try {
+    const fileContent = await fs.readFile(FILE_PATH, 'utf-8');
+    const products: Product[] = JSON.parse(fileContent);
 
-    const producto = array.filter(p => p.categoria.toLocaleLowerCase() == categoria.toLocaleLowerCase())
-    return producto
+    // Strict equality used for safer comparisons
+    const matchedProducts = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+    return matchedProducts;
     
    } catch (error) {
-    console.error("Ha habido un error en la búsqueda: ", error)
+    console.error("A search error occurred:", error);
     return [];
    }
 }
 
 // TEST:
 (async () => {
-    await inicializarArchivo();
-    await agregarProducto("Pulpo de Apego", 2500, "amigurumi");
-    await agregarProducto("Bufanda Infinita", 4000, "prenda");
+    await initializeFile();
+    await addProduct("Attachment Octopus", 2500, "amigurumi");
+    await addProduct("Infinity Scarf", 4000, "garment");
 
-    const amigurumis = await buscarPorCategoria("amigurumi");
-    console.log('--- RESULTADOS DE BUSQUEDA ---')
-    console.table(amigurumis)
+    const amigurumis = await findByCategory("amigurumi");
+    console.log('--- SEARCH RESULTS ---');
+    console.table(amigurumis);
 })();

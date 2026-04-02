@@ -1,25 +1,25 @@
 /**
- * EJERCICIO MÓDULO 09 : PERSISTENCIA EN JSON
- * Proyecto: Tango Resto Bar
- * * * OBJETIVO:
- * Crear un servicio que guarde y recupere platos sugeridos en un archivo 
- * físico llamado 'database.json', para que los datos sobrevivan al reinicio.
- * * * TAREAS:
- * 1. Definir la interfaz 'DailySpecial' con los campos: id, name y price.
- * 2. Implementar 'cargarDatos': una función asíncrona que lea el JSON y maneje 
- * la ausencia del archivo devolviendo un array vacío.
- * 3. Implementar 'guardarPlato': una función que gestione la lectura previa, 
- * la generación de IDs autoincrementales y la escritura en disco.
- * 4. Crear 'mostrarMenu' para imprimir los platos cargados en formato de tabla.
- * * * REQUISITOS:
- * - Usar el módulo nativo 'fs/promises' y 'path' para la gestión de rutas.
- * - Guardar el JSON con indentación de 2 espacios para asegurar su legibilidad.
+ * MODULE 09 EXERCISE: JSON PERSISTENCE
+ * Project: Tango Resto Bar
+ * * * OBJECTIVE:
+ * Create a service that saves and retrieves suggested dishes in a physical 
+ * file named 'database.json', ensuring data survives server restarts
+ * * * TASKS:
+ * 1. Define the 'DailySpecial' interface with fields: id, name and price
+ * 2. Implement 'loadData': an asynchronous function that reads the JSON and handles 
+ * the absence of the file by returning an empty array
+ * 3. Implement 'saveDish': a function that manages prior reading, 
+ * auto-incremental ID generation and disk writing
+ * 4. Create 'displayMenu' to output the loaded dishes in a table format
+ * * * REQUIREMENTS:
+ * - Use the native 'fs/promises' and 'path' modules for route management
+ * - Save the JSON with a 2-space indentation to ensure readability
  */
 import fs from 'fs/promises'; 
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-// Configuración básica de rutas
+// Basic path configuration
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, 'database.json');
 
@@ -29,52 +29,52 @@ interface DailySpecial {
   price: number;
 }
 
-// Función auxiliar para no repetir código de lectura
-async function cargarDatos(): Promise<DailySpecial[]> {
+// Helper function to prevent read code duplication
+async function loadData(): Promise<DailySpecial[]> {
   try {
-    const raw = await fs.readFile(DB_PATH, 'utf8');
-    return JSON.parse(raw);
-  } catch (err) {
-    // Si no existe el archivo, devolvemos un array vacío para empezar
+    const rawData = await fs.readFile(DB_PATH, 'utf8');
+    return JSON.parse(rawData);
+  } catch (error) {
+    // If the file does not exist, we return an empty array to start
     return [];
   }
 }
 
-async function guardarPlato(nombre: string, precio: number) {
-  const platos = await cargarDatos();
+async function saveDish(name: string, price: number): Promise<void> {
+  const dishes = await loadData();
 
-  // Generar ID: buscamos el último o empezamos en 1
-  const ultimoId = platos[platos.length - 1]?.id || 0;  
-  const nuevoPlato: DailySpecial = {
-    id: ultimoId + 1,
-    name: nombre,
-    price: precio
+  // Generate ID: find the last one or start at 1
+  const lastId = dishes[dishes.length - 1]?.id || 0;  
+  const newDish: DailySpecial = {
+    id: lastId + 1,
+    name,
+    price
   };
 
-  platos.push(nuevoPlato);
+  dishes.push(newDish);
 
-  // Guardamos con un poco de formato para que sea legible
-  await fs.writeFile(DB_PATH, JSON.stringify(platos, null, 2));
-  console.log(`-> Agregado: ${nombre} ($${precio})`);
+  // Save with formatting for readability
+  await fs.writeFile(DB_PATH, JSON.stringify(dishes, null, 2));
+  console.log(`-> Added: ${name} ($${price})`);
 }
 
-async function mostrarMenu() {
-  const platos = await cargarDatos();
-  console.log("\n--- MENÚ TANGO RESTO BAR ---");
-  if (platos.length === 0) {
-    console.log("No hay platos cargados todavía.");
+async function displayMenu(): Promise<void> {
+  const dishes = await loadData();
+  console.log("\n--- TANGO RESTO BAR MENU ---");
+  if (dishes.length === 0) {
+    console.log("No dishes loaded yet");
   } else {
-    console.table(platos);
+    console.table(dishes);
   }
 }
 
-// Test rápido de funcionamiento
+// Quick functionality test
 (async () => {
   try {
-    await guardarPlato("Milanesa a la Napolitana", 5500);
-    await guardarPlato("Sorrentinos de Jamón y Queso", 4800);
-    await mostrarMenu();
+    await saveDish("Milanesa a la Napolitana", 5500);
+    await saveDish("Sorrentinos de Jamon y Queso", 4800);
+    await displayMenu();
   } catch (error) {
-    console.error("Hubo un fallo:", error);
+    console.error("An error occurred:", error);
   }
 })();

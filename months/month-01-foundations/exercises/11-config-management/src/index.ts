@@ -1,26 +1,28 @@
-/*
-Módulo 11: Gestión de Configuración con dotenv
-En este módulo he realizado:
-- La instalación de la librería de dotenv.
-- Creación de un archivo .env para guardar datos "sensibles" o configuración.
-- Uso de process.env para traer variables al código.
-- Asegurar el agregado del archivo .env a mi .gitignore para no subir información privada a GitHub.
-*/
+/**
+ * MODULE 11: Configuration Management with dotenv
+ * Description: Environment variable setup and management
+ * - dotenv library integration for loading environment variables
+ * - .env file configuration to isolate sensitive data and credentials
+ * - process.env utilization for injecting configuration into the application
+ * - Gitignore enforcement to prevent sensitive data leaks in version control
+ */
 
 import dotenv from 'dotenv';
 
-// Carga las variables del archivo .env en process.env
+// Injects variables from the .env file into process.env
 dotenv.config();
 
+// Environment variable extraction with fallback defaults
 const port = process.env.PORT || 3000;
 const dbPath = process.env.DB_PATH;
-const modo = process.env.APP_ENV;
+const environment = process.env.APP_ENV;
 
-if (modo === 'development'){
-    console.info('Te encuentras en modo de desarrollo');
+// Environment-based logging
+if (environment === 'development') {
+    console.info('Application is currently running in development mode');
 } else {
-    console.info('El servidor esta corriendo en producción');
+    console.info('Server is running in production mode');
 }
 
-console.log(`Servidor configurado en el puerto: ${port}`);
-console.log(`Ruta de base de datos: ${dbPath}`);
+console.log(`Server configured on port: ${port}`);
+console.log(`Database connection path: ${dbPath}`);

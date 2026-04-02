@@ -1,23 +1,23 @@
 /**
- * EJERCICIO: "Filtro de Talento Tech"
+ * EXERCISE: "Tech Talent Filter"
  * -----------------------------------------
- * Objetivo: Practicar el procesamiento de datos en el Backend usando TypeScript.
- * * 1. Interfaz 'Candidate': Debe tener id (readonly), name, skills (array de strings), 
- * yearsExperience e isAvailable (boolean).
- * * 2. Lógica a implementar:
- * - FILTER: Crear una lista de candidatos que dominen "TypeScript" y tengan 
- * más de 2 años de experiencia.
- * - MAP: Transformar el resultado anterior en un array de frases que digan: 
- * "Candidato [nombre] seleccionado para entrevista técnica".
- * - FIND: Buscar el perfil de "Mauro" dentro de la lista original para 
- * confirmar si está disponible para un nuevo proyecto.
- * * 3. Ejecución: Mostrar todos los resultados en consola para verificar la lógica.
+ * Objective: Practice backend data processing using TypeScript
+ * * 1. 'Candidate' Interface: Must contain id (readonly), name, skills (string array), 
+ * yearsExperience and isAvailable (boolean)
+ * * 2. Logic to implement:
+ * - FILTER: Create a list of candidates who are proficient in "TypeScript" and have 
+ * more than 2 years of experience
+ * - MAP: Transform the previous result into an array of strings stating: 
+ * "Candidate [name] selected for technical interview"
+ * - FIND: Search for "Mauro" within the original list to 
+ * confirm availability for a new project
+ * * 3. Execution: Output all results to the console to verify the logic
  */
 
 interface Candidate {
   readonly id: number;
   name: string;
-  skills: Array<string>;
+  skills: string[];
   yearsExperience: number;
   isAvailable: boolean;
 }
@@ -53,21 +53,21 @@ const candidates: Candidate[] = [
   }
 ];
 
-function filterCandidates(skillToSearch: string, experience: number) {
+function filterCandidates(skillToSearch: string, experience: number): Candidate[] {
   return candidates.filter(candidate => {
     return candidate.skills.includes(skillToSearch) && candidate.yearsExperience > experience;
   });
-};
+}
 
-const candidatesSelect = filterCandidates('TypeScript', 2);
+const selectedCandidates = filterCandidates('TypeScript', 2);
 
-const candidatesList = candidatesSelect.map(candidate => `Candidato ${candidate.name} seleccionado para entrevista técnica`);
+const interviewMessages = selectedCandidates.map(candidate => `Candidate ${candidate.name} selected for technical interview`);
 
 const mauro = candidates.find(candidate => candidate.name === 'Mauro');
 
 if (mauro) {
-  console.log(`--- Resultado de búsqueda ---`);
-  console.log(`Candidato: ${mauro.name} | Disponible: ${mauro.isAvailable ? 'Sí' : 'No'}`);
+  console.log(`--- Search Result ---`);
+  console.log(`Candidate: ${mauro.name} | Available: ${mauro.isAvailable ? 'Yes' : 'No'}`);
 }
 
-console.log(candidatesList);
+console.log(interviewMessages);

@@ -1,5 +1,4 @@
-
-// --- SECCION 1 ---
+// --- SECTION 1: TYPE GUARDS & DISCRIMINATED UNIONS ---
 
 interface Product {
     type: 'product';
@@ -17,70 +16,69 @@ interface Order {
 
 type MaroItem = Product | Order;
 
-
+// Custom Type Guard to safely narrow down the item type
 function isProduct(item: MaroItem): item is Product {
     return item.type === 'product';
 }
 
-const inventarioCrochet: Product[] = [
-    { type: 'product', id: 1, name: 'Amigurumi Gato', price: 1500 },
-    { type: 'product', id: 2, name: 'Bufanda Lana', price: 2000 }
+const crochetInventory: Product[] = [
+    { type: 'product', id: 1, name: 'Amigurumi Cat', price: 1500 },
+    { type: 'product', id: 2, name: 'Wool Scarf', price: 2000 }
 ];
 
-// --- PRUEBAS ---
+// --- TESTING SECTION 1 ---
 
-console.log("\n--- BUSQUEDA CROCHET (precio exacto $1500) ---");
-console.log(inventarioCrochet.filter(p => p.price === 1500));
+console.log("\n--- CROCHET SEARCH (Exact price $1500) ---");
+console.log(crochetInventory.filter(p => p.price === 1500));
 
-// --- SECCION 2 ---
+// --- SECTION 2: ADVANCED FILTERING & UTILITY TYPES ---
 
-interface Propiedad {
+interface Property {
     id: number;
     city: string;
-    room: number;
+    rooms: number;
     price: number;
 }
 
 /**
- * Criterios para la  busqueda:
- * 1. Omitimos 'id' porque no se filtra por ahi
- * 2. Hacemos todo opcional (Partial)
- * 3. Agregamos 'priceMaximo' para busquedas por rango
+ * Search criteria for properties
+ * 1. Omits 'id' as it is not used for filtering
+ * 2. Makes all remaining properties optional (Partial)
+ * 3. Adds 'maxPrice' for range-based queries
  */
-type CriteriosPropiedad = Partial<Omit<Propiedad, 'id'>> & { 
-    priceMaximo?: number 
+type PropertyCriteria = Partial<Omit<Property, 'id'>> & { 
+    maxPrice?: number;
 };
 
-function filterProperties(propiedades: Propiedad[], criteria: CriteriosPropiedad): Propiedad[] {
-    return propiedades.filter((p) => {
-        const filtros = Object.entries(criteria);
+function filterProperties(properties: Property[], criteria: PropertyCriteria): Property[] {
+    return properties.filter((property) => {
+        const filters = Object.entries(criteria);
 
-        for (const [key, value] of filtros) {
+        for (const [key, value] of filters) {
             
-            // Filtro de Rango (precio maximo)
-            if (key === 'priceMaximo') {
-                if (p.price > (value as number)) return false;
+            // Range filter (maximum price evaluation)
+            if (key === 'maxPrice') {
+                if (property.price > (value as number)) return false;
                 continue; 
             }
 
-            // Filtros de Igualdad (city, Room, etc)
-            const valorActual = p[key as keyof Propiedad];
-            if (value !== valorActual) return false;
+            // Equality filters (city, rooms, etc)
+            const currentValue = property[key as keyof Property];
+            if (value !== currentValue) return false;
         }
         return true;
     });
 }
 
-// --- PRUEBAS ---
+// --- TESTING SECTION 2 ---
 
-const propiedades: Propiedad[] = [
-    { id: 2, city: 'Mendoza city', room: 23, price: 80_000 },
-    { id: 3, city: 'Calcinas Rey ', room: 13, price: 60_000 },
-    { id: 4, city: 'Puerto Mader', room: 21, price: 90_000 },
-    { id: 5, city: 'Mendoza', room: 3, price: 230_000 }
+const properties: Property[] = [
+    { id: 2, city: 'Mendoza City', rooms: 23, price: 80_000 },
+    { id: 3, city: 'Calcinas Rey', rooms: 13, price: 60_000 },
+    { id: 4, city: 'Puerto Madero', rooms: 21, price: 90_000 },
+    { id: 5, city: 'Mendoza', rooms: 3, price: 230_000 }
 ];
 
-console.log("--- BUSQUEDA INMOBILIARIA (Hasta $80.000) ---");
-const resultadoInmo = filterProperties(propiedades, { priceMaximo: 80000 });
-console.log(resultadoInmo);
-
+console.log("--- REAL ESTATE SEARCH (Up to $80,000) ---");
+const realEstateResults = filterProperties(properties, { maxPrice: 80000 });
+console.log(realEstateResults);

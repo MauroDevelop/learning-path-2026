@@ -1,19 +1,19 @@
-/*
-* * REQUISITOS:
- * 1. Enum 'PaymentMethod': Debe incluir CREDIT_CARD, PAYPAL y CRYPTO.
- * 2. Union Type 'SubscriptionTier': Solo puede ser 'Basic', 'Pro' o 'VIP'.
- * 3. Interfaz 'Transaction': 
+/**
+ * REQUIREMENTS:
+ * 1. 'PaymentMethod' Enum: Must include CREDIT_CARD, PAYPAL and CRYPTO
+ * 2. 'SubscriptionTier' Union Type: Must be 'Basic', 'Pro' or 'VIP'
+ * 3. 'Transaction' Interface: 
  * - id (readonly number)
  * - amount (number)
  * - method (PaymentMethod)
  * - tier (SubscriptionTier)
- * - status: 'success' | 'failed' | 'pending' (Union type inline)
+ * - status: 'success' | 'failed' | 'pending' (Inline union type)
  */
 enum PaymentMethod {
-    CREDIT_CARD = 'Tarjeta de credito',
+    CREDIT_CARD = 'Credit Card',
     PAYPAL = 'PayPal',
     CRYPTO = 'Crypto'
-};
+}
 
 type SubscriptionTier = 'Basic' | 'Pro' | 'VIP';
 
@@ -22,18 +22,18 @@ interface Transaction {
     amount: number;
     method: PaymentMethod;
     tier: SubscriptionTier;
-    status: 'pending'  | 'success' | 'failed';
-};
+    status: 'pending' | 'success' | 'failed';
+}
 
-/*
-* * TAREAS:
- * - Crear una lista de transacciones con diferentes estados y métodos.
- * - Crear una función 'processTransaction' que reciba una transacción 
- * y "valide" que si el monto es > 500, el status pase a 'failed' 
- * (simulando un límite de seguridad).
- * - Usar .filter() para obtener solo las transacciones 'success'.
- * - Usar .map() para generar un reporte que diga: 
- * "Usuario [tier] pagó $[amount] vía [method]".
+/**
+ * TASKS:
+ * - Create a transaction list with different statuses and methods
+ * - Create a 'processTransaction' function that receives a transaction 
+ * and validates that if the amount is > 500, the status changes to 'failed' 
+ * (simulating a security limit)
+ * - Use .filter() to retrieve only 'success' transactions
+ * - Use .map() to generate a report stating: 
+ * "User [tier] paid $[amount] via [method]"
  */
 
 const transactions: Transaction[] = [
@@ -42,19 +42,21 @@ const transactions: Transaction[] = [
     { id: 3, amount: 50, method: PaymentMethod.CRYPTO, tier: 'Pro', status: 'pending' }
 ];
 
-function processTransaction(t: Transaction){
-    if (t.amount > 500){
-        t.status = 'failed';
-        return {...t, status: 'failed'}; // se retorna una copia con fallo
-    };
-    return {...t, status: 'success'}; // se retorna una copia con el éxito
+function processTransaction(transaction: Transaction): Transaction {
+    if (transaction.amount > 500) {
+        // returns a copy with a failed status
+        return { ...transaction, status: 'failed' };
+    }
+    
+    // returns a copy with a success status
+    return { ...transaction, status: 'success' };
 }
 
-const result = transactions.map(t => processTransaction(t));
+const processedTransactions = transactions.map(t => processTransaction(t));
 
-const transactionsSuccess = result.filter(t => t.status === 'success');
+const successfulTransactions = processedTransactions.filter(t => t.status === 'success');
 
-const report = transactionsSuccess.map(t => `Usuario ${t.tier} pagó ${t.amount} vía ${t.method}` )
+const report = successfulTransactions.map(t => `User ${t.tier} paid $${t.amount} via ${t.method}`);
 
-console.log('--- Resultados ---')
+console.log('--- Results ---');
 console.log(report);

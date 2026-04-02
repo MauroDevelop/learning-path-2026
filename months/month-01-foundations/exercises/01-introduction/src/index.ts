@@ -1,18 +1,24 @@
-// Declaramos variables con un tipo especifico
-let nombre: string = "Mauro";
-let edad: number = 19;
-let esEstudiante: boolean = true;
-let respuesta: string = ""
+// Variable declaration variable with explicit typing
+// note: In professional environments, we use 'const' for inmmutable values
+// to prevent accidental reassignments 
+let name: string = "Mauro";
+let years: number = 19;
+let IsStudent: boolean = true;
+let answer: string = ""
 
 
-// Usamos las variables en un mensaje
-console.log(`Hola, mi nombre es ${nombre} y tengo ${edad} años.`);
+// Format and output developer information to the console
+console.log(`Hello, my name is ${name} and i'm ${years} years old.`);
 
-if (esEstudiante) {
-    respuesta = "si"
+
+// Conditional logic to determine the human-readable status
+if (IsStudent) {
+    answer = "yes"
 } else {
-    respuesta = "no"
+    answer = "no"
 }
-console.log(`Es estudiante?: ${respuesta}`);
-// PRUEBA DE ERROR:
-// nombre = 100;
+
+console.log(`Is student?: ${answer}`);
+// Type safety check:
+// The following line would trigger a Compilation Error because 'developerName' is a string
+// developerName = 100;

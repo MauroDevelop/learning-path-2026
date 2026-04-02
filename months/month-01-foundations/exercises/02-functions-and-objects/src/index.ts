@@ -1,60 +1,60 @@
-// Numeros grandes y Tipos
-let bloquesColocados = 24_000_000; 
-let biomaFavorito = "Deep Dark";
-let tieneNetherite = true;
+// Large number formatting and basic types
+const blocksPlaced: number = 24_000_000; 
+const favoriteBiome: string = "Deep Dark";
+const hasNetherite: boolean = true;
 
-// Funcion con tipo any
-function inspeccionarItem (item: any) {
+// Avoid using 'any' in production code. 'unknown' provides type safety
+function inspectItem(item: unknown): unknown {
     return item;
 }
 
-// Arreglos (Arrays)
-let herramientas: string[] = ['pico', 'pala', 'espada'];
-let nivelesEncantamiento: number[] = [20, 12, 5];
-let inventarioLleno: boolean[] = [true, false, true];
+// Array type annotations
+const tools: string[] = ['pickaxe', 'shovel', 'sword'];
+const enchantmentLevels: number[] = [20, 12, 5];
+const isInventoryFull: boolean[] = [true, false, true];
 
-// Segunda forma (genericos)
-let cordenadas: Array<number> = [100, 64, -250];
+// Alternative array syntax using Generics
+const coordinates: Array<number> = [100, 64, -250];
 
-// Tuplas (Tuples)
-// Representando a un jugador con ID, Nombre y Rango
-let jugador: [number, string, string] = [ 30, "mauro_develop", "Premium" ];
+// Tuples
+// Represents a specific data structure: [ID, Username, Rank]
+const playerData: [number, string, string] = [30, "mauro_develop", "Premium"];
 
 // Enums 
-// Usamos const para que sea súper ligero en el backend
-const enum Rango {
-    Usuario = 1,
+// Const enums are erased during compilation, optimizing performance
+const enum PlayerRank {
+    User = 1,
     Vip = 2,
-    Moderador = 5,
+    Moderator = 5,
     Admin = 10
 }
 
-let miRango: Rango = Rango.Admin;
+const currentRank: PlayerRank = PlayerRank.Admin;
 
-if (miRango >= Rango.Moderador) {
-    console.log("Tienes permisos para banear jugadores.");
+if (currentRank >= PlayerRank.Moderator) {
+    console.log("You have permission to ban players.");
 }
 
-// Objetos
-// Definimos la estructura (molde)
-type Jugador = {
-    readonly id: number, // 'readonly' para que no se pueda cambiar el ID despues
-    nombre: string,
-    // Este es el "atributo con atributos" (Objeto anidado)
-    coordenadas: {
-        x: number,
-        y: number,
-        z: number
-    }
-}
+// Objects and Type Aliases
+// Defines the entity blueprint
+type Player = {
+    readonly id: number; // Prevents reassignment after object initialization
+    name: string;
+    // Nested object representing spatial coordinates
+    location: {
+        x: number;
+        y: number;
+        z: number;
+    };
+};
 
-// Creamos el objeto siguiendo esa estructura
-const proximoJugador: Jugador = {
+// Instantiates the object adhering to the Player type
+const nextPlayer: Player = {
     id: 1,
-    nombre: "Maro-CM",
-    coordenadas: {
+    name: "MauroDevelop123",
+    location: {
         x: 150,
         y: 64,
         z: -200
     }
-}
+};

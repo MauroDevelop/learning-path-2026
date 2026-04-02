@@ -3,3 +3,7 @@ node_modules
 .env
 
 /generated/prisma
+
+# Add the genetated files in the modules
+database.json
+data/
