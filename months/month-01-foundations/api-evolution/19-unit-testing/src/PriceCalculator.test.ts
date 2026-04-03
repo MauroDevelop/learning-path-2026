@@ -1,30 +1,32 @@
 import { PriceCalculator } from './PriceCalculator.js';
 
-// 'describe' agrupa un conjunto de pruebas relacionadas
+// 'describe' groups a suite of related tests
 describe('PriceCalculator', () => {
 
-    // test: Define un escenario de prueba único
-    test('Debe calcular el precio final sumando el IVA (21%)', () => {
-        // llamamos a la función y le pasamos datos de pruba
+    // 'test' or 'it' defines a single isolated test case
+    test('Should calculate the final price by adding VAT (21%)', () => {
+        // Invoke the function with mock data
         const result = PriceCalculator.calculateFinalPrice(100, 0.21);
-        // Aserción: Compara si el valor recibido (result) es estrictamente igual al esperado (121)
+        
+        // Assertion: Verifies if the received value strictly matches the expected outcome
         expect(result).toBe(121);
     });
 
-    test('Debe descontar el monto indicado del precio final', () => {
+    test('Should deduct the specified amount from the final price', () => {
         const result = PriceCalculator.calculateFinalPrice(100, 0.21, 10);
         expect(result).toBe(111);
     });
 
-    test('Debe devolver 0 si el descuento supera al precio total', () => {
+    test('Should return 0 if the discount exceeds the total price', () => {
         const result = PriceCalculator.calculateFinalPrice(100, 0.21, 200);
         expect(result).toBe(0);
     });
 
-    test('Debe lanzar error si el precio base es negativo', () => {
+    test('Should throw an error if the base price is negative', () => {
+        // We must wrap the execution in an anonymous function for Jest to catch the error
         expect(() => {
             PriceCalculator.calculateFinalPrice(-50, 0.21);
-        }).toThrow("El precio base no puede ser negativo");
+        }).toThrow("Base price cannot be negative");
     });
 
 });

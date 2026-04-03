@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-// imporamos la clase del archivo AppError
+// Import custom operational error class
 import { AppError } from "../errors/AppError.js";
 import { ZodError } from 'zod';
 
@@ -7,31 +7,32 @@ export const errorHandler = (
     err: Error, 
     req: Request,
     res: Response,
-    next: NextFunction,
+    next: NextFunction
 ) => {
-    console.error('Error: ', err);
+    console.error('Error log:', err);
 
-    // Si es un error operativo conocido (AppError)
+    // Handle known operational errors defined by our custom AppError class
     if (err instanceof AppError) {
         return res.status(err.statusCode).json({
             status: 'error',
             message: err.message 
-        })
+        });
     }
 
+    // Intercept Zod validation errors and format them for the client
     if (err instanceof ZodError) {
         return res.status(400).json({
             status: 'error',
-            message: 'Datos inválidos',
-            errors: err.issues   // propiedad contiene el array "crudo" con toda la información técnica
-        })
+            message: 'Invalid data format provided',
+            // The 'issues' property contains the raw array with detailed technical validation data
+            errors: err.issues  
+        });
     }
 
-    // Si es un error desconocido (Bug o error 500)
-    // No le damos detalles técnicos al usuario por seguridad
+    // Fallback for unexpected bugs or system crashes
+    // Do not leak technical details to the client for security reasons
     return res.status(500).json({
         status: 'error',
-        message: 'Algo salió mal en el servidor, intente más tarde.'
+        message: 'Internal server error, please try again later'
     });
-
-}
+};

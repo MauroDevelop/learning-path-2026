@@ -1,41 +1,39 @@
+class Vehicle {
+    // Property: a variable that lives inside the class
+    public wheels: number;
 
-class Vehiculo {
-    // (Propiedad: una variable que vive dentro de la clase)
-    public ruedas: number;
-
-    constructor(ruedas: number) {
-        this.ruedas = ruedas;
-        console.log(`Construyendo un vehículo básico de ${ruedas} ruedas...`);
+    constructor(wheels: number) {
+        this.wheels = wheels;
+        console.log(`Building a basic ${wheels}-wheel vehicle...`);
     }
 
-    arrancar() {
-        console.log('El vehiculo ha arracado')
+    startEngine(): void {
+        console.log('The vehicle has started');
     }
 }
 
-class Auto extends Vehiculo {
-    marca: string;
+class Car extends Vehicle {
+    brand: string;
     color: string;
 
-    constructor(marcaRecibida: string, colorRecibido: string){
-        // SUPER: llamamos al constructor padre
-        super(4)
-        this.marca = marcaRecibida;
-        this.color = colorRecibido;
+    constructor(brand: string, color: string) {
+        // SUPER: Invokes the parent constructor
+        super(4);
+        this.brand = brand;
+        this.color = color;
 
-        console.log('He fabricado un auto')
+        console.log('A car has been manufactured');
     }
 
-    // El Auto puede tener sus propios métodos
-    tocarBocina() {
-        console.log("Se ha tocado la bocina");
+    // The Car class can have its own specific methods
+    honkHorn(): void {
+        console.log("The horn has been honked");
     }
 }
 
-const miAuto = new Auto('Toyota', 'verde');
-console.log(miAuto)
+const myCar = new Car('Toyota', 'green');
+console.log(myCar);
 
-
-// Podemos usar métodos del padre y del hijo
-miAuto.arrancar();    // Heredado de Vehiculo
-miAuto.tocarBocina(); // Propio de Auto
+// We can invoke methods from both the parent and the child classes
+myCar.startEngine(); // Inherited from Vehicle
+myCar.honkHorn();    // Specific to Car

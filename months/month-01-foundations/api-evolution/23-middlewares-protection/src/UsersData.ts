@@ -2,7 +2,7 @@ interface StoredUser {
     id: string;
     username: string;
     email: string;
-    password: string; // El hash
+    password: string; // The hash
 };
 
 export class UsersData {

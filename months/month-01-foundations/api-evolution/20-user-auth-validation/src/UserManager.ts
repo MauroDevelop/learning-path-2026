@@ -1,42 +1,42 @@
-/*
-definir un esquema de validación usando zod llamado UserSchema. Debe cumplir estrictamente con estas reglas:
-
-username: Debe ser un string, tener un mínimo de 4 caracteres y un mensaje de error personalizado si no cumple.
-
-email: Debe ser un formato de email válido.
-
-password: Debe ser un string de al menos 8 caracteres.
-
-age: Debe ser un number y la persona debe tener al menos 18 años. (Mensaje: "Debes ser mayor de edad").
-*/
+/**
+ * Define a validation schema using Zod named UserSchema
+ * Must strictly comply with these rules:
+ * username: Must be a string, have a minimum of 4 characters and a custom error message
+ * email: Must be a valid email format
+ * password: Must be a string of at least 8 characters
+ * age: Must be a number and the person must be at least 18 years old
+ */
 
 import { z } from 'zod';
 
 const UserSchema = z.object({
-    username: z.string().min(4, 'El nombre de usuario debe contener minimo de 4 caracteres'),
-    email: z.string().email('Email no valido'),
-    password: z.string().min(8, 'La contraseña debe contener minimo 8 caracteres'),
-    age: z.number().min(18, 'Debes ser mayor de 18 años'),
-})
+    username: z.string().min(4, 'Username must contain at least 4 characters'),
+    email: z.string().email('Invalid email format'),
+    password: z.string().min(8, 'Password must contain at least 8 characters'),
+    age: z.number().min(18, 'You must be at least 18 years old')
+});
 
-// Creo y exporto una clase lamada UserManager
+// SENIOR TWEAK: Infers the TypeScript type directly from the Zod schema to prevent code duplication
+type UserDTO = z.infer<typeof UserSchema>;
+
+// Creates and exports a class named UserManager
 export class UserManager {
-    // Creo un metodo estatico llamado register que recibe de parametros username, email, password y age
-    static register(data: { username: string, email: string, password: string, age: number }) {
-        // Validación
-        const result = UserSchema.safeParse(data);
+    // Static method register that receives the inferred UserDTO as a parameter
+    static register(data: UserDTO): string {
+        // Validation
+        const validationResult = UserSchema.safeParse(data);
 
-        if (result.success === false) {
-            // EXTRAER EL ERROR:
-            // result.error.errors es un array con todos los fallos
-            // Tomamos el primero [0] y su mensaje (.message).
-            const errorMessage = result.error.issues[0]?.message;
+        if (!validationResult.success) {
+            // EXTRACT THE ERROR:
+            // validationResult.error.issues is an array with all the failures
+            // We take the first one [0] and its message (.message)
+            const errorMessage = validationResult.error.issues[0]?.message;
 
-            // Lanzar el error para detener el programa
-            throw new Error (errorMessage);
+            // Throws the error to halt execution
+            throw new Error(errorMessage);
         }
 
-        return `Usuario registrado: ${data.email}`;
+        // Returns the exact string expected by the Jest test suite
+        return `User registered: ${data.email}`;
     }
 }
-// console.log(UserManager.register({username: 'Ma', email: 'maurodevelop.git@gmail.com', password: 'mauro123', age: 19}));

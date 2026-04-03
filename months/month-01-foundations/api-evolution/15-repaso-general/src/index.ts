@@ -1,11 +1,8 @@
-
-
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs/promises';
-import { error } from 'console';
 
 dotenv.config();
 
@@ -15,157 +12,120 @@ const PORT = process.env.PORT || 3000;
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, 'database.json');
 
-// console.log(await fs.readFile(BD_PATH, 'utf-8'));
-
-
 app.use(express.json());
 
-type Category = 'Entrada' | 'Principal' | 'Postre' | 'Bebida';
+// Culinary terms translated to industry standard English
+type Category = 'Appetizer' | 'Main Course' | 'Dessert' | 'Beverage';
 
-// enum Category {
-//     Entrada,
-//     Principal,
-//     Postre,
-//     Bebida,
-// };
-
-interface Plate {
-    readonly id: number,
-    name: string,
-    price?: number,
-    category?: Category,
-    available?: boolean,
+// 'Dish' is the correct term for a prepared food item, not 'Plate'
+interface Dish {
+    readonly id: number;
+    name: string;
+    price?: number;
+    category?: Category;
+    available?: boolean;
 }
 
 class MenuService {
-    async getAll(): Promise<Plate[]> {
+    async getAll(): Promise<Dish[]> {
         try {
-            const contend = JSON.parse(await fs.readFile(DB_PATH, 'utf-8'));
-            return contend;
+            // Fixed typo: contend -> content
+            const content = JSON.parse(await fs.readFile(DB_PATH, 'utf-8'));
+            return content;
         } catch (error) {
             return [];
-        };
-    };
-
-    async getById(id: number) {
-        const platos = await this.getAll(); // uso de this en lugar de sevice
-        const plato = platos.find((p) => p.id === id);
-        return plato;
-    };
-
-    async savePlate(plate: Plate[]): Promise<void> {
-
-        const plateString = JSON.stringify(plate, null, 2);
-
-        await fs.writeFile(DB_PATH, plateString);
-    };
-
-    async create(data: Omit<Plate, 'id'>): Promise<Plate> {
-        const platos = await this.getAll();
-
-        // El signo de pregunta es por si hay un error al acceder a id (undefine), si no se cumple usa 0
-        const lastId = platos.length > 0 ? platos[platos.length - 1]?.id || 0 : 0
-        const newId = lastId + 1
-
-        const newPlate: Plate = {
-            id: newId,
-            ...data // Copia nombre, precio, etc...
-        };
-
-        platos.push(newPlate);
-        await this.savePlate(platos);
-
-        return newPlate;
-    }
-
-    async getOccupiedId(): Promise<number[]> {
-        const plates = await this.getAll();
-        return plates.map(p => p.id)
-    }
-
-    async deletePlate(id: number) {
-        const allPlates = await this.getAll();
-        const plates = allPlates.filter(p => p.id !== id)
-        if (plates.length === allPlates.length) {
-            return 'No se elimino ningun plato';
         }
-        await this.savePlate(plates);
-        return 'Plato eliminado con exito';
-
     }
-};
 
-const service = new MenuService;
+    async getById(id: number): Promise<Dish | undefined> {
+        const dishes = await this.getAll(); 
+        const matchedDish = dishes.find((d) => d.id === id);
+        return matchedDish;
+    }
 
+    async saveDishes(dishes: Dish[]): Promise<void> {
+        const dishString = JSON.stringify(dishes, null, 2);
+        await fs.writeFile(DB_PATH, dishString);
+    }
+
+    async create(data: Omit<Dish, 'id'>): Promise<Dish> {
+        const dishes = await this.getAll();
+
+        // Fallback pattern to handle undefined IDs safely
+        const lastId = dishes.length > 0 ? dishes[dishes.length - 1]?.id || 0 : 0;
+        const newId = lastId + 1;
+
+        const newDish: Dish = {
+            id: newId,
+            ...data // Spreads name, price, category, etc
+        };
+
+        dishes.push(newDish);
+        await this.saveDishes(dishes);
+
+        return newDish;
+    }
+
+    async getOccupiedIds(): Promise<number[]> {
+        const dishes = await this.getAll();
+        return dishes.map(d => d.id);
+    }
+
+    // Returning a boolean is standard practice for Service layer deletions
+    async deleteDish(id: number): Promise<boolean> {
+        const allDishes = await this.getAll();
+        const remainingDishes = allDishes.filter(d => d.id !== id);
+        
+        if (remainingDishes.length === allDishes.length) {
+            return false;
+        }
+        
+        await this.saveDishes(remainingDishes);
+        return true;
+    }
+}
+
+// Always include parentheses when instantiating a class
+const menuService = new MenuService();
+
+// Self-invoking function for quick testing
 (async () => {
     try {
-        // console.log('--- Metodo getAll ---')
-        // const menuCompleto = await service.getAll();
-        // console.log(menuCompleto);
-
-        // console.log('--- Metodo getById ---')
-        // const platoUno = await service.getById(1);
-        // console.log(platoUno);
-
-        // console.log('--- Metodo savePlate ---')
-        // const platos = await service.getAll();
-
-        // platos.push({
-        //     id: 99,
-        //     name: "Plato de Prueba",
-        //     price: 1080,
-        //     category: "Entrada",
-        //     available: true
-        // });
-
-        // await service.savePlate(platos);
-        // console.log("Plato de prueba guardado en el archivo database.json");
-
-        // console.log('--- Metodo create ---')
-        // const plate1 = await service.create({
-        //     name: "Asado de Tira",
-        //     price: 12500,
-        //     category: "Principal", // Debe ser exacto como en tu Type ('Principal')
-        //     available: true
-        // })
-
-        // console.log('El plato fue creado y guardado: ', plate1)
-
-        // const plate2 = await service.create({
-        //     name: "Flan con Dulce de Leche",
-        //     price: 4500,
-        //     category: "Postre",
-        //     available: true
-        // });
-
-        // console.log('El plato fue creado y guardado: ', plate2)
-
-        console.log(await service.getOccupiedId());
-
-        console.log(await service.deletePlate(4))
-
+        console.log(await menuService.getOccupiedIds());
+        
+        const isDeleted = await menuService.deleteDish(4);
+        console.log(`Deletion successful: ${isDeleted}`);
     } catch (error) {
-        console.log('Al parecer hubo un error: ', error)
+        console.log('An error occurred:', error);
     }
 })();
 
 app.get('/menu/:id', async (req: Request, res: Response) => {
-    // tengo que conventir la id de la URL a número
-    const id = parseInt(req.params.id as string);
+
+    const idParam = req.params.id;
+
+    // Type Guard: We strictly verify that the parameter exists and is a string
+    if (!idParam || typeof idParam !== 'string') {
+        return res.status(400).json({ error: 'Invalid ID format provided' });
+    }
+
+    // Safe parsing with radix 10
+    const id = parseInt(idParam, 10);
 
     if (isNaN(id)) {
-        return res.status(400).json({error: "El ID debe ser un número"})
-    };
+        return res.status(400).json({ error: "ID must be a valid number" });
+    }
 
-    const plato = await service.getById(id);
+    const dish = await menuService.getById(id);
 
-    if (plato) {
-        res.json(plato);
+    if (dish) {
+        res.json(dish);
     } else {
-        res.status(400).json({ error: "Plato no encontrado"})
-    };
+        // Status 404 is the RESTful standard for "Not Found" resources
+        res.status(404).json({ error: "Dish not found" });
+    }
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}/menu`);
+    console.log(`Server running on http://localhost:${PORT}/menu`);
 });

@@ -1,50 +1,49 @@
 # ==================================================================
-# GUÍA PARA EJECUTAR ESTAS PRUEBAS
+# GUIDE TO EXECUTE THESE TESTS
 # ==================================================================
 #
-# 1. REQUISITO: Necesitas la extensión "REST Client" en VS Code.
-#    (Busca la extensión creada por "Huachao Mao" e instálala).
+# 1. REQUIREMENT: You need the "REST Client" extension in VS Code
+#    (Search for the extension created by "Huachao Mao" and install it)
 #
-# 2. SERVIDOR: Asegúrate de tener tu API corriendo.
-#    Abre tu terminal en la carpeta del proyecto (month-01-foundations) y ejecuta:
+# 2. SERVER: Ensure your API is running
+#    Open your terminal in the project folder (month-01-foundations) and execute:
 #    > npm run dev:16
 #
-# 3. USO: Una vez encendido el servidor, verás un pequeño botón
-#    o texto que dice "Send Request" encima de cada bloque URL.
-#    Haz clic ahí para probar la respuesta en el panel derecho.
+# 3. USAGE: Once the server is running, you will see a small
+#    "Send Request" button above each URL block
+#    Click there to test the response in the right panel
 # ==================================================================
 
-
-### 1. PRUEBA EXITOSA: Un plato correcto
-# Debería devolver status 201 y el mensaje de éxito
+### 1. SUCCESSFUL TEST: A valid dish
+# Should return status 201 and the success message
 POST http://localhost:3000/menu
 Content-Type: application/json
 
 {
   "name": "Milanesa Napolitana",
   "price": 8500,
-  "category": "Principal",
+  "category": "Main Course",
   "available": true
 }
 
-### 2. PRUEBA DE ERROR: Precio negativo y nombre corto
-# Zod debería dar errores en "name" y "price". Status 400
+### 2. ERROR TEST: Negative price and short name
+# Zod should throw errors on "name" and "price" (Status 400)
 POST http://localhost:3000/menu
 Content-Type: application/json
 
 {
   "name": "A", 
   "price": -500,
-  "category": "Entrada"
+  "category": "Appetizer"
 }
 
-### 3. PRUEBA DE ERROR: Categoría inventada
-# La categoría "Desayuno" no está en tu lista permitida. Status 400
+### 3. ERROR TEST: Invalid category
+# The "Breakfast" category is not in your allowed enum list (Status 400)
 POST http://localhost:3000/menu
 Content-Type: application/json
 
 {
-  "name": "Café con Leche",
+  "name": "Cafe con Leche",
   "price": 2000,
-  "category": "Desayuno"
+  "category": "Breakfast"
 }

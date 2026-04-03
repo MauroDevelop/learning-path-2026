@@ -1,55 +1,58 @@
 import { AuthMiddleware } from "./AuthMiddleware.js";
 import { UsersData } from "./UsersData.js";
-// Reutilizamos la clase UserManager del módulo anterior (22) para registrar y hacer el login
 import { UserManager } from "./UserManager.js";
 
-async function main() {
-    console.log('--- INICIANDO SISTEMA DE PROTECCIÓN ---');
+async function main(): Promise<void> {
+    console.log('--- INITIALIZING PROTECTION SYSTEM ---');
 
     try {
-        console.log('Creando un usuario Admin...');
+        // Provisioning the default Admin user for testing purposes
+        console.log('Provisioning Admin user...');
         await UserManager.register({
             username: 'Admin',
             email: 'adminServer@code.com',
             password: 'root1234'
-        })
-    } catch (e) { };  // Ignoramos por si ya existe
+        });
+    } catch (error) {
+        // Silently ignore registration failure assuming the Admin is already provisioned
+    }
 
-    // Login para obtener el token
+    // Authenticate to retrieve the authorization token
     const session = await UserManager.login({
         email: 'adminServer@code.com',
         password: 'root1234'
-    })
-    const token = session.token
-    console.log('Token obtenido exitosamente\n')
+    });
+    
+    const token = session.token;
+    console.log('Authorization token successfully retrieved\n');
 
-    // Intento de login fallido
-    console.log('Intentando login con datos incorrectos...')
+    // --- INVALID AUTHORIZATION ATTEMPT ---
+    console.log('Attempting access with an invalid token...');
 
-    const intento1 = AuthMiddleware.verifyToken('Admin_Token_2026');
-    // console.log(intento1);
+    const invalidAuthAttempt = AuthMiddleware.verifyToken('Admin_Token_2026');
 
-    if (!intento1.success) {
-        console.log('acceso denegado. El token es incorrecto')
-        console.log("Razón:", intento1.error, '\n');
+    if (!invalidAuthAttempt.success) {
+        console.log('Access Denied: Invalid token provided');
+        console.log("Reason:", invalidAuthAttempt.error, '\n');
     }
 
-    // Intentando login con token correcto
-    console.log('Intentando login con datos correctos...')
-    const intento2 = AuthMiddleware.verifyToken(token);
-    // console.log(intento2);
+    // --- VALID AUTHORIZATION ATTEMPT ---
+    console.log('Attempting access with a valid token...');
+    
+    const validAuthAttempt = AuthMiddleware.verifyToken(token);
 
-    if (!intento2.success) {
-        console.log('acceso denegado. El token es incorrecto')
-        console.log("Razón:", intento2.error, '\n');
+    if (!validAuthAttempt.success) {
+        console.log('Access Denied: Invalid token provided');
+        console.log("Reason:", validAuthAttempt.error, '\n');
     } else {
-        console.log('Login exitoso.');
-        console.log('Intentando acceder a la base de datos de usuarios...');
+        console.log('Access Granted.');
+        console.log('Fetching sensitive data from the user database...');
+        
+        // Protected resource access simulation
         const users = UsersData.getUsersData();
-        console.log('Lista de usuarios: ', users);
-
+        console.log('User directory:', users);
     }
-
 }
 
-await main()
+// Top-level execution with unhandled rejection protection
+main().catch(console.error);

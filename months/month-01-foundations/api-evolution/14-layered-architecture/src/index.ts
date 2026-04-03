@@ -1,14 +1,12 @@
-/*
-Modulo 14: Arquitectura de Capas y Separación de Responsabilidades
-
-En este módulo he aprendido a:
-- Separar la lógica de negocio (Servicios) de los puntos de entrada (Controladores/Rutas)
-- Crear una clase de Servicio para centralizar el acceso al File System
-- Mejorar la legibilidad del código eliminando lógica pesada de los endpoints de Express
-
-Comando para ejecutar el codigo:
-npm run dev:14
-*/
+/**
+ * Module 14: Layered Architecture and Separation of Concerns
+ * * Key learnings implemented:
+ * - Separating business logic (Services) from entry points (Controllers/Routes)
+ * - Creating a Service class to centralize File System access
+ * - Improving code readability by extracting heavy logic from Express endpoints
+ * * Execution command:
+ * npm run dev:14
+ */
 
 import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
@@ -20,21 +18,21 @@ dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
 app.use(express.json());
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const DB_PATH = path.join(__dirname, 'database.json');
 
-
-interface Videojuego {
+interface VideoGame {
     id: number;
-    titulo: string;
-    genero: string;
+    title: string;
+    genre: string;
 }
 
-// Esta clase se encarga solo de hablar con el archivo JSON
-class VideojuegoService {
-    async getAll(): Promise<Videojuego[]> {
+// This class is strictly responsible for interacting with the data source
+class VideoGameService {
+    async getAll(): Promise<VideoGame[]> {
         try {
             const data = await fs.readFile(DB_PATH, 'utf-8');
             return JSON.parse(data);
@@ -43,52 +41,71 @@ class VideojuegoService {
         }
     }
 
-    async create(titulo: string, genero: string): Promise<Videojuego> {
-        const juegos = await this.getAll();
-        const nuevo: Videojuego = {
-            id: (juegos[juegos.length - 1]?.id || 0) + 1,
-            titulo,
-            genero
+    async create(title: string, genre: string): Promise<VideoGame> {
+        const games = await this.getAll();
+        
+        const newGame: VideoGame = {
+            id: (games[games.length - 1]?.id || 0) + 1,
+            title,
+            genre
         };
-        juegos.push(nuevo);
-        await fs.writeFile(DB_PATH, JSON.stringify(juegos, null, 2));
-        return nuevo;
+        
+        games.push(newGame);
+        await fs.writeFile(DB_PATH, JSON.stringify(games, null, 2));
+        
+        return newGame;
     }
 
     async delete(id: number): Promise<boolean> {
-        const juegos = await this.getAll();
-        const filtrados = juegos.filter(j => j.id !== id);
-        if (juegos.length === filtrados.length) return false;
-        await fs.writeFile(DB_PATH, JSON.stringify(filtrados, null, 2));
+        const games = await this.getAll();
+        const filteredGames = games.filter(game => game.id !== id);
+        
+        // If the lengths match, it means no game was removed (ID not found)
+        if (games.length === filteredGames.length) return false;
+        
+        await fs.writeFile(DB_PATH, JSON.stringify(filteredGames, null, 2));
         return true;
     }
 }
 
-const service = new VideojuegoService();
+const gameService = new VideoGameService();
 
-// Las rutas ahora son "limpias": solo reciben la req y usan el service.
-app.get('/juegos', async (req: Request, res: Response) => {
-    const data = await service.getAll();
+// Routes are now "clean": they handle the HTTP cycle and delegate logic to the service
+app.get('/games', async (req: Request, res: Response) => {
+    const data = await gameService.getAll();
     res.json(data);
 });
 
-app.post('/juegos', async (req: Request, res: Response) => {
+app.post('/games', async (req: Request, res: Response) => {
     const { title, genre } = req.body;
+    
     if (!title || !genre) {
-        return res.status(400).json({ error: 'Faltan datos' });
+        return res.status(400).json({ error: 'Missing required data' });
     }
-    const nuevo = await service.create(title, genre);
-    res.status(201).json(nuevo);
+    
+    const newGame = await gameService.create(title, genre);
+    res.status(201).json(newGame);
 });
 
-app.delete('/juegos/:id', async (req: Request, res: Response) => {
-    const id = parseInt(req.params.id as string); // ese parametro llegara como una cadena de texto desde la URL
-    const deleted = await service.delete(id);
+app.delete('/games/:id', async (req: Request, res: Response) => {
+    const idParam = req.params.id;
+
+    // Type Guard: We strictly verify that the parameter exists and is a string
+    if (!idParam || typeof idParam !== 'string') {
+        return res.status(400).json({ error: 'Invalid ID format provided' });
+    }
+
+    // URL parameters are received as strings, parsed using base 10 (decimal)
+    const id = parseInt(idParam, 10); 
+    const isDeleted = await gameService.delete(id);
     
-    if (!deleted) return res.status(404).json({ error: 'No encontrado' });
-    res.json({ message: 'Eliminado con éxito' });
+    if (!isDeleted) {
+        return res.status(404).json({ error: 'Game not found' });
+    }
+    
+    res.json({ message: 'Successfully deleted' });
 });
 
 app.listen(PORT, () => {
-    console.log(`Arquitectura de Capas en http://localhost:${PORT}`);
+    console.log(`Layered Architecture Server running on http://localhost:${PORT}`);
 });

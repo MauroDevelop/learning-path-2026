@@ -1,41 +1,39 @@
 import bcrypt from 'bcrypt';
 import { UserManager } from './UserManager.js';
 
-async function testPasswordSecurity() {
-    // Creo una constante con la contraseña original
-    const passwordOriginal = 'mauro123'
-    console.log('Contraseña original:', passwordOriginal)
+async function testPasswordSecurity(): Promise<void> {
+    // Define the plain-text password for registration
+    const originalPassword = 'mauro123';
+    console.log('Original Password:', originalPassword);
 
-    // --- REGISTRO (crear un hash) ---
-    // '10' es el costo de procesamiento (mientras más alto, más seguro pero es más lento)
-    const hash = await bcrypt.hash(passwordOriginal, 10)   // al llamar un metodo de bcrypt hay que usar await
-    console.log('\nContraseña Hasheada (Lo que se guarda en la BD):')
-    console.log(hash)
+    // --- REGISTRATION ---
+    // Generate a hash using 10 salt rounds to balance security and performance
+    const hashedPassword = await bcrypt.hash(originalPassword, 10);
+    console.log('\nHashed Password (DB Storage):');
+    console.log(hashedPassword);
 
-    // --- LOGIN (comparar) ---
-    console.log("\nIntentando iniciar sesión...");
+    // --- LOGIN ---
+    console.log("\nAttempting to log in...");
 
-    const intentoCorrecto = 'mauro123';
-    console.log('\nLa contraseña ingresada es:', intentoCorrecto)
-
-    const isValid = await bcrypt.compare(intentoCorrecto, hash);
-    if (isValid === true) {
-        console.log('La contraseña ingresada es correcta. \nBienvenido...')
-    } else {
-        console.error('¡La contraseña ingresada es incorrecta! Intentalo nuevamente.')
+    // Helper function to handle repeated login authentication attempts
+    async function attemptLogin(passwordAttempt: string): Promise<void> {
+        console.log('\nPassword entered:', passwordAttempt);
+        
+        // Compare the plain-text attempt against the generated hash
+        const isValid = await bcrypt.compare(passwordAttempt, hashedPassword);
+        
+        if (isValid) {
+            console.log('Success: The password is correct. Welcome!');
+        } else {
+            console.error('Error: Incorrect password! Please try again.');
+        }
     }
 
-    const intentoIncorrecto = 'mauro124';
-    console.log('\nLa contraseña ingresada es:', intentoIncorrecto)
-    const isValid2 = await bcrypt.compare(intentoIncorrecto, hash);
-    if (isValid2 === true) {
-        console.log('La contraseña ingresada es correcta. \nBienvenido...')
-    } else {
-        console.error('¡La contraseña ingresada es incorrecta! Intentalo nuevamente.')
-    }
+    // Test with valid credentials
+    await attemptLogin('mauro123');
 
-
-
+    // Test with invalid credentials
+    await attemptLogin('mauro124');
 }
 
-testPasswordSecurity()
+testPasswordSecurity();

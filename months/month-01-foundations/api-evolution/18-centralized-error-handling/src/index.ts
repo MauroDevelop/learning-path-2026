@@ -1,83 +1,97 @@
-/*
-MÓDULO 18: MANEJO CENTRALIZADO DE ERRORES
---------------------------------------------------
-Objetivo: Interceptar fallos usando un Middleware.
-
-🔗 LINKS DE PRUEBA (Click o Copiar en navegador):
-
-1. ÉXITO (Usuario existente - 200 OK):
-   http://localhost:3000/users/1
-
-2. ERROR OPERATIVO (Usuario no existe - 404 Not Found):
-   (Este error es lanzado manualmente con nuestra clase AppError)
-   http://localhost:3000/users/99
-
-3. BUG INESPERADO (Variable no definida - 500 Internal Server Error):
-   (Simula un fallo de código real que el middleware captura para que el server no caiga)
-   http://localhost:3000/panico
-
-4. HOME:
-   http://localhost:3000/
---------------------------------------------------
-*/
-
+/**
+ * MODULE 18: CENTRALIZED ERROR HANDLING
+ * --------------------------------------------------
+ * Objective: Intercept failures using an Error-Handling Middleware
+ *
+ * 🔗 TESTING LINKS (Click or Copy in browser):
+ *
+ * 1. SUCCESS (Existing user - 200 OK):
+ * http://localhost:3000/users/1
+ *
+ * 2. OPERATIONAL ERROR (User not found - 404 Not Found):
+ * (This error is manually thrown using our AppError class)
+ * http://localhost:3000/users/99
+ *
+ * 3. UNEXPECTED BUG (Undefined variable - 500 Internal Server Error):
+ * (Simulates a real code crash that the middleware catches to prevent server downtime)
+ * http://localhost:3000/panic
+ *
+ * 4. HOME:
+ * http://localhost:3000/
+ * --------------------------------------------------
+ */
 
 import express, { Request, Response, NextFunction } from 'express';
-// Importar middleware y clase personalizada
+// Import custom error class and middleware
 import { errorHandler } from './middlewares/errorHandler.js';
 import { AppError } from './errors/AppError.js';
 
 const app = express();
 app.use(express.json());
 
-// --- Simulamos una Base de Datos ---
+// --- Mock Database Simulation ---
 const users = [
     { id: 1, name: "Mauro", role: "admin" },
-    { id: 2, name: "Invitado", role: "guest" }
+    { id: 2, name: "Guest", role: "guest" }
 ];
 
-// Error Operativo (Controlado)
-// Intenta buscar un usuario que no existe (ej: ID 99)
+// Operational Error (Controlled)
+// Attempts to retrieve a non-existent user (e.g., ID 99)
 app.get('/users/:id', (req: Request, res: Response, next: NextFunction) => {
     try {
-        const id = parseInt(req.params.id as string);
+        
+        const idParam = req.params.id;
+
+        // Type Guard: We strictly verify that the parameter exists and is a string
+        if (!idParam || typeof idParam !== 'string') {
+            // SENIOR TWEAK: Instead of res.status(400), we throw the AppError
+            throw new AppError('Invalid ID format provided', 400);
+        }
+
+        // Safe parsing with radix 10
+        const id = parseInt(idParam, 10);
+        
+        // Defensive programming against NaN inputs
+        if (isNaN(id)) {
+            throw new AppError('Invalid ID format provided', 400);
+        }
+
         const user = users.find(u => u.id === id);
 
         if (!user) {
-            // En lugar de responder directo, lanzamos el error al "next"
-            throw new AppError(`El usuario con ID ${id} no existe`, 404);
+            // Instead of a direct response, we throw the error to the 'catch' block
+            throw new AppError(`User with ID ${id} does not exist`, 404);
         }
 
         res.json(user);
     } catch (error) {
-        // Pasamos el error al middleware errorHandler
+        // Passes the error to the errorHandler middleware
         next(error);
     }
 });
 
-// Error de Programación (Bug inesperado)
-// Esta ruta tiene un error de código a propósito para ver si el servidor aguanta
-app.get('/panico', (req: Request, res: Response, next: NextFunction) => {
+// Programming Error (Unexpected Bug)
+// This route contains intentional faulty code to test server resilience
+app.get('/panic', (req: Request, res: Response, next: NextFunction) => {
     try {
-        // ignorar y compilar el código de todas formas con
-        // @ts-ignore
-        console.log(variableQueNoExiste); // Esto provocará un error de JS nativo
+        // @ts-expect-error - Deliberately referencing an undeclared variable to force a crash
+        console.log(undeclaredVariable); 
     } catch (error) {
         next(error);
     }
 });
 
-// Éxito
-app.get('/', (req, res) => {
-    res.send("El servidor funciona correctamente!");
+// Success route
+app.get('/', (req: Request, res: Response) => {
+    res.send("Server is running correctly");
 });
 
-// --- REGISTRO DEL MIDDLEWARE DE ERRORES ---
-// Esto debe ir simpre al final de todas las rutas, 
-// justo antes del app.listen
+// --- ERROR MIDDLEWARE REGISTRATION ---
+// This must always be placed at the very end of the route stack, 
+// right before app.listen
 app.use(errorHandler);
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Servidor del modulo 18 listo en http://localhost:${PORT}`);
+    console.log(`Module 18 server running on http://localhost:${PORT}`);
 });

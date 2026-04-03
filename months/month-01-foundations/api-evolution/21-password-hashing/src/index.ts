@@ -1,27 +1,29 @@
-import { UserManager } from './UserManager.js'; // uso de .js
+import { UserManager } from './UserManager.js';
 
-async function main() {
+async function main(): Promise<void> {
     try {
-        console.log("--- Intento de Registro Seguro ---");
+        console.log("--- Secure Registration Attempt ---");
 
-        const usuarioRegistrado = await UserManager.register({
+        const registeredUser = await UserManager.register({
             username: "MauroDev",
             email: "maurodevelop.git@gmail.com",
-            password: "superSecreto123", // Contraseña plana
+            password: "superSecret123", // Plain-text password to be hashed by the manager
             age: 26
         });
 
-        console.log("Resultado del sistema:");
-        console.log(usuarioRegistrado);
+        console.log("System output:");
+        console.log(registeredUser);
 
     } catch (error) {
-        console.error("Hubo un error en el registro:");
-        // Casteamos el error para leer el mensaje
-        console.error((error as Error).message);
+        console.error("Registration failed:");
+        
+        // Type Guard to safely access the error message without forced type casting
+        if (error instanceof Error) {
+            console.error(error.message);
+        } else {
+            console.error("An unknown error occurred during registration");
+        }
     }
 }
 
 main();
-
-// Castear = Forzar o afirmar manualmente que una variable es de un tipo específico
-// (en este caso, decirle que es un Error para poder leer su mensaje).

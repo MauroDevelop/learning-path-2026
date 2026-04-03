@@ -1,81 +1,78 @@
-/*
-Módulo 12: API REST - Recibiendo datos (POST y Middleware)
+/**
+ * Module 12: REST API - Handling incoming data (POST and Middleware)
+ * * Key learnings implemented:
+ * - Express configuration to parse JSON payloads using 'express.json()' middleware
+ * - HTTP POST method utilization to transmit data to the server
+ * - Request body access via 'req.body'
+ * - Mandatory data validation ("Bouncer" pattern) and 400 status error handling
+ * - Temporary data persistence (in-memory array) returning a 201 Created status
+ * * Bash execution command (Add game):
+ * curl -X POST http://localhost:3000/games -H "Content-Type: application/json" -d '{"title": "Minecraft", "genre": "Sandbox"}'
+ */
 
-En este módulo he aprendido a:
-- Configurar Express para recibir datos JSON usando el middleware `express.json()`.
-- Utilizar el verbo HTTP POST para enviar información al servidor.
-- Acceder al cuerpo de la petición mediante `req.body`.
-- Validar datos obligatorios (Validación "El Portero") y manejar errores con status 400.
-- Persistir datos en una memoria temporal (array) y responder con status 201 (Created).
-
-Actividades realizadas:
-1. Configuración de middleware para lectura de body.
-2. Implementación de lógica de validación para campos requeridos.
-3. Creación de un endpoint para guardar videojuegos en memoria.
-
-Comando para ejecutar desde Git Bash (Agregar juego):
-curl -X POST http://localhost:3000/juegos -H "Content-Type: application/json" -d '{"title": "Minecraft", "genre": "Sandbox"}'
-*/
-
-import express, {Request, Response} from 'express';
+import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 const PORT = process.env.PORT || 3000;
 const app = express();
 
-//  SE habilita la lectura de JSON
+// Enables JSON payload parsing
 app.use(express.json());
 
 /*
 app.post('/echo', (req: Request, res: Response) => {
-    console.log('Cuerpo recibido: ', req.body);
+    console.log('Received payload: ', req.body);
 
     res.json({
-        message: 'Recibido fuerte y claro',
+        message: 'Received loud and clear',
         myData: req.body
     });
 });
 */
-// Base de Datos temporal
-interface Videojuego {
+
+// In-memory Mock Database
+interface VideoGame {
     id: number;
-    titulo: string;
-    genero: string;
+    title: string;
+    genre: string;
 }
 
-const juegos: Videojuego[] = [];
+const games: VideoGame[] = [];
 
-// Ruta GET para ver qué tenemos guardado
-app.get('/juegos', (req: Request, res: Response) => {
-    res.json(juegos);
+// GET route to retrieve stored resources
+app.get('/games', (req: Request, res: Response) => {
+    res.json(games);
 });
 
-app.post('/juegos', (req: Request, res: Response) => {
+app.post('/games', (req: Request, res: Response) => {
+    // Destructures the payload properties
     const { title, genre } = req.body;
 
-    // Verificmos si falta el titulo
-    if (!title || !genre){
-        // Status 400 = "Bad Request" (Petición incorrecta)
+    // Validates required fields presence
+    if (!title || !genre) {
+        // Status 400 = "Bad Request"
         res.status(400).json({
-            error: 'Faltan datos: titulo y genero son obligatorios'
+            error: 'Missing data: title and genre are strictly required'
         });
-        return    // detiene la función para que no se siga ejecutando
+        // Early return prevents further execution
+        return; 
+    }
+
+    const newGame: VideoGame = {
+        id: games.length + 1,
+        title,
+        genre
     };
 
-    const nuevoJuego: Videojuego = {
-        id: juegos.length +1,
-        titulo: title,
-        genero: genre,
-    };
+    games.push(newGame);
+    console.log(`Game successfully saved: ${title}`);
 
-    juegos.push(nuevoJuego);
-    console.log('Juego guardado con exito: ', title);
-
-    res.status(200).json(nuevoJuego);
+    // Status 201 = "Created" (Standard for successful POST requests)
+    res.status(201).json(newGame);
 });
 
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+    console.log(`Server running on http://localhost:${PORT}`);
 });

@@ -1,22 +1,24 @@
-
-// Creo y exporto la clase AppError y la convierto en hija de la clase Error
+// Creates and exports the AppError class, extending the native Error class
 export class AppError extends Error {
-    // Creo dos metodos publicos de solo lectura
+    // Defines two public read-only properties (not methods)
     public readonly statusCode: number;
     public readonly isOperational: boolean;
-    // true (Operacional): Son errores que esperamos que pasen 
-    // (ej: "Usuario no encontrado", "Contraseña incorrecta", "Faltan datos").
-    // false (Programación): Son bugs que NO esperábamos 
-    // (ej: undefined is not a function, fallo de conexión a DB).
+    
+    // true (Operational): Expected errors we can foresee and handle 
+    // (e.g., "User not found", "Invalid password", "Missing data")
+    // false (Programming): Unexpected bugs or system failures 
+    // (e.g., "undefined is not a function", DB connection loss)
 
     constructor(message: string, statusCode: number) {
-        // Llama al constructor del padre (Error)
-        // Le pasamos el mensaje para que lo guarde
+        // Invokes the parent constructor (Error) and passes the message parameter
         super(message);  
 
         this.statusCode = statusCode;
-
-        // Asumimos que si usamos esta clase, es un error controlado (true)
+        
+        // Instances of this class are considered controlled operational errors by default
         this.isOperational = true;
+
+        // Captures the stack trace, excluding the constructor call from it
+        Error.captureStackTrace(this, this.constructor);
     }
-} 
+}
