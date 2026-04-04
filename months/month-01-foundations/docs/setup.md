@@ -1,54 +1,32 @@
-# Setup y Configuración del Entorno
+# ⚙️ Environment Configuration (Month 01)
 
-Este documento describe cómo ejecutar el Mes 01 localmente y cómo configurar el entorno para los módulos avanzados.
+> **Note:** For general instructions on cloning the repository and basic execution, please refer to the [Main Repository README](../../../README.md).
 
----
+This document outlines the specific configurations required to run the advanced modules (Module 28 onwards) and the test suite for Month 01.
 
-## Quick Start
 
-Sigue estos pasos para ejecutar el proyecto localmente:
+## 🔐 Environment Variables
 
-### 1️⃣ Clonar el repositorio
+Starting from Module 28, the application requires a connection to a local MySQL database. You must create a `.env` file in the root directory of the `month-01-foundations` folder.
 
-```bash
-git clone https://github.com/MauroDevelop/learning-path-2026.git
-```
-### 2️⃣ Entrar al mes 01
+Create the file and add your local MySQL credentials (e.g., using Laragon or XAMPP):
 
-```bash
-cd learning-path-2026/month-01-foundations
+```env
+DATABASE_URL="mysql://root:@localhost:3306/my_database"
 ```
 
-### 3️⃣ Instalar dependencias
+### 📌 Database Setup Checklist:
 
-```bash
-npm install
-```
+- **Prerequisite:** Ensure your local MySQL server is currently running.
+- **Initialization:** Create the empty database (e.g., `my_database`) in your local environment before executing the project.
+- **Security:** Do not commit your `.env` file. It contains sensitive credentials and is already excluded via `.gitignore`.
 
-### 4️⃣ Ejecutar un módulo (ejemplo: módulo 08)
 
-```bash
-npm run dev:08
-```
 
-### 5️⃣ Ejecutar todos los tests
+## 🧪 Running Automated Tests
+
+To verify that your local environment and database are correctly set up, you can run the automated test suite specifically for this month:
 
 ```bash
 npm run test
 ```
-
-##  Configuración de Variables de Entorno
-Este proyecto requiere una conexión a base de datos para los módulos avanzados (Módulo 28 en adelante).
-Crea un archivo `.env` en la raíz del proyecto y asegúrate de definir la variable `DATABASE_URL` con tus credenciales de MySQL local (ej: Laragon/XAMPP).
-
-Ejemplo de `.env`:
-```env
-DATABASE_URL="mysql://root:@localhost:3306/mi_base_de_datos"
-```
-### Asegúrate de:
-
-- Tener MySQL en ejecución
-
-- Crear previamente la base de datos
-
-- Mantener las credenciales locales seguras

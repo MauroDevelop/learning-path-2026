@@ -1,25 +1,22 @@
+# Month 01 Modules – Backend Foundations
 
-
-
-# Módulos del Mes 01 – Fundamentos Backend
-
-El Mes 01 está dividido en módulos progresivos que evolucionan desde fundamentos de TypeScript hasta una API con arquitectura en capas y base de datos relacional.
+Month 01 is divided into progressive modules that evolve from TypeScript fundamentals to a fully functional API featuring Layered Architecture and a relational database.
 
 ---
 
-## 🧠 Fundamentos de TypeScript
+## 🧠 TypeScript Fundamentals
 
-- **01-introduction**: Tipado estático básico y estructuras de control.
-- **02-functions-and-objects**: Funciones tipadas, Arreglos, Tuplas y modelado de objetos.
-- **03-advanced-filtering**: Interfaces avanzadas, Type Guards y Utility Types.
-- **04-modules**: Modularización con ES Modules.
-- **05-array-practice**: Manipulación inmutable con métodos de Array.
-- **06-enums-types**: Gestión de estados con Enums y Union Types.
-- **07-asynchrony-and-promises**: Promises y Async/Await con manejo de errores.
+- **01-introduction**: Basic static typing and control structures.
+- **02-functions-and-objects**: Typed functions, Arrays, Tuples, and object modeling.
+- **03-advanced-filtering**: Advanced interfaces, Type Guards, and Utility Types.
+- **04-modules**: Modularization using ES Modules.
+- **05-array-practice**: Immutable data manipulation using Array methods.
+- **06-enums-types**: State management using Enums and Union Types.
+- **07-asynchrony-and-promises**: Promises and Async/Await with error handling.
 
 ---
 
-## 🌐 Introducción a Backend con Express
+## 🌐 Introduction to Backend with Express
 
 - **08-express-basics**
 - **09-data-persistence**
@@ -28,16 +25,16 @@ El Mes 01 está dividido en módulos progresivos que evolucionan desde fundament
 
 ---
 
-## 🧱 Construcción de API REST
+## 🧱 REST API Construction
 
 - **12-rest-api-post**
 - **13-full-crud-persistence**
 - **14-layered-architecture**
-- **15-repaso-general**
+- **15-repaso-general** *(Note: Kept original folder names to match repository structure)*
 
 ---
 
-## 🛡 Validaciones, Testing y Seguridad
+## 🛡 Validation, Testing, and Security
 
 - **16-validaciones-zod**
 - **17-poo-basics**
@@ -50,7 +47,7 @@ El Mes 01 está dividido en módulos progresivos que evolucionan desde fundament
 
 ---
 
-## 🧩 Arquitectura y Escalabilidad
+## 🧩 Architecture and Scalability
 
 - **24-dependency-injection**
 - **25-api-integration-review**
@@ -61,13 +58,13 @@ El Mes 01 está dividido en módulos progresivos que evolucionan desde fundament
 
 ---
 
-## 🎯 Resultado Final del Mes 01
+## 🎯 Month 01 Key Deliverables
 
-Al finalizar el mes se obtiene:
+By the end of this month, the following milestones are achieved:
 
-- API REST completa
-- Arquitectura en Capas implementada
-- Testing unitario e integración
-- Autenticación con JWT
-- Base de datos relacional con Prisma
-- Documentación OpenAPI
+- Fully functional REST API
+- Implemented Layered Architecture
+- Unit and integration testing setup
+- JWT-based Authentication
+- Relational database integration using Prisma
+- OpenAPI documentation
