@@ -4,6 +4,7 @@ import { authenticateToken, verifyRole } from '../../../middlewares/auth.middlew
 import { uploadMiddleware } from "../../../middlewares/upload.middleware";
 
 import { PrismaProductRepository } from "../../repositories/PrismaProductRepository";
+import { PrismaCategoryRepository } from "../../repositories/PrismaCategoryRepository";
 import { ProductService } from "../../../services/ProductService";
 import { CategoryService } from "../../../services/CategoryService";
 import { ProductController } from "../../controllers/ProductController";
@@ -13,7 +14,8 @@ const productRoutes = Router();
 
 const productRepo = new PrismaProductRepository();
 
-const categoryService = new CategoryService()
+const categoryRepository = new PrismaCategoryRepository();
+const categoryService = new CategoryService(categoryRepository);
 
 const productService = new ProductService(productRepo, categoryService);
 

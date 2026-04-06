@@ -1,12 +1,14 @@
 import { Router } from "express";
 import { authenticateToken, verifyRole } from "../../../middlewares/auth.middleware";
 import { CategoryController } from "../../controllers/CategoryController";
-import { CategoryService } from '../../../services/CategoryService';
+import { PrismaCategoryRepository } from "../../repositories/PrismaCategoryRepository";
+import { CategoryService } from "../../../services/CategoryService";
 
 // Initialize the router for Category-related endpoints
 const categoryRoutes = Router();
-// Instance the controller to handle the incoming requests
-const categoryService = new CategoryService();
+
+const categoryRepository = new PrismaCategoryRepository();
+const categoryService = new CategoryService(categoryRepository);
 const categoryController = new CategoryController(categoryService);
 
 // --- ENDPOINT DEFINITIONS ---

@@ -7,11 +7,13 @@ import { PrismaModifierRepository } from "../../repositories/PrismaModifierRepos
 
 import { ProductService } from "../../../services/ProductService";
 import { PrismaProductRepository } from "../../repositories/PrismaProductRepository";
+import { PrismaCategoryRepository } from "../../repositories/PrismaCategoryRepository";
 import { CategoryService } from "../../../services/CategoryService";
 
 const modifierRoutes = Router();
 
-const categoryService = new CategoryService();
+const categoryRepository = new PrismaCategoryRepository();
+const categoryService = new CategoryService(categoryRepository);
 
 const productRepo = new PrismaProductRepository();
 const productService = new ProductService(productRepo, categoryService);
