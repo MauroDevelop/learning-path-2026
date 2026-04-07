@@ -1,24 +1,32 @@
 export enum OrderStatus {
     PENDING = 'PENDING',
     COOKING = 'COOKING',
-    READY_FOR_PICKUP = 'DELIVERING',
+    DELIVERING = 'DELIVERING',
     DELIVERED = 'DELIVERED'
 }
 
 // Represents a single product within an order
 export class OrderItem {
-    id?: string;
+    id?: string | null;
 
     // We use '!' to tell TypeScript that these properties will be 
-    // initialized dynamically via Object.assign in the constructor.
     quantity!: number;
     price!: number;
-    orderId?: string;
+    orderId?: string | null;
     productId!: string;
 
-    constructor(data: OrderItem) {
-        // Bulk assign properties from the data object to the current instance
-        Object.assign(this, data);
+    constructor(data: {
+        id?: string | null,
+        quantity: number,
+        price: number,
+        orderId?: string | null,
+        productId: string
+    }) {
+        this.id = data.id ?? null;
+        this.quantity = data.quantity;
+        this.price = data.price;
+        this.orderId = data.orderId ?? null
+        this.productId = data.productId 
     }
 }
 
@@ -32,8 +40,8 @@ export class Order {
     latitude?: number | null;
     longitude?: number | null;
     courierId?: string | null; // Optional: only present when a courier is assigned
-    createdAt?: Date;
-    updatedAt?: Date;
+    createdAt?: Date | null;
+    updatedAt?: Date| null;
     items?: OrderItem[];
 
     constructor(data: {
@@ -45,8 +53,8 @@ export class Order {
         latitude?: number | null,
         longitude?: number | null,
         courierId?: string | null, // Optional: only present when a courier is assigned
-        createdAt?: Date,
-        updatedAt?: Date,
+        createdAt?: Date | null,
+        updatedAt?: Date | null, 
         items?: OrderItem[]
 
     }) {
@@ -59,5 +67,9 @@ export class Order {
         this.courierId = data.courierId ?? null;
         this.latitude = data.latitude ?? null;
         this.longitude = data.longitude ?? null;
+
+        this.createdAt = data.createdAt ?? null;
+        this.updatedAt = data.updatedAt ?? null;
+        this.items = data.items ?? []; // Initialize with emphy array as fallback
     }
 }

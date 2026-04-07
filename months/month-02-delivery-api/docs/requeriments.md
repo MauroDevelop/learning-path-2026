@@ -11,10 +11,10 @@
 ### 2. Restaurant Administrator (Admin)
 - Can create/edit/delete Products and Categories.
 - Can view all incoming orders.
-- Can change the order status from `PENDING` to `COOKING` and `READY_FOR_PICKUP`.
+- Can change the order status from `PENDING` to `COOKING` and `DELIVERING`.
 
 ### 3. Courier
-- Can view orders with the `READY_FOR_PICKUP` status.
+- Can view orders with the `DELIVERING` status.
 - Can "take" an order (assign it to themselves).
 - Can change the status to `DELIVERED`.
 
