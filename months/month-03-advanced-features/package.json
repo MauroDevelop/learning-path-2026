@@ -1,0 +1,51 @@
+{
+  "name": "month-03-delivery-api",
+  "version": "1.0.0",
+  "description": "Professional RESTful API for managing a restaurant delivery service with real-time capabilities using WebSockets.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "jest"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@mermaid-js/mermaid-cli": "^11.12.0",
+    "@types/bcrypt": "^6.0.0",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.6",
+    "@types/jest": "^30.0.0",
+    "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.1.0",
+    "@types/supertest": "^7.2.0",
+    "@types/socket.io": "^3.0.2",
+    "@types/redis": "^4.0.11",
+    "jest": "^30.2.0",
+    "prisma": "^5.22.0",
+    "prisma-erd-generator": "^2.4.2",
+    "supertest": "^7.2.2",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^2.9.0",
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
+    "express": "^5.2.1",
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.1.1",
+    "redis": "^4.6.12",
+    "socket.io": "^4.7.2",
+    "zod": "^4.3.6"
+  }
+}

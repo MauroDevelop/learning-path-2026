@@ -1,0 +1,146 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator erd {
+  provider = "prisma-erd-generator"
+  output   = "../docs/erd.svg"
+  theme    = "neutral"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// User role definition
+enum Role {
+  CLIENT // Can place orders
+  ADMIN // Manages the menu and the store
+  COURIER // Delivery
+}
+
+// Main User entity
+model User {
+  id       String  @id @default(uuid())
+  email    String  @unique
+  password String // Hashed password
+  name     String
+  phone    String?
+  role     Role    @default(CLIENT)
+
+  // Relations
+  clientOrders  Order[] @relation("ClientOrder")
+  courierOrders Order[] @relation("CourierOrder")
+
+  // Auditing and Soft Delete
+  isActive  Boolean  @default(true) // Soft delete flag
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users") // Best Practice: tables names should be lowercase and plural
+}
+
+model Product {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  description String?
+  price       Decimal @db.Decimal(10, 2)
+
+  stock    Int     @default(0)
+  imageUrl String?
+
+  isActive Boolean @default(true)
+
+  // Relations
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+
+  orderItem OrderItem[]
+
+  modifiers Modifier[]
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("products")
+}
+
+model Category {
+  id          String  @id @default(uuid())
+  name        String  @unique
+  description String?
+
+  isActive Boolean @default(true)
+
+  products Product[] // Relation, a category have too products
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("categories")
+}
+
+model Modifier {
+  id    String  @id @default(uuid())
+  name  String
+  price Decimal @db.Decimal(10, 2)
+
+  isActive Boolean @default(true)
+
+  // Relations
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  // Timestamps
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("modifiers")
+}
+
+enum OrderStatus {
+  PENDING
+  COOKING
+  DELIVERING
+  DELIVERED
+}
+
+model Order {
+  id        String      @id @default(uuid())
+  total     Decimal     @db.Decimal(10, 2) // total price
+  status    OrderStatus @default(PENDING)
+  deliveryAddress String 
+  latitude Float?
+  longitude Float?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  // Relations with users
+  clientId String
+  client   User   @relation("ClientOrder", fields: [clientId], references: [id])
+
+  courierId String?
+  courier   User?   @relation("CourierOrder", fields: [courierId], references: [id])
+
+  orderItems OrderItem[]
+
+  @@map("orders")
+}
+
+model OrderItem {
+  id       String  @id @default(uuid())
+  quantity Int
+  price    Decimal @db.Decimal(10, 2)
+
+  // Relation with the order
+  orderId String
+  order   Order  @relation(fields: [orderId], references: [id])
+
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@map("order_items")
+}
